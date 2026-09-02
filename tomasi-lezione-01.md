@@ -7,9 +7,9 @@
 # L’insegnamento “Fisica e statistica”
 
 -   Tre moduli:
-    #.   Fisica applicata (prof. Tomasi)
+    #.   Fisica applicata (dott. Bianchi)
     #.   Misure elettriche ed elettroniche (dott. Bianchi)
-    #.   Statistica medica
+    #.   Statistica medica (dott. Turati)
 -   Un esame di 60 minuti per ogni modulo, nella stessa giornata
 -   Obbligatoria la presenza al 70% di lezioni **per ogni modulo** (giustificazioni solo con certificato medico)
 
@@ -28,7 +28,7 @@
 
 -   Non c’è un libro di testo consigliato: le slide dovrebbero bastare per la preparazione.
 
--   Queste slides sono disponibili all'indirizzo [ziotom78.github.io/tecniche-audio](https://ziotom78.github.io/tecniche-audio/), e sono navigabili.
+-   Queste slides sono disponibili all'indirizzo https://davide-bianchi-astro.github.io/tecniche-audio e sono navigabili.
 
 -   Se vi è più comodo, potete ottenere una versione PDF producendola da soli: basta aggiungere `?print-pdf` alla fine della URL e stampare la pagina da browser in un file PDF (vedi le [istruzioni dettagliate](https://revealjs.com/pdf-export/)).
 
