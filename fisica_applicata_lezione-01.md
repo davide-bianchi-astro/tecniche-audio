@@ -245,12 +245,10 @@ Sottolinea che la misurazione di qualcosa è un’attività della vita quotidian
 - Sistema Internazionale (SI) — Il Sistema Imperiale **non** è richiesto!
 - Multipli decimali
 - Vantaggi del SI
-- Studiate bene, cercando collegamenti e usando carte Anki per le cose che dovete mandare a memoria
-- Se dovete usare ChatGPT, fatelo con giudizio e grande attenzione!
 
 ---
-title: Fisica -- Lezione 1
+title: Fisica Applicata -- Lezione 1
 subtitle: Cosa significa misurare?
-author: Davide Bianchi (mutuato da Maurizio Tomasi) ([davide.bianchi1@unimi.it`](mailto:davide.bianchi1@unimi.it))
+author: Davide Bianchi ([davide.bianchi1@unimi.it`](mailto:davide.bianchi1@unimi.it))
 date: Mercoledì 2 Settembre 2026
 ...
