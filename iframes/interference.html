@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principio di Sovrapposizione Interattivo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Stile di base per il corpo e il layout responsivo */
+        body {
+            color: #1a202c;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: #ffffff;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2b6cb0;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        /* Stile per i pannelli delle onde (Canvas) */
+        .wave-panel {
+            margin-bottom: 25px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .wave-panel h2 {
+            font-size: 1.25rem;
+            padding: 10px 15px;
+            margin: 0;
+            background-color: #f7fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 110px; /* Altezza fissa per coerenza */
+            background-color: #ffffff;
+        }
+
+        /* Colore specifico per l'onda risultante */
+        #canvas-sum {
+            background-color: #ebf8ff;
+        }
+
+        /* Stile per i controlli (Slider) */
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding-top: 10px;
+        }
+
+        .control-group {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e0;
+        }
+
+        /* Modifica chiave: Rendi flessibile la label e centra gli item */
+        .control-group label {
+            /* display: block; -- Rimosso per usare flex */
+            display: flex; /* Abilita flexbox per allineamento orizzontale */
+            align-items: center; /* Allinea verticalmente (centra) gli elementi */
+            justify-content: space-between; /* Spinge gli elementi ai lati (nome slider a sinistra, valore a destra) */
+            margin-bottom: 15px; /* Aumenta lo spazio tra gli slider */
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        /* Stile per il contenitore dell'input per forzare l'allineamento */
+        .slider-container {
+            display: flex;
+            flex-grow: 1; /* Permette al contenitore di occupare lo spazio disponibile */
+            align-items: center;
+            margin-right: 10px; /* Spazio tra lo slider e il valore */
+        }
+
+        input[type="range"] {
+            width: 100%; /* L'input occupa lo spazio del contenitore flessibile */
+            margin: 0; /* Rimuovi i margini verticali predefiniti */
+            -webkit-appearance: none;
+            height: 5px;
+            background: #444;
+            border-radius: 5px;
+        }
+
+        /* Stile per l'output numerico dello slider */
+        .slider-value {
+            font-weight: 700;
+            color: #2b6cb0;
+            /* margin-left: 10px; -- Rimosso, lo spazio è gestito dal flex container */
+            width: 40px; /* Larghezza fissa per mantenere l'allineamento dei valori */
+            text-align: right;
+        }
+
+        /* Stili specifici per raggruppare i controlli delle due onde */
+        .wave-1-controls { border-color: #90cdf4; }
+        .wave-2-controls { border-color: #fbd38d; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Controlli Slider -->
+    <div class="controls-grid">
+        <!-- Controlli Onda 1 -->
+        <div class="control-group wave-1-controls">
+            <h3 style="color: #3182ce; margin-top: 0; border-bottom: 1px solid #bee3f8; padding-bottom: 5px;">Onda 1</h3>
+
+            <!-- Etichetta Ampiezza (A) -->
+            <label>
+                Ampiezza (A):
+                <div class="slider-container">
+                    <input type="range" id="amplitude1" min="10" max="80" value="50" step="1" oninput="drawAll()">
+                </div>
+                <span id="val-a1" class="slider-value"></span>
+            </label>
+
+            <!-- Etichetta Frequenza (F) -->
+            <label>
+                Frequenza (F):
+                <div class="slider-container">
+                    <input type="range" id="frequency1" min="1" max="10" value="2" step="0.1" oninput="drawAll()">
+                </div>
+                <span id="val-f1" class="slider-value"></span>
+            </label>
+
+            <!-- Etichetta Sfasamento -->
+            <label>
+                Sfasamento:
+                <div class="slider-container">
+                    <input type="range" id="phase1" min="0" max="360" value="0" step="10" oninput="drawAll()">
+                </div>
+                <span id="val-p1" class="slider-value"></span>
+            </label>
+        </div>
+
+        <!-- Controlli Onda 2 -->
+        <div class="control-group wave-2-controls">
+            <h3 style="color: #dd6b20; margin-top: 0; border-bottom: 1px solid #f6ad55; padding-bottom: 5px;">Onda 2</h3>
+
+            <!-- Etichetta Ampiezza (A) -->
+            <label>
+                Ampiezza (A):
+                <div class="slider-container">
+                    <input type="range" id="amplitude2" min="10" max="80" value="50" step="1" oninput="drawAll()">
+                </div>
+                <span id="val-a2" class="slider-value"></span>
+            </label>
+
+            <!-- Etichetta Frequenza (F) -->
+            <label>
+                Frequenza (F):
+                <div class="slider-container">
+                    <input type="range" id="frequency2" min="1" max="10" value="2" step="0.1" oninput="drawAll()">
+                </div>
+                <span id="val-f2" class="slider-value"></span>
+            </label>
+
+            <!-- Etichetta Fase (Φ) -->
+            <label>
+                Sfasamento:
+                <div class="slider-container">
+                    <input type="range" id="phase2" min="0" max="360" value="180" step="10" oninput="drawAll()">
+                </div>
+                <span id="val-p2" class="slider-value"></span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Pannelli di Visualizzazione Canvas -->
+
+    <!-- Onda 1 -->
+    <div class="wave-panel">
+        <h2 style="color: #3182ce;">Onda 1 (Input)</h2>
+        <canvas id="canvas-1" width="900" height="200"></canvas>
+    </div>
+
+    <!-- Onda 2 -->
+    <div class="wave-panel">
+        <h2 style="color: #dd6b20;">Onda 2 (Input)</h2>
+        <canvas id="canvas-2" width="900" height="100"></canvas>
+    </div>
+
+    <!-- Onda Risultante (Interferenza) -->
+    <div class="wave-panel">
+        <h2 style="color: #2c5282;">Onda Risultante (Somma e Interferenza)</h2>
+        <canvas id="canvas-sum" width="900" height="100"></canvas>
+    </div>
+
+</div>
+
+<script>
+    // Inizializzazione delle costanti e dei contesti
+    const CANVAS_WIDTH = 900;
+    const CANVAS_HEIGHT = 200;
+    const CENTER_Y = CANVAS_HEIGHT / 2;
+    const STEP_X = 1;
+    const PI = Math.PI;
+
+    // Ottiene i context dei tre canvas
+    const ctx1 = document.getElementById('canvas-1').getContext('2d');
+    const ctx2 = document.getElementById('canvas-2').getContext('2d');
+    const ctxSum = document.getElementById('canvas-sum').getContext('2d');
+
+    // Funzione per disegnare la linea di base (asse X)
+    function drawAxis(ctx) {
+        ctx.strokeStyle = '#a0aec0'; // Colore grigio
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, CENTER_Y);
+        ctx.lineTo(CANVAS_WIDTH, CENTER_Y);
+        ctx.stroke();
+    }
+
+    /**
+     * Disegna un'onda sinusoidale su un canvas.
+     * @param {CanvasRenderingContext2D} ctx - Contesto del canvas.
+     * @param {number} amplitude - Ampiezza dell'onda.
+     * @param {number} frequency - Frequenza (numero di cicli sull'asse X).
+     * @param {number} phase - Fase in radianti.
+     * @param {string} color - Colore della linea.
+     */
+    function drawWave(ctx, amplitude, frequency, phase, color) {
+        drawAxis(ctx); // Disegna l'asse prima dell'onda
+
+        f = function(x) {
+            return amplitude * Math.sin(2 * PI * frequency * x * 4 + phase);
+        }
+
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(0, CENTER_Y - f(0));
+
+        // La formula base dell'onda è: A * sin(2 * PI * F * x_normalizzato + Φ)
+        for (let x = STEP_X; x <= CANVAS_WIDTH; x += STEP_X) {
+            // Normalizza x tra 0 e 1.0
+            const xNormalized = x / CANVAS_WIDTH;
+
+            // Calcolo del valore Y dell'onda
+            const y = f(xNormalized);
+
+            // Disegna il punto traslato sul canvas
+            ctx.lineTo(x, CENTER_Y - y);
+        }
+        ctx.stroke();
+    }
+
+    /**
+     * Funzione principale per leggere i valori e ridisegnare tutto.
+     */
+    function drawAll() {
+        // 1. Legge i valori degli slider
+        const A1 = parseFloat(document.getElementById('amplitude1').value);
+        const F1 = parseFloat(document.getElementById('frequency1').value);
+        const P1_deg = parseFloat(document.getElementById('phase1').value);
+        const P1_rad = P1_deg * PI / 180; // Conversione da gradi a radianti
+
+        const A2 = parseFloat(document.getElementById('amplitude2').value);
+        const F2 = parseFloat(document.getElementById('frequency2').value);
+        const P2_deg = parseFloat(document.getElementById('phase2').value);
+        const P2_rad = P2_deg * PI / 180; // Conversione da gradi a radianti
+
+        // 2. Aggiorna i display dei valori
+        document.getElementById('val-a1').textContent = A1.toFixed(0);
+        document.getElementById('val-f1').textContent = F1.toFixed(1);
+        document.getElementById('val-p1').textContent = P1_deg.toFixed(0) + '°';
+
+        document.getElementById('val-a2').textContent = A2.toFixed(0);
+        document.getElementById('val-f2').textContent = F2.toFixed(1);
+        document.getElementById('val-p2').textContent = P2_deg.toFixed(0) + '°';
+
+        // 3. Cancella i canvas
+        ctx1.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        ctx2.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        ctxSum.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+        // 4. Disegna Onda 1
+        drawWave(ctx1, A1, F1, P1_rad, '#3182ce'); // Blu
+
+        // 5. Disegna Onda 2
+        drawWave(ctx2, A2, F2, P2_rad, '#dd6b20'); // Arancione
+
+        // 6. Disegna Onda Risultante (Somma/Interferenza)
+        drawAxis(ctxSum); // Asse per il canvas somma
+
+        let f = function(x) {
+            // Calcolo dell'onda 1 in questo punto x
+            const y1 = A1 * Math.sin(2 * PI * F1 * x * 4 + P1_rad);
+
+            // Calcolo dell'onda 2 in questo punto x
+            const y2 = A2 * Math.sin(2 * PI * F2 * x * 4 + P2_rad);
+
+            // SOMMA DEI VALORI Y (Principio di Sovrapposizione)
+            return y1 + y2;
+        };
+
+        ctxSum.strokeStyle = '#2c5282'; // Blu scuro
+        ctxSum.lineWidth = 4;
+        ctxSum.beginPath();
+        ctxSum.moveTo(0, CENTER_Y - f(0));
+
+        // Calcola e disegna la somma
+        for (let x = STEP_X; x <= CANVAS_WIDTH; x += STEP_X) {
+            const xNormalized = x / CANVAS_WIDTH;
+
+            const y = f(xNormalized);
+
+            ctxSum.lineTo(x, CENTER_Y - y);
+        }
+        ctxSum.stroke();
+    }
+
+    // Esegui la funzione al caricamento della pagina per disegnare le onde iniziali
+    window.onload = function() {
+        // Assegna la dimensione corretta ai canvas per la coerenza
+        const canvases = document.querySelectorAll('canvas');
+        canvases.forEach(c => {
+            c.width = CANVAS_WIDTH;
+            c.height = CANVAS_HEIGHT;
+        });
+
+        drawAll();
+    };
+
+</script>
+</body>
+</html>

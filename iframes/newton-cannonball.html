@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulazione Cannone di Newton</title>
+
+  <style>
+    /* CSS Vanilla per lo stile */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff; /* gray-800 */
+            color: #000000;
+            min-height: 60vh;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+            }
+        }
+
+        .controls-panel {
+            background-color: #ccc; /* gray-700 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        @media (min-width: 768px) {
+            .controls-panel {
+                width: 33.333333%; /* 1/3 */
+            }
+        }
+
+        .visualization-area {
+            background-color: #ccc; /* gray-700 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            flex-grow: 1; /* Occupa lo spazio rimanente */
+        }
+
+        h1 {
+            font-size: 1.875rem; /* 3xl */
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #34a; /* blue-400 */
+        }
+
+        h2 {
+            font-size: 1.25rem; /* xl */
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #34a; /* blue-300 */
+        }
+
+        p {
+            margin-bottom: 0.5rem;
+            text-align: center;
+            color: #000;
+        }
+
+        .velocity-info {
+            font-size: 0.875rem; /* sm */
+            margin-top: 0.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .velocity-value {
+            font-weight: bold;
+            color: rgb(139, 47, 11); /* yellow-300 */
+        }
+
+        #initialVelocity {
+            width: 100%;
+            height: 8px;
+            background: #4b5563; /* gray-600 */
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+        }
+
+        #startButton {
+            width: 100%;
+            background-color: #34a;
+            color: white;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        #startButton:hover {
+            background-color: #1d4ed8; /* blue-700 */
+        }
+
+        #simCanvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #4b5563; /* gray-600 */
+            background-color: #111827; /* gray-900 */
+            /* Assicurati che l'aspect ratio sia corretto se si usa la percentuale */
+        }
+  </style>
+
+</head>
+<body>
+    <div class="container">
+
+        <div class="controls-panel">
+            <h2>Controlli Simulazione</h2>
+
+            <label for="initialVelocity" class="block mb-2 text-sm font-medium">Velocità Iniziale (m/s):</label>
+            <input type="range" id="initialVelocity" name="initialVelocity" min="0" max="8000" value="0" step="25">
+            <p class="velocity-info">Valore: <span id="velocityValue" class="velocity-value">0</span> m/s</p>
+
+            <button id="startButton">
+                Lancia Palla
+            </button>
+        </div>
+
+        <div class="visualization-area">
+            <canvas id="simCanvas" width="600" height="600"></canvas>
+        </div>
+
+    </div>
+
+  <script>
+    // === Parametri Fisici Reali ===
+    const G = 6.67430e-11; // Costante gravitazionale (Nm²/kg²)
+    const M_EARTH = 5.972e24; // Massa della Terra (kg)
+    const R_EARTH = 6.371e6; // Raggio medio della Terra (m)
+    const LAUNCH_ALTITUDE = 1200e3; // Nuova Altitudine di lancio (400 km)
+    const R_INITIAL = R_EARTH + LAUNCH_ALTITUDE; // Distanza iniziale dal centro Terra
+
+    // === Configurazione della Simulazione e Visualizzazione ===
+    const CANVAS = document.getElementById('simCanvas');
+    const CTX = CANVAS.getContext('2d');
+    const VELOCITY_SLIDER = document.getElementById('initialVelocity');
+    const VELOCITY_VALUE_DISPLAY = document.getElementById('velocityValue');
+    const START_BUTTON = document.getElementById('startButton');
+
+    const CANVAS_CENTER_X = CANVAS.width / 2;
+    const CANVAS_CENTER_Y = CANVAS.height / 2;
+
+    // Scala di conversione: metri a pixel.
+    const METERS_PER_PIXEL = R_INITIAL * 1.5 / (CANVAS.width / 2); // Raggio Iniziale ~ 1/1.5 del raggio del canvas
+    const PIXELS_PER_METER = 1 / METERS_PER_PIXEL;
+
+    // Parametri temporali per l'integrazione (tempo simulato per frame)
+    const TIME_STEP = 40; // Secondi simulati per passo di calcolo (Δt)
+
+    let cannonBall = null;
+    let animationFrameId = null;
+
+    // === Oggetto Palla di Cannone ===
+    function CannonBall(initialVelocity_m_s) {
+        // Posizione iniziale: Distanza iniziale dal centro, lanciata tangenzialmente
+        // Lanciamo lungo l'asse Y (tangenziale), partendo da r_x = R_INITIAL
+        this.r_x = R_INITIAL;
+        this.r_y = 0;
+
+        // Velocità iniziale (tangenziale all'asse Y)
+        this.v_x = 0;
+        this.v_y = initialVelocity_m_s;
+
+        this.radius = 2e5; // Raggio palla (arbitrario per visualizzazione, in metri)
+        this.mass = 1000; // Massa palla (arbitraria, kg)
+        this.isCrashed = false;
+        this.trajectory = []; // Memorizza punti per disegnare la scia
+    }
+
+    // === Funzioni di Supporto per il Canvas ===
+
+    /** Converte coordinate reali (metri, centro Terra) in coordinate canvas (pixel) */
+    function toCanvasCoords(r_x, r_y) {
+        // Eseguiamo una rotazione di 90 gradi per posizionare il punto di lancio a "sinistra"
+        // sull'asse orizzontale del canvas, come una montagna in 2D.
+        const x_canvas = CANVAS_CENTER_X + r_y * PIXELS_PER_METER;
+        const y_canvas = CANVAS_CENTER_Y - r_x * PIXELS_PER_METER;
+        return {
+            x: x_canvas,
+            y: y_canvas
+        };
+    }
+
+    /** Disegna la Terra */
+    function drawEarth() {
+        CTX.beginPath();
+        const earthRadius_px = R_EARTH * PIXELS_PER_METER;
+        CTX.arc(CANVAS_CENTER_X, CANVAS_CENTER_Y, earthRadius_px, 0, Math.PI * 2);
+        CTX.fillStyle = '#10B981'; // Smeraldo (verde)
+        CTX.fill();
+        CTX.closePath();
+
+        // Disegna il cannone (punto di partenza)
+        const {
+            x,
+            y
+        } = toCanvasCoords(R_INITIAL, 0);
+        CTX.beginPath();
+        CTX.arc(x, y, 5, 0, Math.PI * 2);
+        CTX.fillStyle = '#F59E0B'; // Ambra
+        CTX.fill();
+        CTX.closePath();
+    }
+
+    /** Disegna la palla di cannone e la sua traiettoria (scia) */
+    function drawCannonBall(ball) {
+        // 1. Disegna la traiettoria (scia)
+        CTX.beginPath();
+        CTX.strokeStyle = ball.isCrashed ? '#EF4444' : '#60A5FA'; // Imposta il colore della linea (rosso se schiantato, blu altrimenti)
+        CTX.lineWidth = 2;
+
+        // Verifica che ci siano punti da disegnare
+        if (ball.trajectory.length > 0) {
+
+            // Sposta il punto di partenza della linea al primo punto della traiettoria (punto di lancio)
+            const {
+                x: startX,
+                y: startY
+            } = toCanvasCoords(ball.trajectory[0].r_x, ball.trajectory[0].r_y);
+            CTX.moveTo(startX, startY); // Inizia un nuovo percorso al punto di lancio
+
+            // Collega tutti i punti successivi con delle linee
+            ball.trajectory.forEach(pos => {
+                const {
+                    x,
+                    y
+                } = toCanvasCoords(pos.r_x, pos.r_y);
+                CTX.lineTo(x, y); // Aggiunge un segmento di linea dal punto precedente a questo
+            });
+
+            // Disegna effettivamente il percorso creato sul canvas
+            CTX.stroke();
+        }
+
+        // La posizione è l'ultima posizione calcolata (il punto di impatto se è schiantata)
+        const {
+            x,
+            y
+        } = toCanvasCoords(ball.r_x, ball.r_y);
+        const radius_px = ball.radius * PIXELS_PER_METER;
+
+        CTX.beginPath();
+        CTX.arc(x, y, radius_px < 5 ? 5 : radius_px, 0, Math.PI * 2); // Minimo 5 pixel
+
+        // Usa un colore diverso se la palla è schiantata, ma disegnala comunque
+        CTX.fillStyle = ball.isCrashed ? '#EF4444' : '#FCD34D'; // Rosso se schiantata, Giallo altrimenti
+        CTX.fill();
+        CTX.closePath();
+    }
+
+    // === Funzioni di Fisica e Simulazione ===
+
+    /** Calcola la forza gravitazionale (vettore) */
+    function calculateGravityForce(r_x, r_y) {
+        const r_mag_sq = r_x * r_x + r_y * r_y; // Distanza dal centro al quadrato
+        const r_mag = Math.sqrt(r_mag_sq);
+
+        // Forza scalare (F = G * M_terra * m_palla / r²)
+        const F_mag = G * M_EARTH * cannonBall.mass / r_mag_sq;
+
+        // Componenti della forza (dirette verso il centro)
+        const F_x = -F_mag * (r_x / r_mag);
+        const F_y = -F_mag * (r_y / r_mag);
+
+        return {
+            F_x,
+            F_y,
+            r_mag
+        };
+    }
+
+    // Funzione che calcola le derivate dello stato (velocità e accelerazione)
+    function dState(r_x, r_y, v_x, v_y, mass) {
+        const r_mag_sq = r_x * r_x + r_y * r_y;
+        const r_mag = Math.sqrt(r_mag_sq);
+
+        // Forza gravitazionale scalare: F = G * M_terra * mass / r^2
+        const F_mag = G * M_EARTH * mass / r_mag_sq;
+
+        // Componenti della Forza
+        const F_x = -F_mag * (r_x / r_mag);
+        const F_y = -F_mag * (r_y / r_mag);
+
+        // Componenti dell'Accelerazione: a = F / m
+        const a_x = F_x / mass;
+        const a_y = F_y / mass;
+
+        return {
+            dr_x: v_x, // dr/dt = v
+            dr_y: v_y,
+            dv_x: a_x, // dv/dt = a (accelerazione)
+            dv_y: a_y
+        };
+    }
+
+    /** Aggiorna lo stato della palla con il metodo Runge-Kutta di Ordine 4 (RK4) */
+    function updateSimulation() {
+        if (!cannonBall || cannonBall.isCrashed) {
+            return;
+        }
+
+        // Controlli di collisione e fuga
+        const r_mag = Math.sqrt(cannonBall.r_x * cannonBall.r_x + cannonBall.r_y * cannonBall.r_y);
+
+        // === Criterio di Collisione (Ritorno a Terra) ===
+        if (r_mag <= R_EARTH) {
+            cannonBall.isCrashed = true;
+            cannonBall.trajectory.push({
+                r_x: cannonBall.r_x,
+                r_y: cannonBall.r_y
+            });
+            cancelAnimationFrame(animationFrameId);
+            START_BUTTON.textContent = "Riprova Lancio";
+            console.log("Collisione con la Terra! Traiettoria finita.");
+            return;
+        }
+
+        // === Integrazione RK4 ===
+        const dt = TIME_STEP;
+        const m = cannonBall.mass;
+        const {
+            r_x,
+            r_y,
+            v_x,
+            v_y
+        } = cannonBall;
+
+        // 1. Calcola k1 (derivata all'inizio del passo)
+        const k1 = dState(r_x, r_y, v_x, v_y, m);
+
+        // 2. Calcola k2 (derivata al punto medio, usando k1)
+        const k2 = dState(
+            r_x + k1.dr_x * dt / 2,
+            r_y + k1.dr_y * dt / 2,
+            v_x + k1.dv_x * dt / 2,
+            v_y + k1.dv_y * dt / 2,
+            m
+        );
+
+        // 3. Calcola k3 (derivata al punto medio, usando k2)
+        const k3 = dState(
+            r_x + k2.dr_x * dt / 2,
+            r_y + k2.dr_y * dt / 2,
+            v_x + k2.dv_x * dt / 2,
+            v_y + k2.dv_y * dt / 2,
+            m
+        );
+
+        // 4. Calcola k4 (derivata alla fine del passo, usando k3)
+        const k4 = dState(
+            r_x + k3.dr_x * dt,
+            r_y + k3.dr_y * dt,
+            v_x + k3.dv_x * dt,
+            v_y + k3.dv_y * dt,
+            m
+        );
+
+        // Aggiorna lo stato (Posizione e Velocità) con la media pesata dei k's
+        // r_new = r_old + (dt/6) * (k1 + 2*k2 + 2*k3 + k4)
+
+        // Aggiorna Posizione
+        cannonBall.r_x += (dt / 6) * (k1.dr_x + 2 * k2.dr_x + 2 * k3.dr_x + k4.dr_x);
+        cannonBall.r_y += (dt / 6) * (k1.dr_y + 2 * k2.dr_y + 2 * k3.dr_y + k4.dr_y);
+
+        // Aggiorna Velocità
+        cannonBall.v_x += (dt / 6) * (k1.dv_x + 2 * k2.dv_x + 2 * k3.dv_x + k4.dv_x);
+        cannonBall.v_y += (dt / 6) * (k1.dv_y + 2 * k2.dv_y + 2 * k3.dv_y + k4.dv_y);
+
+        // === Memorizza la traiettoria e Controlli di Fuga (Mantieni come prima) ===
+        const r_mag_new = Math.sqrt(cannonBall.r_x * cannonBall.r_x + cannonBall.r_y * cannonBall.r_y);
+        if (r_mag_new > R_EARTH * 3) {
+            // ... (Logica di fuga) ...
+        }
+
+        cannonBall.trajectory.push({
+            r_x: cannonBall.r_x,
+            r_y: cannonBall.r_y
+        });
+    }
+
+    /** Loop principale di Animazione e Rendering */
+    function gameLoop() {
+        // 1. Pulisci il canvas
+        CTX.clearRect(0, 0, CANVAS.width, CANVAS.height);
+
+        // 2. Aggiorna la fisica (se la palla esiste e non è caduta)
+        if (cannonBall && !cannonBall.isCrashed) {
+            updateSimulation();
+        }
+
+        // 3. Disegna gli elementi
+        drawEarth();
+        if (cannonBall) {
+            drawCannonBall(cannonBall);
+        }
+
+        // 4. Richiedi il frame successivo
+        animationFrameId = requestAnimationFrame(gameLoop);
+    }
+
+    // === Gestione Eventi e Inizializzazione ===
+
+    /** Avvia la simulazione */
+    function startSimulation() {
+        // 1. Cancella il frame precedente (se in esecuzione)
+        if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+        }
+
+        // 2. Crea un nuovo oggetto palla con la velocità dello slider
+        const initialSpeed = parseFloat(VELOCITY_SLIDER.value);
+        cannonBall = new CannonBall(initialSpeed);
+
+        // 3. Avvia il loop di animazione
+        gameLoop();
+
+        START_BUTTON.textContent = "Rilancia";
+    }
+
+    // Listener per lo slider (aggiorna il valore visualizzato)
+    VELOCITY_SLIDER.addEventListener('input', () => {
+        VELOCITY_VALUE_DISPLAY.textContent = VELOCITY_SLIDER.value;
+    });
+
+    // Listener per il pulsante di lancio
+    START_BUTTON.addEventListener('click', startSimulation);
+
+    // Inizializzazione: disegna la Terra all'avvio
+    window.onload = () => {
+        drawEarth();
+        // Imposta il valore iniziale dello slider
+        VELOCITY_VALUE_DISPLAY.textContent = VELOCITY_SLIDER.value;
+
+        // Crea una palla di cannone iniziale a riposo per visualizzare il punto di lancio
+        cannonBall = new CannonBall(0);
+        cannonBall.isCrashed = false; // Non è caduta finché non viene lanciata
+        drawCannonBall(cannonBall);
+    };
+
+    // Avvia il loop di animazione in modo continuo (solo per il rendering della traiettoria)
+    gameLoop();
+  </script>
+</body>
+</html>

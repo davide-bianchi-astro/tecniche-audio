@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Linear Trajectory Plotter</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: sans-serif; margin: 2em; }
+    .controls { margin-top: 1em; }
+    .control-group { margin-bottom: 1em; }
+    table { margin-top: 2em; border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 0.5em; text-align: center; }
+    th { background-color: #f2f2f2; }
+    .controls {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1em;
+        flex-wrap: wrap; /* permette adattamento su schermi piccoli */
+        margin-top: 1em;
+    }
+
+    .control-group {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.9em;
+    }
+
+    .buttons button {
+        margin-right: 0.5em;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Legge oraria di uno spostamento</h2>
+<canvas id="trajectoryChart" width="800" height="200"></canvas>
+
+<div class="controls">
+  <div class="control-group">
+    <label>Durata (s): <span id="durationLabel">1</span></label>
+    <input type="range" id="durationSlider" min="1" max="20" value="1">
+  </div>
+
+  <div class="control-group">
+    <label>Velocità (m/s): <span id="velocityLabel">1</span></label>
+    <input type="range" id="velocitySlider" min="-10" max="10" value="1">
+  </div>
+
+  <div class="buttons">
+    <button onclick="addMotion()">Aggiungi spostamento</button>
+    <button onclick="addPause()">Aggiungi pausa</button>
+    <button onclick="resetAll()">Cancella tutto</button>
+  </div>
+</div>
+
+<h3>Motion Steps</h3>
+<table id="stepsTable">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Tipo</th>
+      <th>Durata (s)</th>
+      <th>Velocità (m/s)</th>
+      <th>Tempo finale (s)</th>
+      <th>Posizione finale (m)</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+  const ctx = document.getElementById('trajectoryChart').getContext('2d');
+
+  let time = 0;
+  let position = 0;
+  let data = [{ x: time, y: position }];
+  let stepCount = 0;
+
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: 'Spostamento in funzione del tempo',
+        data: data,
+        borderWidth: 2,
+        fill: false,
+        borderColor: 'blue',
+        pointRadius: 3,
+        tension: 0
+      }]
+    },
+    options: {
+      scales: {
+        x: {
+          type: 'linear',
+          title: { display: true, text: 'Tempo (s)' },
+          beginAtZero: true
+        },
+        y: {
+          title: { display: true, text: 'Spostamento (m)' }
+        }
+      }
+    }
+  });
+
+  function addMotion() {
+    const duration = parseInt(document.getElementById('durationSlider').value);
+    const velocity = parseInt(document.getElementById('velocitySlider').value);
+
+    for (let i = 1; i <= duration; i++) {
+      time += 1;
+      position += velocity;
+      data.push({ x: time, y: position });
+    }
+
+    stepCount++;
+    addStepRow(stepCount, "Motion", duration, velocity, time, position);
+    chart.update();
+  }
+
+  function addPause() {
+    const duration = parseInt(document.getElementById('durationSlider').value);
+
+    for (let i = 1; i <= duration; i++) {
+      time += 1;
+      // position stays the same
+      data.push({ x: time, y: position });
+    }
+
+    stepCount++;
+    addStepRow(stepCount, "Pause", duration, "", time, position);
+    chart.update();
+  }
+
+  function resetAll() {
+    time = 0;
+    position = 0;
+    data.length = 0;
+    data.push({ x: 0, y: 0 });
+    stepCount = 0;
+    chart.update();
+    clearTable();
+  }
+
+  function addStepRow(step, type, duration, velocity, finalTime, finalPosition) {
+    const table = document.getElementById('stepsTable').getElementsByTagName('tbody')[0];
+    const row = table.insertRow();
+    row.insertCell(0).innerText = step;
+    row.insertCell(1).innerText = type;
+    row.insertCell(2).innerText = duration;
+    row.insertCell(3).innerText = velocity;
+    row.insertCell(4).innerText = finalTime;
+    row.insertCell(5).innerText = finalPosition;
+  }
+
+  function clearTable() {
+    const tbody = document.getElementById('stepsTable').getElementsByTagName('tbody')[0];
+    tbody.innerHTML = '';
+  }
+
+  // Update labels on slider change
+  document.getElementById('durationSlider').addEventListener('input', function () {
+    document.getElementById('durationLabel').textContent = this.value;
+  });
+
+  document.getElementById('velocitySlider').addEventListener('input', function () {
+    document.getElementById('velocityLabel').textContent = this.value;
+  });
+</script>
+
+</body>
+</html>

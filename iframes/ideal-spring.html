@@ -1,0 +1,42 @@
+
+  <div class="container">
+    <div class="card">
+      <h1>Oscillatore armonico ideale (massa–molla)</h1>
+      <p class="small">Imposta l'allungamento iniziale, poi premi <em>Start</em>. L'energia totale rimane costante e la barra mostra la partizione tra energia elastica <span style="color:var(--potential)">(E<sub>e</sub>)</span> e cinetica <span style="color:var(--kinetic)">(E<sub>c</sub>)</span>.</p>
+      <div class="row controls">
+        <label>Allungamento iniziale A (m): <span id="AVal">0.20</span></label>
+        <input id="A" type="range" min="-0.30" max="0.30" step="0.01" value="0.20" />
+        <label>m (kg): <span id="mVal">1.0</span></label>
+        <input id="m" type="range" min="0.2" max="3" step="0.1" value="1.0" />
+        <label>k (N/m): <span id="kVal">1</span></label>
+        <input id="k" type="range" min="0.1" max="3" step="0.1" value="1" />
+        <button id="start">Start</button>
+        <button id="reset" class="secondary">Reset</button>
+      </div>
+    </div>
+
+    <div class="card stage" id="stage">
+      <div class="guide"></div>
+      <div class="spring" id="spring"></div>
+      <div class="mass" id="mass"></div>
+    </div>
+
+    <div class="card energy-card">
+      <div class="legend">
+        <span class="chip" style="background:var(--potential)"></span> E<sub>e</sub>
+        <span class="chip" style="background:var(--kinetic)"></span> E<sub>c</sub>
+      </div>
+      <div class="bar" id="energyBar" aria-label="Barra energia">
+        <div class="pot" id="potPart" style="width: 50%"></div>
+        <div class="kin" id="kinPart" style="width: 50%"></div>
+      </div>
+      <div class="readouts">
+        <div class="kv">t = <b><span id="tVal">0.00</span></b> s</div>
+        <div class="kv">x = <b><span id="xVal">0.20</span></b> m</div>
+        <div class="kv">v = <b><span id="vVal">0.00</span></b> m/s</div>
+        <div class="kv">U = <b><span id="UVal">0.00</span></b> J</div>
+        <div class="kv">K = <b><span id="KVal">0.00</span></b> J</div>
+        <div class="kv">E = <b><span id="EVal">0.00</span></b> J (costante)</div>
+      </div>
+    </div>
+  </div>

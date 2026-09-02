@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Intensità Solare e Inclinazione</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #f0f0f0; font-family: sans-serif; }
+        #canvas-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+        label, input { vertical-align: middle; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <div id="controls">
+        <label for="sun-elevation">Inclinazione Solare (Zenith 90° - Orizzonte 0°):</label>
+        <input type="range" id="sun-elevation" min="5" max="90" value="45" step="1">
+        <span id="elevation-value">45°</span>
+    </div>
+
+    <script>
+      // === VARIABILI GLOBALI DI SCENA ===
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+
+      let controls;
+
+      // Elementi della simulazione
+      let sunSphere;
+      let earthPlane;
+      let rayMeshes = []; // CAMBIATO: Sarà un array di mesh per i raggi
+      let hitArea; // Manteniamo la reference per l'area rossa
+
+      // === CONFIGURAZIONE INIZIALE ===
+      function init() {
+          // Configurazione del Renderer
+          renderer.setSize(window.innerWidth, window.innerHeight);
+          renderer.setClearColor(0x90a8ff); // Cielo azzurro chiaro
+          document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+          // Posizionamento della Telecamera
+          camera.position.set(0, 10, 15);
+          camera.lookAt(0, 0, 0);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+          // Imposta il punto centrale di rotazione (la scena)
+          controls.target.set(0, 0, 0);
+          // Opzioni utili per la demo:
+          controls.enableDamping = true; // Rende la rotazione più fluida
+          controls.dampingFactor = 0.1;
+          controls.minDistance = 5; // Distanza minima di zoom
+          controls.maxDistance = 50; // Distanza massima di zoom
+          controls.update(); // Aggiorna i controlli una volta
+
+          // Aggiungi la Luce Ambientale per vedere gli oggetti
+          const ambientLight = new THREE.AmbientLight(0x404040, 2); // Luce soffusa
+
+          // La Luce del Sole (direzionale)
+          const sunLight = new THREE.DirectionalLight(0xffffff, 3);
+          sunLight.position.set(0, 0, 0); // La posizione verrà aggiornata in updateScene
+          scene.add(ambientLight, sunLight);
+
+          // === CREAZIONE DEGLI OGGETTI 3D ===
+
+          // 1. Il Sole (Sfera)
+          const sunGeometry = new THREE.SphereGeometry(1, 32, 32);
+          const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffe050 });
+          sunSphere = new THREE.Mesh(sunGeometry, sunMaterial);
+          scene.add(sunSphere);
+
+          // 2. La Terra (Piano)
+          const earthGeometry = new THREE.PlaneGeometry(40, 40);
+          const earthMaterial = new THREE.MeshPhongMaterial({ color: 0x40a040, side: THREE.DoubleSide });
+          earthPlane = new THREE.Mesh(earthGeometry, earthMaterial);
+          earthPlane.rotation.x = -Math.PI / 2; // Ruota per farlo giacere sul piano XZ
+          earthPlane.position.y = -5; // Posizionalo sotto il centro
+          scene.add(earthPlane);
+
+          // 3. Il Fascio di Raggi (Inizialmente vuoto)
+          // Useremo un parallelepipedo (Box) per simularlo.
+          const rayMaterial = new THREE.MeshBasicMaterial({
+              color: 0xffffff,
+              transparent: true,
+              opacity: 0.2,
+              side: THREE.DoubleSide
+          });
+
+          // === GESTIONE DELLO SLIDER ===
+          const slider = document.getElementById('sun-elevation');
+          const valueDisplay = document.getElementById('elevation-value');
+
+          slider.addEventListener('input', () => {
+              const elevation = parseFloat(slider.value);
+              valueDisplay.textContent = `${elevation}°`;
+              updateScene(elevation);
+          });
+
+          // Avvia la scena con il valore iniziale
+          updateScene(parseFloat(slider.value));
+
+          // Gestione del ridimensionamento della finestra
+          window.addEventListener('resize', onWindowResize, false);
+      }
+
+      function onWindowResize() {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+
+      // === FUNZIONE CHIAVE: AGGIORNAMENTO SIMULAZIONE ===
+      function updateScene(elevationDeg) {
+          // Conversione dell'angolo di elevazione da gradi a radianti
+          // 90 gradi è lo Zenith (Sole alto), 0 gradi è l'orizzonte (Sole basso).
+          const elevationRad = THREE.MathUtils.degToRad(elevationDeg);
+
+          // Distanza fissa del Sole dal punto centrale
+          const radius = 500;
+
+          // Calcolo delle coordinate del Sole (semplificato 2D, nel piano YZ)
+          // y = altezza (seno)
+          // z = profondità (coseno)
+          const sunX = 0;
+          const sunY = radius * Math.sin(elevationRad);
+          const sunZ = -radius * Math.cos(elevationRad); // Usiamo -Z per posizionarlo davanti
+
+          // Posiziona il Sole
+          sunSphere.position.set(sunX, sunY, sunZ);
+
+          // --- Aggiornamento del Fascio di Raggi ---
+
+      // --- Pulizia ---
+          rayMeshes.forEach(mesh => scene.remove(mesh));
+          rayMeshes = [];
+          let oldHitArea = scene.getObjectByName('hitArea');
+          if (oldHitArea) scene.remove(oldHitArea);
+
+          // --- Definizione della Geometria e dei Punti di Incidenza ---
+          const earthY = earthPlane.position.y;
+          const beamBaseWidth = 2;
+          const beamHalfWidth = beamBaseWidth / 2;
+
+          // Calcola l'allungamento dovuto all'angolo
+          const sunElevationSin = Math.sin(elevationRad);
+          const interceptionLength = beamBaseWidth / sunElevationSin;
+
+          // Punti dove i raggi partono dalla Terra (origine del fascio).
+          // (x, y_earth, z)
+          const targetPoints = [
+              new THREE.Vector3(0, earthY, 0), // Centro
+              new THREE.Vector3(-beamHalfWidth, earthY, -interceptionLength / 2), // Basso-sinistra
+              new THREE.Vector3( beamHalfWidth, earthY, -interceptionLength / 2), // Basso-destra
+              new THREE.Vector3(-beamHalfWidth, earthY, interceptionLength / 2),  // Alto-sinistra
+              new THREE.Vector3( beamHalfWidth, earthY, interceptionLength / 2)   // Alto-destra
+          ];
+
+          // --- VETTORE DI DIREZIONE COMUNE ---
+          // Definiamo il vettore direzione per tutti i raggi (paralleli)
+          // Se l'elevazione è 90 (Zenith), il vettore è (0, 1, 0)
+          // Se l'elevazione è 0 (Orizzonte), il vettore è (0, 0, 1) (Assumendo che il Sole arrivi da Z positivo)
+
+          // Per avere una rotazione più intuitiva, useremo la posizione del Sole lontana
+          // come riferimento per il vettore direzione.
+          const targetDirection = new THREE.Vector3().subVectors(sunSphere.position, new THREE.Vector3(0, earthY, 0)).normalize();
+
+          // --- Creazione e Posizionamento dei 5 Raggi ---
+          const rayMaterial = new THREE.MeshBasicMaterial({
+              color: 0xffffff,
+              transparent: true,
+              opacity: 0.25,
+              side: THREE.DoubleSide
+          });
+
+          // Vettore 'up' standard per la matrice di rotazione
+          const upVector = new THREE.Vector3(0, 1, 0);
+
+          targetPoints.forEach(startPointOnEarth => {
+
+              // 1. Definisci il punto finale
+              // Se il raggio è lungo 'radius', il punto finale sarà:
+              const endPoint = startPointOnEarth.clone().add(targetDirection.clone().multiplyScalar(radius));
+
+              // 2. Creazione della Geometria
+              const beamGeometry = new THREE.CylinderGeometry(0.1, 0.1, radius, 8);
+              const ray = new THREE.Mesh(beamGeometry, rayMaterial);
+
+              // 3. Posizionamento al Punto Medio
+              // Il punto medio è l'origine + metà della lunghezza del raggio nella sua direzione.
+              ray.position.lerpVectors(startPointOnEarth, endPoint, 0.5);
+
+              // 4. Rotazione (lookAt)
+              // La rotazione è identica per tutti i raggi. Diciamo al cilindro di puntare.
+              const orientation = new THREE.Matrix4();
+              // Puntiamo dall'Origine (startPointOnEarth) verso la direzione finale (endPoint)
+              orientation.lookAt(startPointOnEarth, endPoint, upVector);
+              ray.rotation.setFromRotationMatrix(orientation);
+              ray.rotation.x += Math.PI / 2; // Correzione per l'orientamento del cilindro (asse Y -> Z)
+
+              scene.add(ray);
+              rayMeshes.push(ray);
+          });
+
+          // --- Visualizzazione dell'Area Intercettata (Rettangolo Rosso) ---
+          // La logica per il rettangolo rimane la stessa, basata sull'allungamento
+          const areaGeometry = new THREE.PlaneGeometry(beamBaseWidth, interceptionLength);
+          const areaMaterial = new THREE.MeshBasicMaterial({
+              color: 0xff0000,
+              transparent: true,
+              opacity: 0.5,
+              side: THREE.DoubleSide
+          });
+          hitArea = new THREE.Mesh(areaGeometry, areaMaterial);
+          hitArea.rotation.x = -Math.PI / 2;
+          hitArea.position.y = earthY + 0.01;
+          hitArea.name = 'hitArea';
+          scene.add(hitArea);
+      }
+
+      // === LOOP DI RENDERING ===
+      function animate() {
+          requestAnimationFrame(animate);
+          controls.update();
+          // Non c'è animazione continua, ma il rendering è sempre necessario
+          renderer.render(scene, camera);
+      }
+
+      // Avvio dell'applicazione
+      init();
+      animate();
+    </script>
+</body>
+</html>

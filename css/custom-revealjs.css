@@ -1,0 +1,47 @@
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  text-transform: none;
+}
+
+.subtitle {
+    font-style: italic;
+    font-size: 3.5rem;
+}
+
+.author {
+    font-size: 2.0rem;
+}
+
+.date {
+    font-size: 2.0rem;
+}
+
+.sourceCode {
+    overflow: scroll;
+}
+
+.warning-box {
+    padding: 25px; background-color: #ffd7d7;
+}
+
+.side-by-side {
+  display: flex;
+  align-items: center;     /* allinea verticalmente in centro */
+  gap: 2rem;               /* spazio fra le colonne */
+}
+
+.side-by-side .content {
+  flex: 1 1 auto;          /* la colonna di testo si espande */
+}
+
+.side-by-side .media {
+  flex: 0 0 40%;           /* colonna fissa al 40% */
+}
+
+.side-by-side .media img {
+  display: block;
+}

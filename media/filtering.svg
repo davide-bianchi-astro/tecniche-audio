@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="140.48074mm"
+   height="52.086037mm"
+   viewBox="0 0 140.48074 52.086037"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="filtering.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.6844239"
+     inkscape:cx="272.49673"
+     inkscape:cy="139.81041"
+     inkscape:window-width="1920"
+     inkscape:window-height="1135"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <marker
+       style="overflow:visible"
+       id="Triangle"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-16.527316,-115.24742)">
+    <path
+       style="opacity:0.94;fill:#eeffaa;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none;marker-end:url(#Triangle)"
+       d="M 69.781833,158.07359 H 56.800353"
+       id="path23"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="opacity:0.94;fill:#eeffaa;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none;marker-end:url(#Triangle)"
+       d="M 120.91619,158.07359 H 107.93471"
+       id="path22"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="opacity:0.94;fill:#eeffaa;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none;marker-end:url(#Triangle)"
+       d="m 138.80166,133.14061 v 12.98148"
+       id="path21"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="opacity:0.94;fill:#eeffaa;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none;marker-end:url(#Triangle)"
+       d="m 103.90366,124.86687 h 12.98148"
+       id="path20"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="opacity:0.94;fill:#eeffaa;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none;marker-end:url(#Triangle)"
+       d="M 52.583884,124.86687 H 65.56536"
+       id="path19"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;opacity:0.94;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:0.540999, 1.623"
+       x="42.886971"
+       y="132.72017"
+       id="text1"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.541"
+         x="42.886971"
+         y="132.72017" /></text>
+    <rect
+       style="opacity:0.94;fill:#eeffaa;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       id="rect11"
+       width="37.491833"
+       height="18.587053"
+       x="67.902908"
+       y="115.51796"
+       rx="9.2935266"
+       ry="9.2935266" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;opacity:0.94;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       x="86.689133"
+       y="123.6819"
+       id="text2-3"><tspan
+         sodipodi:role="line"
+         style="fill:#000000;stroke:none;stroke-width:0.541;stroke-dasharray:none"
+         x="86.689133"
+         y="123.6819"
+         id="tspan3-6">Trasformata</tspan><tspan
+         sodipodi:role="line"
+         style="fill:#000000;stroke:none;stroke-width:0.541;stroke-dasharray:none"
+         x="86.689133"
+         y="128.97356"
+         id="tspan8">di Fourier</tspan></text>
+    <rect
+       style="opacity:0.94;fill:#eeffaa;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       id="rect14"
+       width="37.491833"
+       height="18.587053"
+       x="68.021767"
+       y="148.47591"
+       rx="9.2935266"
+       ry="9.2935266" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;opacity:0.94;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       x="86.750114"
+       y="156.63979"
+       id="text2-3-20"><tspan
+         sodipodi:role="line"
+         style="fill:#000000;stroke:none;stroke-width:0.541;stroke-dasharray:none"
+         x="86.750114"
+         y="156.63979"
+         id="tspan5">Composizione</tspan><tspan
+         sodipodi:role="line"
+         style="fill:#000000;stroke:none;stroke-width:0.541;stroke-dasharray:none"
+         x="86.750114"
+         y="161.93144"
+         id="tspan6">delle sinusoidi</tspan></text>
+    <g
+       id="g14"
+       transform="translate(0,-10.583334)">
+      <rect
+         style="opacity:0.94;fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+         id="rect10"
+         width="37.491833"
+         height="18.587053"
+         x="16.797815"
+         y="126.10126" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;opacity:0.94;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+         x="35.465183"
+         y="133.81866"
+         id="text2"><tspan
+           sodipodi:role="line"
+           id="tspan2"
+           style="fill:#000000;stroke:none;stroke-width:0.541;stroke-dasharray:none"
+           x="35.465183"
+           y="133.81866">Registrazione</tspan><tspan
+           sodipodi:role="line"
+           style="fill:#000000;stroke:none;stroke-width:0.541;stroke-dasharray:none"
+           x="35.465183"
+           y="139.11032"
+           id="tspan3">originale</tspan></text>
+    </g>
+    <g
+       id="g15"
+       transform="translate(0,-4.2333335)">
+      <rect
+         style="opacity:0.94;fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+         id="rect10-1"
+         width="37.491833"
+         height="18.587053"
+         x="16.797815"
+         y="152.70917" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;opacity:0.94;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+         x="35.465183"
+         y="160.84721"
+         id="text2-3-20-2"><tspan
+           sodipodi:role="line"
+           style="fill:#000000;stroke:none;stroke-width:0.541;stroke-dasharray:none"
+           x="35.465183"
+           y="160.84721"
+           id="tspan6-8">Registrazione</tspan><tspan
+           sodipodi:role="line"
+           style="fill:#000000;stroke:none;stroke-width:0.541;stroke-dasharray:none"
+           x="35.465183"
+           y="166.13887"
+           id="tspan7">modificata</tspan></text>
+    </g>
+    <g
+       id="g18"
+       transform="translate(0,-10.583334)">
+      <rect
+         style="opacity:0.94;fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+         id="rect12"
+         width="37.491833"
+         height="18.587053"
+         x="119.24572"
+         y="126.10128" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;opacity:0.94;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+         x="138.00714"
+         y="133.84451"
+         id="text2-7"><tspan
+           sodipodi:role="line"
+           style="fill:#000000;stroke:none;stroke-width:0.541;stroke-dasharray:none"
+           x="138.00714"
+           y="133.84451"
+           id="tspan3-9">Sinusoidi</tspan><tspan
+           sodipodi:role="line"
+           style="fill:#000000;stroke:none;stroke-width:0.541;stroke-dasharray:none"
+           x="138.00714"
+           y="139.13617"
+           id="tspan4">della registrazione</tspan></text>
+    </g>
+    <rect
+       style="opacity:0.94;fill:#eeffaa;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       id="rect13"
+       width="37.491833"
+       height="18.587053"
+       x="119.24573"
+       y="148.47589"
+       rx="9.2935266"
+       ry="9.2935266" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;opacity:0.94;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       x="137.89656"
+       y="158.83913"
+       id="text2-3-2"><tspan
+         sodipodi:role="line"
+         style="fill:#000000;stroke:none;stroke-width:0.541;stroke-dasharray:none"
+         x="137.89656"
+         y="158.83913"
+         id="tspan3-6-6">Filtraggio</tspan></text>
+  </g>
+</svg>

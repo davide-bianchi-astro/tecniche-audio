@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Sintesi Additiva di Onde Sinusoidali</title>
+    <style>
+        /* Stili CSS di base integrati */
+        body { font-family: sans-serif; margin: 20px; background-color: #f4f4f4; }
+        .panel { 
+            border: 1px solid #ccc; 
+            margin-bottom: 10px; 
+            padding: 10px; 
+            background-color: #fff; 
+            display: flex; 
+            align-items: center;
+        }
+        .controls { 
+            display: flex; 
+            flex-direction: column; 
+            margin-left: 20px; 
+            width: 200px;
+        }
+        .control-group { 
+            margin-bottom: 5px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            font-size: small;
+        }
+        canvas { 
+            border: 1px solid #000; 
+            flex-shrink: 0; 
+            background-color: #eee;
+        }
+        .sum-panel canvas { border-color: #c00; }
+        .buttons { margin-top: 20px; }
+        button { 
+            padding: 10px 20px; 
+            font-size: 16px; 
+            margin-right: 10px; 
+            cursor: pointer;
+        }
+        #playButton { background-color: #4CAF50; color: white; }
+        #stopButton { background-color: #f44336; color: white; }
+    </style>
+</head>
+<body>
+
+    <div id="osc1Panel" class="panel">
+        <canvas id="canvas1" width="300" height="100"></canvas>
+        <div class="controls">
+            <h3 style="margin: 0 0 10px 0;">Onda 1</h3>
+            <div class="control-group">
+                <label for="freq1">Frequenza (Hz):</label>
+                <input type="range" id="freq1" min="20" max="1200" step="1" value="220" oninput="updateControls(1)">
+                <span id="freqVal1">440</span>
+            </div>
+            <div class="control-group">
+                <label for="amp1">Ampiezza:</label>
+                <input type="range" id="amp1" min="0" max="1" step="0.01" value="0.7" oninput="updateControls(1)">
+                <span id="ampVal1">0.70</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="osc2Panel" class="panel">
+        <canvas id="canvas2" width="300" height="100"></canvas>
+        <div class="controls">
+            <h3 style="margin: 0 0 10px 0;">Onda 2</h3>
+            <div class="control-group">
+                <label for="freq2">Frequenza (Hz):</label>
+                <input type="range" id="freq2" min="20" max="1200" step="1" value="440" oninput="updateControls(2)">
+                <span id="freqVal2">440</span>
+            </div>
+            <div class="control-group">
+                <label for="amp2">Ampiezza:</label>
+                <input type="range" id="amp2" min="0" max="1" step="0.01" value="0.3" oninput="updateControls(2)">
+                <span id="ampVal2">0.30</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="osc3Panel" class="panel">
+        <canvas id="canvas3" width="300" height="100"></canvas>
+        <div class="controls">
+            <h3 style="margin: 0 0 10px 0;">Onda 3</h3>
+            <div class="control-group">
+                <label for="freq3">Frequenza (Hz):</label>
+                <input type="range" id="freq3" min="20" max="1200" step="1" value="880" oninput="updateControls(3)">
+                <span id="freqVal3">880</span>
+            </div>
+            <div class="control-group">
+                <label for="amp3">Ampiezza:</label>
+                <input type="range" id="amp3" min="0" max="1" step="0.01" value="0.15" oninput="updateControls(3)">
+                <span id="ampVal3">0.15</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="sumPanel" class="panel sum-panel">
+        <canvas id="canvasSum" width="300" height="100"></canvas>
+        <div class="controls">
+            <h3 style="margin: 0 0 10px 0; color: #c00;">Somma delle Onde</h3>
+            </div>
+    </div>
+    
+
+    <div class="buttons">
+        <button id="playButton" onclick="startSound()">Suona nota</button>
+        <button id="stopButton" onclick="stopSound()" disabled>Ferma nota</button>
+    </div>
+
+    <script>
+        // Variabili globali per l'API Web Audio
+        let audioCtx;
+        let oscillators = [];
+        let gainNodes = [];
+        let isPlaying = false;
+        const NUM_OSCILLATORS = 3;
+
+        // --- Funzioni di gestione dell'audio ---
+
+        function initAudio() {
+            // Crea l'AudioContext solo dopo l'interazione dell'utente
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function startSound() {
+            initAudio();
+            if (isPlaying) return;
+
+            // 1. Creazione dei nodi
+            for (let i = 0; i < NUM_OSCILLATORS; i++) {
+                // OscillatorNode per generare l'onda sinusoidale
+                const oscillator = audioCtx.createOscillator();
+                oscillator.type = 'sine';
+
+                // GainNode per controllare l'ampiezza
+                const gainNode = audioCtx.createGain();
+
+                // 2. Connessione dei nodi (Oscillator -> Gain -> Destinazione Audio)
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                // 3. Salvataggio dei riferimenti e avvio
+                oscillators[i] = oscillator;
+                gainNodes[i] = gainNode;
+
+                // Imposta i valori iniziali dagli slider e avvia l'oscillatore
+                updateOscillatorParams(i + 1); 
+                oscillator.start();
+            }
+            
+            isPlaying = true;
+            document.getElementById('playButton').disabled = true;
+            document.getElementById('stopButton').disabled = false;
+        }
+
+        function stopSound() {
+            if (!isPlaying) return;
+
+            // Arresta tutti gli oscillatori e li de-referenzia
+            oscillators.forEach(osc => {
+                // Uso di .stop() schedulato per evitare click udibili
+                osc.stop(audioCtx.currentTime); 
+            });
+
+            oscillators = [];
+            gainNodes = []; // Non strettamente necessario ma buona pratica
+            isPlaying = false;
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('stopButton').disabled = true;
+        }
+
+        // --- Funzioni di controllo e aggiornamento in tempo reale ---
+
+        function updateOscillatorParams(index) {
+            const freq = parseFloat(document.getElementById(`freq${index}`).value);
+            const amp = parseFloat(document.getElementById(`amp${index}`).value);
+            
+            // Aggiorna i valori visualizzati a lato degli slider
+            document.getElementById(`freqVal${index}`).textContent = freq;
+            document.getElementById(`ampVal${index}`).textContent = amp.toFixed(2);
+            
+            // Aggiorna l'oscillatore in tempo reale se il suono è in esecuzione
+            if (isPlaying && oscillators[index - 1]) {
+                const now = audioCtx.currentTime;
+                // Imposta la frequenza e l'ampiezza con un piccolo ritardo per transizioni più fluide
+                oscillators[index - 1].frequency.setValueAtTime(freq, now + 0.01);
+                gainNodes[index - 1].gain.setValueAtTime(amp, now + 0.01);
+            }
+        }
+        
+        function updateControls(index) {
+            // Chiama la funzione di aggiornamento audio e ridisegna i canvas
+            updateOscillatorParams(index);
+            drawWave(index);
+        }
+
+        // --- Funzioni di visualizzazione (Canvas) ---
+        
+        function drawWave(index) {
+            const canvas = document.getElementById(`canvas${index}`);
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            const halfHeight = height / 2;
+            const freq = parseFloat(document.getElementById(`freq${index}`).value);
+            const amp = parseFloat(document.getElementById(`amp${index}`).value);
+            
+            ctx.clearRect(0, 0, width, height);
+            ctx.beginPath();
+            ctx.strokeStyle = '#0066AA';
+            ctx.lineWidth = 2;
+
+            // Disegna la forma d'onda sinusoidale
+            for (let x = 0; x < width; x++) {
+                // Calcola l'angolo (tempo) per la posizione x
+                // Usa un fattore di scala per visualizzare alcune oscillazioni complete
+                const angle = (x / width) * Math.PI * 2 * (freq / 100); 
+                // Calcola il valore Y (ampiezza) e scala per l'altezza del canvas
+                const y = halfHeight - Math.sin(angle) * halfHeight * amp;
+                
+                if (x === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Aggiorna anche il pannello somma
+            drawSumWave();
+        }
+
+        function drawSumWave() {
+            const canvas = document.getElementById('canvasSum');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            const halfHeight = height / 2;
+
+            const waves = [];
+            for (let i = 1; i <= NUM_OSCILLATORS; i++) {
+                waves.push({
+                    freq: parseFloat(document.getElementById(`freq${i}`).value),
+                    amp: parseFloat(document.getElementById(`amp${i}`).value)
+                });
+            }
+
+            ctx.clearRect(0, 0, width, height);
+            ctx.beginPath();
+            ctx.strokeStyle = '#c00'; // Rosso per la somma
+            ctx.lineWidth = 2;
+
+            let maxAmplitude = 0;
+
+            // Disegna la somma delle forme d'onda
+            for (let x = 0; x < width; x++) {
+                let sumY = 0;
+                
+                for (let i = 0; i < NUM_OSCILLATORS; i++) {
+                    // Calcola l'angolo (tempo) come sopra
+                    const angle = (x / width) * Math.PI * 2 * (waves[i].freq / 100); 
+                    // Somma i valori delle singole sinusoidi
+                    sumY += Math.sin(angle) * waves[i].amp;
+                }
+                
+                // Trova l'ampiezza massima per la normalizzazione
+                maxAmplitude = Math.max(maxAmplitude, Math.abs(sumY));
+
+                // Calcola la posizione Y (non ancora normalizzata)
+                const y = halfHeight - sumY * halfHeight; 
+
+                if (x === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Disegna la versione normalizzata (per evitare clipping visuale)
+            // L'ampiezza massima (maxAmplitude) è usata per scalare la somma
+            if (maxAmplitude > 0) {
+                ctx.clearRect(0, 0, width, height); // Pulizia per il ridisegno normalizzato
+                ctx.beginPath();
+                ctx.strokeStyle = '#c00';
+                ctx.lineWidth = 2;
+
+                for (let x = 0; x < width; x++) {
+                    let sumY = 0;
+                    for (let i = 0; i < NUM_OSCILLATORS; i++) {
+                        const angle = (x / width) * Math.PI * 2 * (waves[i].freq / 100); 
+                        sumY += Math.sin(angle) * waves[i].amp;
+                    }
+
+                    // Normalizza il valore Y
+                    const normalizedY = sumY / maxAmplitude; 
+                    const y = halfHeight - normalizedY * halfHeight * 0.9; // 0.9 per un po' di margine
+
+                    if (x === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                ctx.stroke();
+            }
+
+        }
+
+        // --- Inizializzazione ---
+
+        // Funzione per inizializzare il disegno delle onde all'avvio
+        function initDrawing() {
+            for(let i = 1; i <= NUM_OSCILLATORS; i++) {
+                updateControls(i); // Questo aggiorna sia i valori visualizzati che il disegno
+            }
+        }
+
+        // Avvia l'inizializzazione quando la pagina è caricata
+        window.onload = initDrawing;
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="158.60294mm"
+   height="113.2793mm"
+   viewBox="0 0 158.60294 113.2793"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="neural-network.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.90625297"
+     inkscape:cx="60.137734"
+     inkscape:cy="186.48215"
+     inkscape:window-width="1920"
+     inkscape:window-height="1140"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-33.786775,-48.683331)">
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 69.340912,150.56579 116.21778,127.64981"
+       id="path2"
+       sodipodi:nodetypes="cc" />
+    <g
+       id="g1"
+       transform="translate(123.53131,-12.161471)">
+      <circle
+         style="opacity:0.94;fill:#ffeeaa;stroke:#000000;stroke-width:0.541;stroke-linecap:round;stroke-dasharray:none"
+         id="path1"
+         cx="41.081635"
+         cy="110.11224"
+         r="7.0243592" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.02777px;font-family:Charter;-inkscape-font-specification:Charter;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;opacity:0.94;fill:#000000;stroke:none;stroke-width:0.25;stroke-linecap:round"
+         x="36.945324"
+         y="111.39458"
+         id="text1"><tspan
+           sodipodi:role="line"
+           id="tspan1"
+           style="fill:#000000;stroke:none;stroke-width:0.25"
+           x="36.945324"
+           y="111.39458">Neurone</tspan></text>
+    </g>
+    <g
+       id="g2"
+       transform="translate(81.472238,14.599065)">
+      <circle
+         style="opacity:0.94;fill:#ffeeaa;stroke:#000000;stroke-width:0.541;stroke-linecap:round;stroke-dasharray:none"
+         id="circle1"
+         cx="41.081635"
+         cy="110.11224"
+         r="7.0243592" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.02777px;font-family:Charter;-inkscape-font-specification:Charter;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;opacity:0.94;fill:#000000;stroke:none;stroke-width:0.25;stroke-linecap:round"
+         x="36.945324"
+         y="111.39458"
+         id="text2"><tspan
+           sodipodi:role="line"
+           id="tspan2"
+           style="fill:#000000;stroke:none;stroke-width:0.25"
+           x="36.945324"
+           y="111.39458">Neurone</tspan></text>
+    </g>
+    <g
+       id="g2-3"
+       transform="translate(24.521392,-40.626344)">
+      <circle
+         style="opacity:0.94;fill:#ffeeaa;stroke:#000000;stroke-width:0.541;stroke-linecap:round;stroke-dasharray:none"
+         id="circle1-5"
+         cx="41.081635"
+         cy="110.11224"
+         r="7.0243592" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.02777px;font-family:Charter;-inkscape-font-specification:Charter;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;opacity:0.94;fill:#000000;stroke:none;stroke-width:0.25;stroke-linecap:round"
+         x="36.945324"
+         y="111.39458"
+         id="text2-6"><tspan
+           sodipodi:role="line"
+           id="tspan2-2"
+           style="fill:#000000;stroke:none;stroke-width:0.25"
+           x="36.945324"
+           y="111.39458">Neurone</tspan></text>
+    </g>
+    <g
+       id="g2-0"
+       transform="translate(106.01595,-54.134053)">
+      <circle
+         style="opacity:0.94;fill:#ffeeaa;stroke:#000000;stroke-width:0.541;stroke-linecap:round;stroke-dasharray:none"
+         id="circle1-9"
+         cx="41.081635"
+         cy="110.11224"
+         r="7.0243592" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.02777px;font-family:Charter;-inkscape-font-specification:Charter;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;opacity:0.94;fill:#000000;stroke:none;stroke-width:0.25;stroke-linecap:round"
+         x="36.945324"
+         y="111.39458"
+         id="text2-3"><tspan
+           sodipodi:role="line"
+           id="tspan2-6"
+           style="fill:#000000;stroke:none;stroke-width:0.25"
+           x="36.945324"
+           y="111.39458">Neurone</tspan></text>
+    </g>
+    <g
+       id="g2-1"
+       transform="translate(80.172811,-28.43572)">
+      <circle
+         style="opacity:0.94;fill:#ffeeaa;stroke:#000000;stroke-width:0.541;stroke-linecap:round;stroke-dasharray:none"
+         id="circle1-8"
+         cx="41.081635"
+         cy="110.11224"
+         r="7.0243592" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.02777px;font-family:Charter;-inkscape-font-specification:Charter;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;opacity:0.94;fill:#000000;stroke:none;stroke-width:0.25;stroke-linecap:round"
+         x="36.945324"
+         y="111.39458"
+         id="text2-7"><tspan
+           sodipodi:role="line"
+           id="tspan2-9"
+           style="fill:#000000;stroke:none;stroke-width:0.25"
+           x="36.945324"
+           y="111.39458">Neurone</tspan></text>
+    </g>
+    <g
+       id="g2-7"
+       transform="translate(99.65969,-10.771587)">
+      <circle
+         style="opacity:0.94;fill:#ffeeaa;stroke:#000000;stroke-width:0.541;stroke-linecap:round;stroke-dasharray:none"
+         id="circle1-59"
+         cx="41.081635"
+         cy="110.11224"
+         r="7.0243592" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.02777px;font-family:Charter;-inkscape-font-specification:Charter;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;opacity:0.94;fill:#000000;stroke:none;stroke-width:0.25;stroke-linecap:round"
+         x="36.945324"
+         y="111.39458"
+         id="text2-2"><tspan
+           sodipodi:role="line"
+           id="tspan2-28"
+           style="fill:#000000;stroke:none;stroke-width:0.25"
+           x="36.945324"
+           y="111.39458">Neurone</tspan></text>
+    </g>
+    <g
+       id="g2-12"
+       transform="translate(0,1.7728145)">
+      <circle
+         style="opacity:0.94;fill:#ffeeaa;stroke:#000000;stroke-width:0.541;stroke-linecap:round;stroke-dasharray:none"
+         id="circle1-93"
+         cx="41.081635"
+         cy="110.11224"
+         r="7.0243592" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.02777px;font-family:Charter;-inkscape-font-specification:Charter;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;opacity:0.94;fill:#000000;stroke:none;stroke-width:0.25;stroke-linecap:round"
+         x="36.945324"
+         y="111.39458"
+         id="text2-1"><tspan
+           sodipodi:role="line"
+           id="tspan2-94"
+           style="fill:#000000;stroke:none;stroke-width:0.25"
+           x="36.945324"
+           y="111.39458">Neurone</tspan></text>
+    </g>
+    <g
+       id="g2-03"
+       transform="translate(6.3161491,-37.821405)">
+      <circle
+         style="opacity:0.94;fill:#ffeeaa;stroke:#000000;stroke-width:0.541;stroke-linecap:round;stroke-dasharray:none"
+         id="circle1-6"
+         cx="41.081635"
+         cy="110.11224"
+         r="7.0243592" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.02777px;font-family:Charter;-inkscape-font-specification:Charter;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;opacity:0.94;fill:#000000;stroke:none;stroke-width:0.25;stroke-linecap:round"
+         x="36.945324"
+         y="111.39458"
+         id="text2-10"><tspan
+           sodipodi:role="line"
+           id="tspan2-63"
+           style="fill:#000000;stroke:none;stroke-width:0.25"
+           x="36.945324"
+           y="111.39458">Neurone</tspan></text>
+    </g>
+    <g
+       id="g2-5"
+       transform="translate(138.09157,34.808921)">
+      <circle
+         style="opacity:0.94;fill:#ffeeaa;stroke:#000000;stroke-width:0.541;stroke-linecap:round;stroke-dasharray:none"
+         id="circle1-54"
+         cx="41.081635"
+         cy="110.11224"
+         r="7.0243592" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.02777px;font-family:Charter;-inkscape-font-specification:Charter;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;opacity:0.94;fill:#000000;stroke:none;stroke-width:0.25;stroke-linecap:round"
+         x="36.945324"
+         y="111.39458"
+         id="text2-76"><tspan
+           sodipodi:role="line"
+           id="tspan2-5"
+           style="fill:#000000;stroke:none;stroke-width:0.25"
+           x="36.945324"
+           y="111.39458">Neurone</tspan></text>
+    </g>
+    <g
+       id="g2-4"
+       transform="translate(41.617112,-31.391465)">
+      <circle
+         style="opacity:0.94;fill:#ffeeaa;stroke:#000000;stroke-width:0.541;stroke-linecap:round;stroke-dasharray:none"
+         id="circle1-52"
+         cx="41.081635"
+         cy="110.11224"
+         r="7.0243592" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.02777px;font-family:Charter;-inkscape-font-specification:Charter;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;opacity:0.94;fill:#000000;stroke:none;stroke-width:0.25;stroke-linecap:round"
+         x="36.945324"
+         y="111.39458"
+         id="text2-5"><tspan
+           sodipodi:role="line"
+           id="tspan2-4"
+           style="fill:#000000;stroke:none;stroke-width:0.25"
+           x="36.945324"
+           y="111.39458">Neurone</tspan></text>
+    </g>
+    <g
+       id="g2-07"
+       transform="translate(22.24764,44.555531)">
+      <circle
+         style="opacity:0.94;fill:#ffeeaa;stroke:#000000;stroke-width:0.541;stroke-linecap:round;stroke-dasharray:none"
+         id="circle1-86"
+         cx="41.081635"
+         cy="110.11224"
+         r="7.0243592" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.02777px;font-family:Charter;-inkscape-font-specification:Charter;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;opacity:0.94;fill:#000000;stroke:none;stroke-width:0.25;stroke-linecap:round"
+         x="36.945324"
+         y="111.39458"
+         id="text2-8"><tspan
+           sodipodi:role="line"
+           id="tspan2-8"
+           style="fill:#000000;stroke:none;stroke-width:0.25"
+           x="36.945324"
+           y="111.39458">Neurone</tspan></text>
+    </g>
+    <g
+       id="g2-9"
+       transform="translate(144.01322,-33.89309)">
+      <circle
+         style="opacity:0.94;fill:#ffeeaa;stroke:#000000;stroke-width:0.541;stroke-linecap:round;stroke-dasharray:none"
+         id="circle1-2"
+         cx="41.081635"
+         cy="110.11224"
+         r="7.0243592" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.02777px;font-family:Charter;-inkscape-font-specification:Charter;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;opacity:0.94;fill:#000000;stroke:none;stroke-width:0.25;stroke-linecap:round"
+         x="36.945324"
+         y="111.39458"
+         id="text2-0"><tspan
+           sodipodi:role="line"
+           id="tspan2-68"
+           style="fill:#000000;stroke:none;stroke-width:0.25"
+           x="36.945324"
+           y="111.39458">Neurone</tspan></text>
+    </g>
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 59.867196,148.34029 43.572697,118.40669"
+       id="path3" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 41.739827,104.91723 46.013986,79.071929"
+       id="path4" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 54.361952,70.790749 c 4.140592,-0.734621 4.140592,-0.734621 4.140592,-0.734621"
+       id="path5" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 72.326774,71.72572 c 4.674862,2.604567 4.674862,2.604567 4.674862,2.604567 v 0"
+       id="path6" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 63.44454,76.200229 44.678311,105.71864"
+       id="path7" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 75.532394,78.804795 53.493765,75.999879"
+       id="path8" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 79.80655,85.082466 47.349661,108.45677"
+       id="path9" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 89.556975,79.672983 24.643195,1.335675"
+       id="path10" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 88.755571,82.27755 134.03494,96.969968"
+       id="path11" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 88.12442,74.469105 52.0457,-16.930117"
+       id="path12"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 72.087363,66.529968 140.04638,55.891525"
+       id="path13" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 124.48567,75.421801 C 141.31664,60.019876 141.31664,60.019876 141.31664,60.019876"
+       id="path14" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 140.99907,92.252772 3.79588,-29.607399"
+       id="path15"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 162.75231,91.300077 151.75679,61.300567"
+       id="path16"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 147.55248,98.619261 c 9.78665,-0.627348 9.78665,-0.627348 9.78665,-0.627348"
+       id="path17" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 127.97919,81.17896 49.93698,-4.140504"
+       id="path18" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 153.82597,57.967046 24.46661,14.930905"
+       id="path19" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 184.69154,83.186475 -4.89332,54.579365"
+       id="path20" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 169.13329,92.847651 C 180.55104,81.429899 180.55104,81.429899 180.55104,81.429899"
+       id="path21" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 167.25124,104.2654 9.03383,34.12779"
+       id="path22" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 128.98295,121.58023 30.7401,-18.44406"
+       id="path23" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 126.7245,119.32178 c 9.91211,-14.17809 9.91211,-14.17809 9.91211,-14.17809"
+       id="path24" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 121.45476,117.31426 120.0746,88.456208"
+       id="path25" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 124.08963,117.69067 19.07141,-56.085"
+       id="path26" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 117.81614,119.19631 87.076041,84.190233"
+       id="path27" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 115.30674,123.33681 48.180402,112.54641"
+       id="path28" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 70.137617,154.45332 171.89362,145.29403"
+       id="path29" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 128.85748,127.47731 c 43.78896,14.67997 43.78896,14.67997 43.78896,14.67997"
+       id="path30" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 144.03933,105.89651 29.4854,33.75138"
+       id="path31" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 66.875403,148.43077 116.18503,86.825099"
+       id="path32" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 135.88379,94.353289 c -9.03382,-8.030067 -9.03382,-8.030067 -9.03382,-8.030067"
+       id="path33" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="m 146.79966,95.357047 c 31.9948,-16.185605 31.9948,-16.185605 31.9948,-16.185605"
+       id="path34" />
+    <path
+       style="opacity:0.94;fill:#1a1a1a;stroke:#000000;stroke-width:0.540999;stroke-linecap:round;stroke-dasharray:none"
+       d="M 51.568087,77.791275 116.18503,121.07835"
+       id="path35" />
+  </g>
+</svg>

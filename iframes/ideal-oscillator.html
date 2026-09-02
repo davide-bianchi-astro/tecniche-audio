@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oscillatore armonico ideale (massa–molla)</title>
+
+  <style>
+    :root {
+      --bg: #fff;
+      --panel: #fff;
+      --text: #000;
+      --muted: #9ca3af;
+      --accent: #3b82f6;
+      --kinetic: #40b0a6;   /* Questi due colori vanno bene anche per i */
+      --potential: #a18e6a; /* daltonici */
+      --grid: #888;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell;
+      background: #fff;
+      color: var(--text);
+    }
+    .container {
+      max-width: 980px; margin: 32px auto; padding: 16px; display: grid; gap: 16px;
+    }
+    .card {
+      background: var(--panel); border: 1px solid #1f2937; border-radius: 16px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    h1 { margin: 0 0 8px; font-size: 20px; font-weight: 700; }
+    .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .controls label { font-size: 14px; }
+    .controls > div {
+        margin-bottom: 0.5em;
+    }
+    input[type="range"] { width: 250px; }
+    button {
+      background: var(--accent); border: none; color: white; padding: 10px 14px; border-radius: 12px; cursor: pointer; font-weight: 600;
+    }
+    button.secondary { background: #374151; }
+
+    /* Scena: molla + massa */
+    .stage {
+      position: relative; height: 160px; background: linear-gradient(transparent 70%, rgba(255,255,255,.04));
+      border-radius: 12px; border: 1px solid #1f2937; overflow: hidden;
+    }
+    .guide { position: absolute; left: 36px; right: 240px; top: 50%; height: 2px; background: var(--grid); }
+    .spring {
+      position: absolute; top: 50%; left: 360px; height: 0; border-top: 6px solid #23358d; transform: translateY(-1px);
+      transform-origin: left center;
+    }
+    .mass {
+      position: absolute; top: calc(50% - 20px); width: 40px; height: 40px; border-radius: 8px; background: linear-gradient(180deg,#93c5fd,#60a5fa);
+      border: 2px solid rgba(255,255,255,.15); box-shadow: 0 6px 20px rgba(0,0,0,.35);
+    }
+
+    /* Barra energia */
+    .energy-card .legend { display:flex; gap:12px; align-items:center; font-size: 13px;}
+    .chip { width:12px; height:12px; border-radius: 3px; display:inline-block; }
+    .bar {
+      position: relative; height: 18px; background: #0f172a; border: 1px solid #1f2937; border-radius: 10px; overflow: hidden;
+    }
+    .bar .pot { position:absolute; left:0; top:0; bottom:0; background: var(--potential); }
+    .bar .kin { position:absolute; right:0; top:0; bottom:0; background: var(--kinetic); }
+    .readouts { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:8px; margin-top:8px; font-feature-settings:"tnum" on, "lnum" on; }
+    .readouts .kv { padding:8px 10px; background:#0f172a; border:1px solid #1f2937; border-radius:10px; font-size: 13px; color: #d1d5db; }
+    .readouts .kv b { color: white; }
+    .small { font-size: 12px; }
+  </style>
+
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <p class="small">Imposta l'allungamento iniziale, poi premi <em>Start</em>. L'energia totale rimane costante e la barra mostra la partizione tra energia elastica <span style="color:var(--potential)">(E<sub>e</sub>)</span> e cinetica <span style="color:var(--kinetic)">(E<sub>c</sub>)</span>.</p>
+      <div class="controls">
+        <div>
+          <label>Allungamento iniziale A (m): <span id="AVal">0.20</span></label>
+          <input id="A" type="range" min="-0.30" max="0.30" step="0.01" value="0.20" />
+        </div>
+        <div>
+          <label>Massa (kg): <span id="mVal">1.0</span></label>
+          <input id="m" type="range" min="0.2" max="3" step="0.1" value="1.0" />
+        </div>
+        <div>
+          <label>Costante k (N/m): <span id="kVal">1</span></label>
+          <input id="k" type="range" min="0.1" max="3" step="0.1" value="1" />
+        </div>
+        <button id="start">Start</button>
+        <button id="reset" class="secondary">Reset</button>
+      </div>
+    </div>
+
+    <div class="card stage" id="stage">
+      <div class="guide"></div>
+      <div class="spring" id="spring"></div>
+      <div class="mass" id="mass"></div>
+    </div>
+
+    <div class="card energy-card">
+      <div class="legend">
+        <span class="chip" style="background:var(--potential)"></span> Energia elastica
+        <span class="chip" style="background:var(--kinetic)"></span> Energia cinetica
+      </div>
+      <div class="bar" id="energyBar" aria-label="Barra energia">
+        <div class="pot" id="potPart" style="width: 50%"></div>
+        <div class="kin" id="kinPart" style="width: 50%"></div>
+      </div>
+      <div class="readouts">
+        <div class="kv">t = <b><span id="tVal">0.00</span></b> s</div>
+        <div class="kv">x = <b><span id="xVal">0.20</span></b> m</div>
+        <div class="kv">v = <b><span id="vVal">0.00</span></b> m/s</div>
+        <div class="kv">U = <b><span id="UVal">0.00</span></b> J</div>
+        <div class="kv">K = <b><span id="KVal">0.00</span></b> J</div>
+        <div class="kv">E = <b><span id="EVal">0.00</span></b> J (costante)</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Parametri e stato
+    const Ael = document.getElementById('A');
+    const mel = document.getElementById('m');
+    const kel = document.getElementById('k');
+    const AVal = document.getElementById('AVal');
+    const mVal = document.getElementById('mVal');
+    const kVal = document.getElementById('kVal');
+
+    const massEl = document.getElementById('mass');
+    const springEl = document.getElementById('spring');
+    const stageEl = document.getElementById('stage');
+
+    const tVal = document.getElementById('tVal');
+    const xVal = document.getElementById('xVal');
+    const vVal = document.getElementById('vVal');
+    const UVal = document.getElementById('UVal');
+    const KVal = document.getElementById('KVal');
+    const EVal = document.getElementById('EVal');
+
+    const potPart = document.getElementById('potPart');
+    const kinPart = document.getElementById('kinPart');
+    const energyBar = document.getElementById('energyBar');
+
+    const startBtn = document.getElementById('start');
+    const resetBtn = document.getElementById('reset');
+
+    // Mappa metri->pixel per la scena
+    const PIXELS_PER_METER = 800; // scala orizzontale
+    const LEFT_ANCHOR = 240 + 24; // pixel dalla sinistra (parete + offset)
+
+    let running = false;
+    let startTime = 0;     // timestamp di avvio animazione (ms)
+    let t0 = 0;            // t relativo (s)
+
+    // Stato fisico
+    let A = parseFloat(Ael.value); // m (può essere negativo = compressione)
+    let m = parseFloat(mel.value); // kg
+    let k = parseFloat(kel.value); // N/m
+
+    // Derivati
+    function omega() { return Math.sqrt(k/m); } // rad/s
+    function totalEnergy() { return 0.5 * k * A * A; }
+
+    // UI sync iniziale
+    function syncLabels() {
+      AVal.textContent = A.toFixed(2);
+      mVal.textContent = m.toFixed(1);
+      kVal.textContent = k.toFixed(0);
+    }
+
+    function layoutAt(x) {
+      // x in metri rispetto all'equilibrio (positivo verso destra)
+      const px = LEFT_ANCHOR + x * PIXELS_PER_METER;
+      massEl.style.left = (px - 20) + 'px';
+      const springLen = px - LEFT_ANCHOR;
+
+      if (springLen > 0) {
+        springEl.style.left = LEFT_ANCHOR + 'px';
+        springEl.style.width = springLen + 'px';
+      } else {
+        springEl.style.left = (LEFT_ANCHOR + springLen) + 'px';
+        springEl.style.width = (-springLen) + 'px';
+      }
+    }
+
+    function updateEnergyBar(U, K, E) {
+      // Normalizza le larghezze sulla dimensione della barra (E costante)
+      const W = energyBar.clientWidth;
+      const wU = Math.max(0, Math.min(W, (U/E) * W));
+      const wK = W - wU; // assicura somma costante
+      potPart.style.width = wU + 'px';
+      kinPart.style.width = wK + 'px';
+    }
+
+    function setReadouts(t, x, v, U, K, E) {
+      tVal.textContent = t.toFixed(2);
+      xVal.textContent = x.toFixed(2);
+      vVal.textContent = v.toFixed(2);
+      UVal.textContent = U.toFixed(2);
+      KVal.textContent = K.toFixed(2);
+      EVal.textContent = E.toFixed(2);
+    }
+
+    function step(nowMs) {
+      if (!running) return; // ferma il loop quando necessario
+
+      if (startTime === 0) startTime = nowMs;
+      const t = (nowMs - startTime) / 1000 + t0; // secondi
+
+      const w = omega();
+      // Soluzione analitica per condizioni iniziali x(0) = A, v(0) = 0
+      const x = A * Math.cos(w * t);
+      const v = -A * w * Math.sin(w * t);
+
+      const U = 0.5 * k * x * x;
+      const K = 0.5 * m * v * v;
+      const E = totalEnergy();
+
+      layoutAt(x);
+      updateEnergyBar(U, K, E > 0 ? E : U+K);
+      setReadouts(t, x, v, U, K, E);
+
+      requestAnimationFrame(step);
+    }
+
+    // Eventi controlli
+    Ael.addEventListener('input', () => { A = parseFloat(Ael.value); syncLabels(); if (!running) { layoutAt(A); setReadouts(0, A, 0, 0.5*k*A*A, 0, totalEnergy()); updateEnergyBar(0.5*k*A*A, 0, totalEnergy()); }});
+    mel.addEventListener('input', () => { m = parseFloat(mel.value); syncLabels(); if (!running) { setReadouts(0, A, 0, 0.5*k*A*A, 0, totalEnergy()); updateEnergyBar(0.5*k*A*A, 0, totalEnergy()); }});
+    kel.addEventListener('input', () => { k = parseFloat(kel.value); syncLabels(); if (!running) { setReadouts(0, A, 0, 0.5*k*A*A, 0, totalEnergy()); updateEnergyBar(0.5*k*A*A, 0, totalEnergy()); }});
+
+    startBtn.addEventListener('click', () => {
+      if (!running) {
+        running = true;
+        startBtn.textContent = 'Pausa';
+        // riparte da dov'era: t0 resta quello corrente
+        requestAnimationFrame(step);
+      } else {
+        // pausa: congela il tempo relativo in t0
+        running = false;
+        startBtn.textContent = 'Start';
+        // Calcola t0 dalla fase corrente per poter riprendere
+        // Recupera l'ultimo t mostrato
+        const tShown = parseFloat(tVal.textContent);
+        t0 = tShown;
+        startTime = 0; // forza il ricalcolo all'avvio
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {
+      running = false; startBtn.textContent = 'Start';
+      startTime = 0; t0 = 0;
+      // Ritorna alle condizioni iniziali: x=A, v=0
+      const U = 0.5 * k * A * A; const E = totalEnergy();
+      layoutAt(A);
+      updateEnergyBar(U, 0, E);
+      setReadouts(0, A, 0, U, 0, E);
+    });
+
+    // Setup iniziale
+    function init() {
+      syncLabels();
+      layoutAt(A);
+      const U = 0.5 * k * A * A; const E = totalEnergy();
+      updateEnergyBar(U, 0, E);
+      setReadouts(0, A, 0, U, 0, E);
+    }
+    window.addEventListener('resize', () => {
+      // Ricomputa la larghezza della barra in base alle nuove dimensioni
+      const U = 0.5 * k * Math.pow(parseFloat(xVal.textContent), 2);
+      const K = Math.max(0, totalEnergy() - U);
+      updateEnergyBar(U, K, totalEnergy());
+    });
+
+    init();
+  </script>
+</body>
+</html>

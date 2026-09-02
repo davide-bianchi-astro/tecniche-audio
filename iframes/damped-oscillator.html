@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Massa–Molla Smorzata</title>
+
+  <style>
+    :root {
+  --bg: #fff;
+  --panel: #fff;
+  --ink: #000;
+  --muted: #000;
+  --accent: #38bdf8;
+  --good: #34d399;
+}
+
+html,
+body {
+  height: 100%
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column
+}
+
+header {
+  padding: 18px 20px;
+  border-bottom: 1px solid #1f2937;
+  background: linear-gradient(180deg, rgba(56, 189, 248, .08), rgba(0, 0, 0, 0))
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.15rem;
+  letter-spacing: .2px
+}
+
+main {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 18px;
+  align-items: start;
+  padding: 18px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid #1f2937;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .25)
+}
+
+.controls {
+  padding: 16px;
+  position: sticky;
+  top: 12px
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 14px 0
+}
+
+.row label {
+  font-size: .95rem;
+  color: var(--muted)
+}
+
+.value {
+  min-width: 64px;
+  text-align: right
+}
+
+input[type=range] {
+  width: 100%
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px
+}
+
+button {
+  appearance: none;
+  border: 1px solid #000;
+  background: #99f;
+  color: var(--ink);
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed
+}
+
+.canvasWrap {
+  display: grid;
+  gap: 12px
+}
+
+.card {
+  padding: 10px
+}
+
+.legend {
+  font-size: .9rem;
+  color: var(--muted)
+}
+
+footer {
+  padding: 14px 20px;
+  color: var(--muted);
+  font-size: .9rem;
+  border-top: 1px solid #1f2937
+}
+
+.small {
+  font-size: .85rem;
+}
+  </style>
+
+
+</head>
+<body>
+
+<main>
+  <!-- Controls -->
+  <section class="panel controls">
+    <div class="row"><label>Massa m <span class="small">[kg]</span></label>
+      <div class="value"><span id="mVal">1.00</span></div>
+    </div>
+    <input id="m" type="range" min="0.2" max="5" value="1" step="0.05" />
+
+    <div class="row"><label>Costante elastica k <span class="small">[N/m]</span></label>
+      <div class="value"><span id="kVal">10.0</span></div>
+    </div>
+    <input id="k" type="range" min="1" max="50" value="10" step="0.5" />
+
+    <div class="row"><label>Smorzamento c <span class="small">[kg/s]</span></label>
+      <div class="value"><span id="cVal">0.60</span></div>
+    </div>
+    <input id="c" type="range" min="0" max="10" value="0.6" step="0.02" />
+
+    <div class="row"><label>Allungamento iniziale x₀ <span class="small">[m]</span></label>
+      <div class="value"><span id="x0Val">1.5</span></div>
+    </div>
+    <input id="x0" type="range" min="1" max="3" value="1.5" step="0.01" />
+
+    <div class="row"><label>Velocità iniziale v₀ <span class="small">[m/s]</span></label>
+      <div class="value"><span id="v0Val">0.00</span></div>
+    </div>
+    <input id="v0" type="range" min="-3" max="3" value="0" step="0.05" />
+
+    <div class="row">
+      <label class="legend">Smorzamento critico c<sub>crit</sub> = <span id="ccrit">—</span></label></div>
+
+    <div class="buttons">
+      <button id="start">Avvia</button>
+      <button id="pause">Pausa</button>
+      <button id="reset">Reset</button>
+    </div>
+
+    <p class="small" style="margin-top:12px">E(t) = ½ k x² + ½ m v² → 0 quando x,v → 0.</p>
+  </section>
+
+  <!-- Visuals -->
+  <section class="canvasWrap">
+    <div class="panel card">
+      <canvas id="sim" width="720" height="260" aria-label="Animazione massa-molla"></canvas>
+    </div>
+    <div class="panel card">
+      <div class="legend">Energia potenziale + cinetica E(t) [J]. Quando il corpo si arresta, E → 0.</div>
+      <canvas id="energy" width="720" height="220" aria-label="Grafico energia"></canvas>
+    </div>
+  </section>
+</main>
+
+  <script>
+    // --- Stato fisico ---
+const state = {
+  m: 1.0,
+  k: 10.0,
+  c: 0.6,
+  x: 0.5,   // posizione (m)
+  v: 0.0,   // velocità (m/s)
+  t: 0.0,
+  running: false,
+  energyTrace: [],
+  t0: null,
+};
+
+let prev = null;
+
+// DOM
+const $ = (id) => document.getElementById(id);
+const sim = $("sim");
+const gSim = sim.getContext("2d");
+const eCanvas = $("energy");
+const gE = eCanvas.getContext("2d");
+
+// Controlli
+const mSlider = $("m"), kSlider = $("k"), cSlider = $("c"), x0Slider = $("x0"), v0Slider = $("v0");
+const mVal = $("mVal"), kVal = $("kVal"), cVal = $("cVal"), x0Val = $("x0Val"), v0Val = $("v0Val"), ccritEl = $("ccrit");
+const startBtn = $("start"), pauseBtn = $("pause"), resetBtn = $("reset");
+
+// Utility: clamp
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+
+function updateCcrit() {
+  const ccrit = 2 * Math.sqrt(state.m * state.k);
+  ccritEl.textContent = ccrit.toFixed(3) + " kg/s";
+}
+
+function syncLabels() {
+  mVal.textContent = Number(state.m).toFixed(2);
+  kVal.textContent = Number(state.k).toFixed(1);
+  cVal.textContent = Number(state.c).toFixed(2);
+  x0Val.textContent = Number(state.x).toFixed(2);
+  v0Val.textContent = Number(state.v).toFixed(2);
+  updateCcrit();
+}
+
+function readSliders() {
+  state.m = parseFloat(mSlider.value);
+  state.k = parseFloat(kSlider.value);
+  state.c = parseFloat(cSlider.value);
+  state.x = parseFloat(x0Slider.value);
+  state.v = parseFloat(v0Slider.value);
+  syncLabels();
+}
+
+// Inizializza
+readSliders();
+
+// Eventi controlli
+[mSlider, kSlider, cSlider].forEach(el => {
+  el.addEventListener('input', () => {
+    state[el.id] = parseFloat(el.value);
+    syncLabels();
+  });
+});
+
+x0Slider.addEventListener('input', () => {
+    state.x = parseFloat(x0Slider.value);
+    x0Val.textContent = Number(state.x).toFixed(2);
+});
+v0Slider.addEventListener('input', () => {
+    state.v = parseFloat(v0Slider.value);
+    v0Val.textContent = Number(state.v).toFixed(2);
+});
+
+startBtn.addEventListener('click', () => {
+  if (!state.running) {
+    state.running = true;
+    prev = null;
+    state.t0 = performance.now();
+    requestAnimationFrame(loop);
+  }
+});
+pauseBtn.addEventListener('click', () => { state.running = false; });
+resetBtn.addEventListener('click', () => {
+  state.running = false;
+  state.energyTrace.length = 0;
+  state.t = 0;
+  state.t0 = null;
+  readSliders();
+  drawSim();
+  drawEnergy();
+});
+
+function step(dt) {
+  const { m, k, c } = state;
+
+  // accelerazione: x¨ = (-c v - k x) / m
+  const a = (x, v) => (-c * v - k * x) / m;
+
+  const x0 = state.x;
+  const v0 = state.v;
+
+  // RK4
+  const k1x = v0;
+  const k1v = a(x0, v0);
+
+  const k2x = v0 + 0.5 * dt * k1v;
+  const k2v = a(x0 + 0.5 * dt * k1x, v0 + 0.5 * dt * k1v);
+
+  const k3x = v0 + 0.5 * dt * k2v;
+  const k3v = a(x0 + 0.5 * dt * k2x, v0 + 0.5 * dt * k2v);
+
+  const k4x = v0 + dt * k3v;
+  const k4v = a(x0 + dt * k3x, v0 + dt * k3v);
+
+  state.x = x0 + (dt / 6) * (k1x + 2 * k2x + 2 * k3x + k4x);
+  state.v = v0 + (dt / 6) * (k1v + 2 * k2v + 2 * k3v + k4v);
+
+  // Snap a zero per evitare rumore numerico quando siamo fermissimi
+  if (Math.abs(state.x) < 1e-5 && Math.abs(state.v) < 1e-5) {
+    state.x = 0;
+    state.v = 0;
+  }
+}
+
+// Disegno scena della massa-molla
+function drawSim() {
+  const W = sim.width, H = sim.height;
+  gSim.clearRect(0, 0, W, H);
+
+  // Scala: 1 metro → 160 px
+  const pxPerMeter = 160;
+  const anchor = 400; // parete
+  const baseY = H / 2;
+  const xPix = anchor + state.x * pxPerMeter; // posizione del blocco
+
+  // Binari e parete
+  gSim.strokeStyle = "#475569"; // slate-500
+  gSim.lineWidth = 2;
+  gSim.beginPath();
+  gSim.moveTo(anchor, 40); gSim.lineTo(anchor, H - 40); gSim.stroke();
+
+  // Molla
+  const springStart = anchor;
+  const springEnd = xPix;
+  gSim.beginPath();
+  gSim.moveTo(springStart, baseY);
+  gSim.lineTo(springEnd, baseY);
+  gSim.strokeStyle = "#38bdf8"; // accent
+  gSim.lineWidth = 3;
+  gSim.stroke();
+
+  // Blocco (massa)
+  gSim.fillStyle = "#10b981"; // green-ish
+  const bw = 60, bh = 46;
+  gSim.fillRect(xPix - bw / 2, baseY - bh / 2, bw, bh);
+
+  // Indicazioni testo
+  gSim.fillStyle = "#000";
+  gSim.font = "12px system-ui";
+  gSim.fillText(`x = ${state.x.toFixed(3)} m`, xPix - 28, baseY - bh / 2 - 10);
+
+  // Terreno linea
+  gSim.strokeStyle = "#1f2937"; gSim.lineWidth = 1;
+  gSim.beginPath(); gSim.moveTo(0, baseY + bh / 2 + 22); gSim.lineTo(W, baseY + bh / 2 + 22); gSim.stroke();
+}
+
+// Energia
+function totalEnergy() {
+  return 0.5 * state.k * state.x * state.x + 0.5 * state.m * state.v * state.v;
+}
+
+function drawEnergy() {
+  const W = eCanvas.width, H = eCanvas.height;
+  gE.clearRect(0, 0, W, H);
+
+  // Cornice
+  gE.strokeStyle = "#334155"; gE.lineWidth = 1;
+  gE.strokeRect(40, 20, W - 60, H - 60);
+
+  // Asse
+  gE.fillStyle = "#94a3b8"; gE.font = "12px system-ui";
+  gE.fillText("E [J]", 6, 24);
+
+  if (state.energyTrace.length < 2) { return; }
+
+  const tmin = state.energyTrace[0].t;
+  const tmax = state.energyTrace[state.energyTrace.length - 1].t;
+  const paddingL = 50, paddingR = 20, paddingT = 30, paddingB = 40;
+  const plotW = W - paddingL - paddingR;
+  const plotH = H - paddingT - paddingB;
+
+  // autoscale Y
+  let ymax = 0;
+  for (const p of state.energyTrace) { ymax = Math.max(ymax, p.E); }
+  ymax = ymax > 0 ? ymax : 1; // evita divisione per zero
+
+  // ticks
+  const yTicks = 4;
+  gE.fillStyle = "#64748b";
+  for (let i = 0; i <= yTicks; i++) {
+    const yv = (i / yTicks) * ymax;
+    const y = paddingT + plotH * (1 - i / yTicks);
+    gE.globalAlpha = 0.4; gE.beginPath(); gE.moveTo(paddingL, y); gE.lineTo(W - paddingR, y); gE.strokeStyle = "#1f2937"; gE.stroke(); gE.globalAlpha = 1;
+    gE.fillText(yv.toFixed(2), 8, y + 4);
+  }
+
+  // curve
+  gE.beginPath();
+  for (const p of state.energyTrace) {
+    const tx = (p.t - tmin) / (tmax - tmin || 1);
+    const x = paddingL + tx * plotW;
+    const y = paddingT + plotH * (1 - (p.E / ymax));
+    if (p === state.energyTrace[0]) gE.moveTo(x, y); else gE.lineTo(x, y);
+  }
+  gE.strokeStyle = "#34d399"; gE.lineWidth = 2; gE.stroke();
+
+  // ultimo valore
+  const last = state.energyTrace[state.energyTrace.length - 1];
+  gE.fillStyle = "#e5e7eb";
+  gE.fillText(`E(t) = ${last.E.toExponential(3)} J`, W - 190, 22);
+
+  if (last.E < 1e-6) {
+    gE.fillStyle = "#10b981";
+    gE.fillText("Il sistema si è praticamente arrestato: E ≈ 0", paddingL, H - 12);
+  }
+}
+
+// Main loop
+function loop(now) {
+  if (!state.running) { drawSim(); drawEnergy(); return; }
+  if (prev === null) prev = now;
+  let dt = (now - prev) / 1000; // s
+  prev = now;
+
+  // Integra in passi piccoli se il frame è lungo
+  const maxStep = 1 / 240; // 240 Hz integrazione
+  let tleft = dt;
+  while (tleft > 0) {
+    const h = Math.min(maxStep, tleft);
+    step(h);
+    tleft -= h;
+    state.t += h;
+    // registra energia ogni 1/60 s
+    if (!state._eAcc) state._eAcc = 0;
+    state._eAcc += h;
+    if (state._eAcc >= 1 / 60) {
+      state.energyTrace.push({ t: state.t, E: totalEnergy() });
+      // mantieni ultimi N secondi (es. 30 s)
+      const TMAX = 30;
+      while (state.energyTrace.length && (state.t - state.energyTrace[0].t) > TMAX) { state.energyTrace.shift(); }
+      state._eAcc = 0;
+    }
+  }
+
+  drawSim();
+  drawEnergy();
+
+  // stop automatico quando fermo
+  if (state.x === 0 && state.v === 0) {
+    state.running = false;
+    prev = null;
+  }
+
+  if (state.running) requestAnimationFrame(loop); else prev = null;
+}
+
+// Primo render
+drawSim();
+drawEnergy();
+  </script>
+</body>
+</html>

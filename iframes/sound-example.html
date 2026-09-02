@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulazione Onde Sonore</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .controls-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 600px; /* Limita la larghezza per migliore visualizzazione */
+            margin: auto; /* Centra il contenitore */
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+        #toggleTone, #toggleNoise {
+            background-color: #007bff;
+            color: white;
+        }
+        #toggleTone:hover, #toggleNoise:hover {
+            background-color: #0056b3;
+        }
+        .status-text {
+            margin-top: 20px;
+            font-size: 1.1em;
+            font-style: italic;
+            color: #666;
+        }
+        .value-display {
+            font-weight: normal;
+            float: right;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            background-color: #eee;
+            margin-top: 20px;
+            display: block; /* Per centrare o gestire meglio il blocco */
+            width: 100%; /* Si adatta alla larghezza del contenitore */
+            height: 150px; /* Altezza fissa per il grafico */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls-container">
+        <h2>Generatore Onde Sonore</h2>
+
+        <div class="control-group">
+            <label for="frequency">Frequenza (Pitch): <span id="freqValue" class="value-display">440 Hz</span></label>
+            <input type="range" id="frequency" min="50" max="2000" value="440">
+        </div>
+
+        <div class="control-group">
+            <label for="amplitude">Ampiezza (Volume): <span id="ampValue" class="value-display">50%</span></label>
+            <input type="range" id="amplitude" min="0" max="1" value="0.5" step="0.01">
+        </div>
+
+        <div class="control-group">
+            <button id="toggleTone">Avvia/Stop Tono</button>
+            <button id="toggleNoise">Avvia/Stop Rumore Casuale</button>
+        </div>
+
+        <p class="status-text" id="status">Seleziona e avvia un suono per iniziare la simulazione.</p>
+
+        <canvas id="waveformCanvas"></canvas>
+
+    </div>
+
+    <script>
+// Inizializzazione del contesto audio
+    let audioContext;
+    // Variabili per il tono
+    let oscillator = null;
+    let gainNode = null;
+    // Variabili per il rumore
+    let noiseSource = null;
+    // NUOVE VARIABILI PER IL GRAFICO
+    let analyser = null;
+    let dataArray; // Array dove verranno memorizzati i dati dell'onda
+    let bufferLength; // Lunghezza del buffer dei dati
+    const canvas = document.getElementById('waveformCanvas');
+    const canvasCtx = canvas.getContext('2d');
+
+    // Funzione per inizializzare il contesto audio al primo click
+    function initAudio() {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            // Inizializza l'analizzatore una volta che il contesto è pronto
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 2048; // Dimensione del Fast Fourier Transform, più grande = più dettagli
+            bufferLength = analyser.fftSize;
+            dataArray = new Uint8Array(bufferLength); // Array per i dati in tempo (forma d'onda)
+
+            // Avvia la funzione di disegno del grafico
+            drawWaveform();
+        }
+    }
+
+    // SLIDER EVENTS per aggiornare i valori e i display
+    // ... (restano invariati) ...
+    const freqSlider = document.getElementById('frequency');
+    const ampSlider = document.getElementById('amplitude');
+    const freqValue = document.getElementById('freqValue');
+    const ampValue = document.getElementById('ampValue');
+
+    freqSlider.addEventListener('input', () => {
+        freqValue.textContent = `${freqSlider.value} Hz`;
+        if (oscillator && audioContext.state === 'running') { // Aggiunto controllo stato audioContext
+            oscillator.frequency.setValueAtTime(parseFloat(freqSlider.value), audioContext.currentTime);
+        }
+    });
+
+    ampSlider.addEventListener('input', () => {
+        ampValue.textContent = `${Math.round(ampSlider.value * 100)}%`;
+        if (gainNode && audioContext.state === 'running') { // Aggiunto controllo stato audioContext
+            gainNode.gain.setValueAtTime(parseFloat(ampSlider.value), audioContext.currentTime);
+        }
+    });
+
+    // --- FUNZIONE DI DISEGNO DELLA FORMA D'ONDA ---
+    function drawWaveform() {
+        requestAnimationFrame(drawWaveform); // Continua a chiamare se stesso per un'animazione fluida
+
+        if (!analyser || audioContext.state !== 'running') {
+            // Se l'analizzatore non è attivo o il contesto audio è sospeso, pulisci il canvas
+            canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+            return;
+        }
+
+        // Ottieni i dati della forma d'onda dal nodo analizzatore
+        analyser.getByteTimeDomainData(dataArray); // Riempie dataArray con i dati dell'onda
+
+        canvasCtx.clearRect(0, 0, canvas.width, canvas.height); // Pulisci il canvas
+        canvasCtx.lineWidth = 2;
+        canvasCtx.strokeStyle = 'rgb(0, 123, 255)'; // Colore blu
+        canvasCtx.beginPath();
+
+        const sliceWidth = canvas.width * 1.0 / bufferLength; // Larghezza di ogni "fetta" di dati
+        let x = 0;
+
+        for (let i = 0; i < bufferLength; i++) {
+            // I dati sono tra 0 e 255. Li normalizziamo a 0-1 e li scaliamo all'altezza del canvas.
+            const v = dataArray[i] / 128.0; // Normalizza a 0-2 (128 è il punto medio)
+            const y = v * canvas.height / 2; // Scala all'altezza del canvas
+
+            if (i === 0) {
+                canvasCtx.moveTo(x, y);
+            } else {
+                canvasCtx.lineTo(x, y);
+            }
+
+            x += sliceWidth;
+        }
+
+        canvasCtx.lineTo(canvas.width, canvas.height / 2); // Assicura che la linea arrivi alla fine
+        canvasCtx.stroke();
+    }
+
+
+    // --- GESTIONE TONO (Onda Sinusoidale) ---
+
+    document.getElementById('toggleTone').addEventListener('click', () => {
+        initAudio(); // Assicura che l'audioContext e l'analyser siano inizializzati
+
+        if (audioContext.state === 'suspended') { // Riprendi il contesto se sospeso
+             audioContext.resume();
+        }
+
+        // Ferma l'eventuale rumore attivo
+        if (noiseSource) stopNoise();
+
+        if (oscillator === null) {
+            // AVVIO DEL TONO
+            oscillator = audioContext.createOscillator();
+            oscillator.type = 'sine';
+            gainNode = audioContext.createGain();
+
+            const frequency = parseFloat(freqSlider.value);
+            const amplitude = parseFloat(ampSlider.value);
+
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            gainNode.gain.setValueAtTime(amplitude, audioContext.currentTime);
+
+            // NUOVA CONNESSIONE: Collega all'analizzatore PRIMA di connettere alla destinazione
+            oscillator.connect(gainNode);
+            gainNode.connect(analyser); // Connetti il gainNode all'analyser
+            analyser.connect(audioContext.destination); // E poi l'analyser alla destinazione
+
+            oscillator.start();
+
+            document.getElementById('toggleTone').textContent = 'STOP Tono';
+            document.getElementById('status').textContent = 'Tono attivo in loop.';
+
+        } else {
+            // STOP DEL TONO
+            oscillator.stop();
+            oscillator = null;
+            gainNode = null;
+            // Disconnetti l'analizzatore dalla destinazione quando non c'è suono attivo
+            analyser.disconnect(audioContext.destination); // Rimuovi connessione temporanea
+            document.getElementById('toggleTone').textContent = 'Avvia Tono';
+            document.getElementById('status').textContent = 'Tono interrotto. Seleziona e avvia un suono per iniziare la simulazione.';
+        }
+    });
+
+    // --- GESTIONE RUMORE CASUALE (Bianco) ---
+
+    function startNoise() {
+        // ... (resto della funzione startNoise, come prima) ...
+        const bufferSize = audioContext.sampleRate * 2;
+        const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+
+        for (let i = 0; i < bufferSize; i++) {
+            output[i] = Math.random() * 2 - 1;
+        }
+
+        noiseSource = audioContext.createBufferSource();
+        noiseSource.buffer = noiseBuffer;
+        noiseSource.loop = true;
+
+        gainNode = audioContext.createGain();
+
+        const amplitude = parseFloat(ampSlider.value);
+        gainNode.gain.setValueAtTime(amplitude, audioContext.currentTime);
+
+        // NUOVA CONNESSIONE: Collega all'analizzatore
+        noiseSource.connect(gainNode);
+        gainNode.connect(analyser); // Connetti il gainNode all'analyser
+        analyser.connect(audioContext.destination); // E poi l'analyser alla destinazione
+
+        noiseSource.start();
+
+        document.getElementById('toggleNoise').textContent = 'STOP Rumore';
+        document.getElementById('status').textContent = 'Rumore Casuale attivo in loop.';
+    }
+
+    function stopNoise() {
+        if (noiseSource) {
+            noiseSource.stop();
+            noiseSource = null;
+            gainNode = null;
+             // Disconnetti l'analizzatore dalla destinazione
+            analyser.disconnect(audioContext.destination);
+        }
+        document.getElementById('toggleNoise').textContent = 'Avvia Rumore Casuale';
+        document.getElementById('status').textContent = 'Rumore interrotto. Seleziona e avvia un suono per iniziare la simulazione.';
+    }
+
+    document.getElementById('toggleNoise').addEventListener('click', () => {
+        initAudio(); // Assicura che l'audioContext e l'analyser siano inizializzati
+
+        if (audioContext.state === 'suspended') { // Riprendi il contesto se sospeso
+             audioContext.resume();
+        }
+
+        // Ferma l'eventuale tono attivo
+        if (oscillator) stopTone();
+
+        if (noiseSource === null) {
+            startNoise();
+        } else {
+            stopNoise();
+        }
+    });
+
+    function stopTone() {
+        if (oscillator) {
+            oscillator.stop();
+            oscillator = null;
+        }
+        document.getElementById('toggleTone').textContent = 'Avvia Tono';
+    }
+    </script>
+
+</body>
+</html>

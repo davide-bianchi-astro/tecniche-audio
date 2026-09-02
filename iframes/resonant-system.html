@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Oscillatore a molla – Risonanza interattiva</title>
+  <style>
+    :root {
+      --bg: #fffff;        /* slate-900 */
+      --panel: #fffff;     /* gray-900 */
+      --card: #fffff;      /* gray-800 */
+      --muted: #000;     /* gray-400 */
+      --text: #000;      /* gray-200 */
+      --accent: #38bdf8;    /* sky-400 */
+      --warn: #f59e0b;      /* amber-500 */
+      --danger: #f87171;    /* red-400 */
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      display: grid; grid-template-rows: auto 1fr; gap: 16px;
+    }
+    header { padding: 16px 24px; background: var(--panel); position: sticky; top:0; z-index:10; }
+    header h1 { margin: 0; font-size: 1.2rem; letter-spacing: .3px; }
+    main { display: grid; gap: 16px; grid-template-columns: 1fr 360px; align-items: start; padding: 0 16px 24px; }
+    .stage { background: var(--card); border-radius: 16px; padding: 12px; }
+    canvas { width: 100%; height: 440px; display:block; background: #fff;
+             border-radius: 12px; }
+    .controls { background: var(--card); border-radius: 16px; padding: 16px; position: sticky; top: 88px; }
+    .row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; margin: 8px 0; }
+    .row label { font-size: .9rem; color: var(--muted); }
+    .row input[type="range"] { width: 180px; }
+    .row input[type="number"] { width: 110px; padding: 6px 8px; border-radius: 8px; border: 1px solid #374151; background: #fff; color: var(--text); }
+    .row input[type="checkbox"] { transform: scale(1.1); }
+    .btns { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; margin: 12px 0 4px; }
+    button { padding: 10px 12px; border: none; border-radius: 12px; background: #ccc; color: var(--text); cursor: pointer; font-weight: 600; }
+    button:hover { background:#888; }
+    button:active { transform: translateY(1px); }
+    .accent { background: #bbf; }
+    .warn { background: #bbf; }
+    .muted { color: var(--muted); font-size: .85rem; }
+    .grid2 { display:grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .pill { display:inline-block; padding: 2px 8px; border-radius: 999px; background:#fbf2f0; border:1px solid #334155; font-size:.75rem; color:var(--muted); }
+    .legend { display:flex; gap:8px; align-items:center; font-size:.85rem; color: var(--muted); margin-top:8px; }
+    .dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="stage">
+      <canvas id="sim" width="1024" height="440"></canvas>
+      <div class="legend">
+        <span class="dot" style="background:var(--accent)"></span> posizione x(t)
+      </div>
+    </section>
+
+    <aside class="controls">
+      <div class="btns">
+        <button id="start" class="accent">Avvia</button>
+        <button id="pause">Pausa</button>
+        <button id="reset">Reset</button>
+      </div>
+
+      <div class="row"><label>Impulso singolo J (kg·m/s)</label><input id="J" type="number" step="0.1" value="1.0"></div>
+      <div class="grid">
+        <button id="impulse" class="accent2">Dai impulso ora</button>
+      </div>
+
+      <hr style="border:none; border-top:1px solid #374151; margin:12px 0" />
+
+      <div class="row"><label>Impulsi periodici</label><input id="enablePeriodic" type="checkbox"></div>
+      <div class="row"><label>Periodo impulsi T<sub>imp</sub> (s)</label><input id="Timp" type="number" step="0.01" value="2.00"></div>
+      <div class="grid">
+        <button id="syncNat">Sincronizza a T<sub>0</sub> (risonanza)</button>
+      </div>
+
+      <hr style="border:none; border-top:1px solid #374151; margin:12px 0" />
+
+      <div class="row"><label>Massa m (kg)</label><input id="m" type="number" step="0.1" value="1.0"></div>
+      <div class="row"><label>Costante elastica k (N/m)</label><input id="k" type="number" step="0.5" value="5.0"></div>
+      <div class="row"><label>Smorzamento c (kg/s)</label><input id="c" type="number" step="0.05" value="0.10"></div>
+      <div class="row"><label>Posizione iniziale x<sub>0</sub> (m)</label><input id="x0" type="number" step="0.01" value="0.50"></div>
+      <div class="row"><label>Velocità iniziale v<sub>0</sub> (m/s)</label><input id="v0" type="number" step="0.01" value="0.00"></div>
+
+      <div class="row"><label>Scala spaziale (px/m)</label><input id="scale" type="number" step="10" value="200"></div>
+
+      <p class="muted" id="readout">–</p>
+    </aside>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('sim');
+    const ctx = canvas.getContext('2d');
+
+    // UI refs
+    const UI = id => document.getElementById(id);
+    const startBtn = UI('start');
+    const pauseBtn = UI('pause');
+    const resetBtn = UI('reset');
+    const impulseBtn = UI('impulse');
+    const enablePeriodic = UI('enablePeriodic');
+    const Timp = UI('Timp');
+    const Jinput = UI('J');
+    const mIn = UI('m');
+    const kIn = UI('k');
+    const cIn = UI('c');
+    const x0In = UI('x0');
+    const v0In = UI('v0');
+    const scaleIn = UI('scale');
+    const readout = UI('readout');
+    const syncNatBtn = UI('syncNat');
+
+    // Simulation state
+    let state = {
+      x: parseFloat(x0In.value),
+      v: parseFloat(v0In.value),
+      t: 0,
+      running: false,
+      lastTick: null,
+      lastImpulseTime: 0,
+      alternating: false,
+      maxAbsX: 0, // for envelope
+      trace: [], // blue trace of the position of the oscillating body
+    };
+
+    function natOmega() {
+      const m = Math.max(1e-6, parseFloat(mIn.value));
+      const k = Math.max(0, parseFloat(kIn.value));
+      return Math.sqrt(k / m);
+    }
+
+    function natPeriod() {
+      const w0 = natOmega();
+      return (w0 > 0) ? (2 * Math.PI / w0) : Infinity;
+    }
+
+    function reset() {
+      state.x = parseFloat(x0In.value);
+      state.v = parseFloat(v0In.value);
+      state.t = 0;
+      state.lastImpulseTime = 0;
+      state.alternating = false;
+      state.maxAbsX = Math.abs(state.x);
+      state.trace = [];
+      state.lastTick = performance.now();
+      draw();
+    }
+
+    let curFill = '#0b1220';
+
+    function triggerFlash() {
+      // 1. Override the CSS with an inline style for the flash color.
+      // We use .background, not .backgroundColor.
+      curFill = '#ecf0f1';
+
+      // 2. Set a timer to remove the inline style
+      setTimeout(() => {
+        // Setting .background to '' removes the inline style,
+        // causing the canvas to revert to its CSS-defined gradient.
+        curFill = '#0b1220';
+      }, 150); // Flash duration in milliseconds
+    }
+
+    function applyImpulse(sign = +1) {
+      const J = parseFloat(Jinput.value) * sign;
+      const m = Math.max(1e-6, parseFloat(mIn.value));
+      state.v += J / m; // instantaneous Δv = J/m
+      state.lastImpulseTime = state.t;
+      triggerFlash();
+    }
+
+    function tick(dt) {
+      // Limit dt for numeric stability
+      dt = Math.min(dt, 1/60);
+      const m = Math.max(1e-6, parseFloat(mIn.value));
+      const k = Math.max(0, parseFloat(kIn.value));
+      const c = Math.max(0, parseFloat(cIn.value));
+      // Acceleration a = -(c/m) v - (k/m) x
+      const a = -(c/m) * state.v - (k/m) * state.x;
+      // Euler–Cromer (semi-implicit Euler)
+      state.v += a * dt;
+      state.x += state.v * dt;
+      state.t += dt;
+
+      // Periodic impulses
+      if (enablePeriodic.checked) {
+        const T = Math.max(1e-4, parseFloat(Timp.value));
+        if (state.t - state.lastImpulseTime >= T) {
+          const sign = state.alternating ? (Math.sin(2*Math.PI*state.t/T) >= 0 ? +1 : -1) : +1;
+          applyImpulse(sign);
+        }
+      }
+
+      draw();
+    }
+
+    function draw() {
+      const W = canvas.width, H = canvas.height;
+      ctx.clearRect(0,0,W,H);
+
+      // World coordinates
+      const cx = 420; // wall x
+      const y = H/2 + 20; // baseline for spring
+      const scale = Math.max(20, parseFloat(scaleIn.value)); // px per meter
+
+      // Draw wall
+      ctx.fillStyle = curFill;
+      ctx.fillRect(0,0,W,H);
+
+      // grid
+      ctx.strokeStyle = '#1f2a44';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([2, 6]);
+      ctx.beginPath();
+      for (let gx = cx; gx < W; gx += scale) { ctx.moveTo(gx, 40); ctx.lineTo(gx, H-40); }
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // wall pattern
+      ctx.fillStyle = '#223354';
+      for (let i=0;i<12;i++) ctx.fillRect(10, 30 + i*30, 16, 16);
+      ctx.fillStyle = '#334155';
+      ctx.fillRect(cx-6, 80, 6, H-80);
+
+      // Mass position
+      const x_px = cx + state.x * scale;
+
+      // Spring
+      const left = cx;
+      const right = x_px;
+      ctx.strokeStyle = '#60a5fa';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(left, y);
+      ctx.lineTo(right, y);
+      ctx.stroke();
+
+      // Mass block
+      const bw = 60, bh = 60;
+      ctx.fillStyle = '#10b981';
+      ctx.strokeStyle = '#064e3b';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.roundRect(x_px - bw/2, y - bh/2, bw, bh, 12);
+      ctx.fill();
+      ctx.stroke();
+
+      // Position trace (x(t)) – draw as scrolling strip chart along top
+      const traceH = 120;
+      const traceTop = 60;
+      const vx = 2.0; // px per frame for scroll speed of graph
+      // Keep a static buffer of last N samples mapped to pixels across width
+      if (!state.trace) state.trace = [];
+      state.trace.push({ t: state.t, x: state.x });
+      while (state.trace.length && state.t - state.trace[0].t > 10) state.trace.shift();
+
+      // Map time to x pixel (right aligned, 10 s window)
+      const Tview = 10;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, 0, W, traceH);
+      ctx.clip();
+      // Axes
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, traceH/2);
+      ctx.lineTo(W, traceH/2);
+      ctx.stroke();
+
+      function tToX(t){ return W - (state.t - t) * (W / Tview); }
+      function xToY(x){ return traceH/2 - x * scale * 0.25; } // 25% of canvas scale
+
+      // position line
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      first = true;
+      for (const p of state.trace) {
+        const px = tToX(p.t);
+        const py = xToY(p.x);
+        if (first) { ctx.moveTo(px, py); first=false; } else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+      ctx.restore();
+
+      // HUD text
+      ctx.fillStyle = '#e5e7eb';
+      ctx.font = '12px ui-sans-serif, system-ui, -apple-system';
+      const w0 = natOmega();
+      const T0 = natPeriod();
+      const zeta = parseFloat(cIn.value) / (2*Math.sqrt(Math.max(1e-6, parseFloat(kIn.value)*parseFloat(mIn.value))));
+      const lines = [
+        `t = ${state.t.toFixed(2)} s`,
+        `x = ${state.x.toFixed(3)} m`,
+        `v = ${state.v.toFixed(3)} m/s`,
+        `ω₀ = ${w0.toFixed(3)} rad/s`,
+        `T₀ = ${isFinite(T0)?T0.toFixed(2):'∞'} s`,
+        `ζ = ${isFinite(zeta)?zeta.toFixed(3):'—'}`,
+      ];
+      let tx = W - 180, ty = H - 92;
+      ctx.globalAlpha = 0.18;
+      ctx.fillStyle = '#000';
+      ctx.roundRect(tx-10, ty-62, 170, 84, 12);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = '#e5e7eb';
+      lines.forEach((s,i)=>{ ctx.fillText(s, tx, ty + i*14); });
+
+      // Readout paragraph
+      readout.innerHTML = `T<sub>0</sub> ≈ <b>${isFinite(T0)?T0.toFixed(2):'∞'}</b> s • ω<sub>0</sub> ≈ <b>${w0.toFixed(2)}</b> rad/s • ζ ≈ <b>${isFinite(zeta)?zeta.toFixed(3):'—'}</b><br>
+      Ampiezza attuale ≈ <b>${state.maxAbsX.toFixed(3)}</b> m`;
+    }
+
+    // Animation loop
+    function loop(now) {
+      if (!state.running) { state.lastTick = now; draw(); requestAnimationFrame(loop); return; }
+      if (state.lastTick == null) state.lastTick = now;
+      const dt = Math.max(0, (now - state.lastTick) / 1000);
+      state.lastTick = now;
+      // Substep integration if needed
+      let remaining = dt;
+      const h = 1/240; // base step for stable integration
+      while (remaining > 1e-6) {
+        const step = Math.min(h, remaining);
+        tick(step);
+        remaining -= step;
+      }
+      requestAnimationFrame(loop);
+    }
+
+    // UI behaviors
+    startBtn.addEventListener('click', ()=>{ state.running = true; });
+    pauseBtn.addEventListener('click', ()=>{ state.running = false; });
+    resetBtn.addEventListener('click', ()=>{ state.running = false; reset(); });
+
+    impulseBtn.addEventListener('click', ()=> applyImpulse(+1));
+
+    syncNatBtn.addEventListener('click', ()=>{
+      const T0 = natPeriod();
+      if (isFinite(T0)) { Timp.value = T0.toFixed(2); enablePeriodic.checked = true; state.alternating = false; }
+    });
+
+    // If parameters change, recompute nothing drastic; reset is safer for demos
+    [mIn,kIn,cIn,x0In,v0In].forEach(el=> el.addEventListener('change', ()=>{ reset(); }));
+
+    // Init
+    reset();
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>

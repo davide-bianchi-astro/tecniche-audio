@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizzazione Interattiva della Fase Sinusoidale</title>
+    <style>
+        /* Stili minimali per il layout, come richiesto, solo per organizzare i canvas */
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #1a202c;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 30px;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin: 10px;
+        }
+        .controls {
+            width: 80%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #e0f2f1;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #004d40;
+        }
+        input[type="range"] {
+            width: 100%;
+        }
+        #phaseValue {
+            font-weight: bold;
+            color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <label for="phaseSlider">
+            Sfasamento (Fase Iniziale) φ:
+            <span id="phaseValue">0</span>°
+        </label>
+        <input type="range" id="phaseSlider" min="0" max="360" value="0" step="1">
+    </div>
+
+    <div class="container">
+        <!-- Canvas per la Circonferenza Goniometrica -->
+        <canvas id="circleCanvas" width="400" height="400"></canvas>
+        <!-- Canvas per il Grafico della Funzione Seno -->
+        <canvas id="sineCanvas" width="600" height="400"></canvas>
+    </div>
+
+    <script>
+        // Inizializzazione delle costanti e dei contesti dei canvas
+        const circleCanvas = document.getElementById('circleCanvas');
+        const circleCtx = circleCanvas.getContext('2d');
+        const sineCanvas = document.getElementById('sineCanvas');
+        const sineCtx = sineCanvas.getContext('2d');
+
+        const slider = document.getElementById('phaseSlider');
+        const phaseValueSpan = document.getElementById('phaseValue');
+
+        // Impostazioni per il Canvas Circolare
+        const CIRCLE_CENTER_X = circleCanvas.width / 2;
+        const CIRCLE_CENTER_Y = circleCanvas.height / 2;
+        const CIRCLE_RADIUS = 150;
+
+        // Impostazioni per il Canvas della Sinusoide
+        const SINE_PADDING = 50;
+        const SINE_WIDTH = sineCanvas.width - 2 * SINE_PADDING;
+        const SINE_HEIGHT = sineCanvas.height - 2 * SINE_PADDING;
+        const SINE_SCALE_X = SINE_WIDTH / (2 * Math.PI); // Scala per 2*pi radianti
+        const SINE_SCALE_Y = SINE_HEIGHT / 2; // Scala per ampiezza [-1, 1]
+
+        let phaseAngleDeg = 0; // Fase in gradi
+        let phaseAngleRad = 0; // Fase in radianti
+
+        // Funzione di conversione da gradi a radianti
+        function toRadians(degrees) {
+            return degrees * (Math.PI / 180);
+        }
+
+        // --- FUNZIONI DI DISEGNO ---
+
+        function drawCircle() {
+            // Pulisci il canvas
+            circleCtx.clearRect(0, 0, circleCanvas.width, circleCanvas.height);
+
+            // 1. Disegna gli assi cartesiani
+            circleCtx.strokeStyle = '#9e9e9e';
+            circleCtx.lineWidth = 1;
+            circleCtx.beginPath();
+            // Asse X
+            circleCtx.moveTo(0, CIRCLE_CENTER_Y);
+            circleCtx.lineTo(circleCanvas.width, CIRCLE_CENTER_Y);
+            // Asse Y
+            circleCtx.moveTo(CIRCLE_CENTER_X, 0);
+            circleCtx.lineTo(CIRCLE_CENTER_X, circleCanvas.height);
+            circleCtx.stroke();
+
+            // 2. Disegna la circonferenza
+            circleCtx.strokeStyle = '#42a5f5'; // Azzurro chiaro
+            circleCtx.lineWidth = 2;
+            circleCtx.beginPath();
+            circleCtx.arc(CIRCLE_CENTER_X, CIRCLE_CENTER_Y, CIRCLE_RADIUS, 0, 2 * Math.PI);
+            circleCtx.stroke();
+
+            // 3. Calcola le coordinate del punto P sulla circonferenza
+            // Nota: L'angolo nel canvas è misurato in senso orario da +X.
+            // La fase (phi) è l'angolo di partenza.
+            const x = CIRCLE_CENTER_X + CIRCLE_RADIUS * Math.cos(phaseAngleRad);
+            const y = CIRCLE_CENTER_Y - CIRCLE_RADIUS * Math.sin(phaseAngleRad); // Il - è per invertire l'asse Y del canvas
+
+            // 4. Disegna il segmento (vettore) che rappresenta l'angolo
+            circleCtx.strokeStyle = '#d32f2f'; // Rosso scuro
+            circleCtx.lineWidth = 3;
+            circleCtx.beginPath();
+            circleCtx.moveTo(CIRCLE_CENTER_X, CIRCLE_CENTER_Y);
+            circleCtx.lineTo(x, y);
+            circleCtx.stroke();
+
+            // 5. Disegna l'angolo (Arco)
+            circleCtx.strokeStyle = '#f44336';
+            circleCtx.lineWidth = 2;
+            circleCtx.beginPath();
+            // L'arco parte da 0 (asse X positivo) fino all'angolo corrente
+            circleCtx.arc(CIRCLE_CENTER_X, CIRCLE_CENTER_Y, CIRCLE_RADIUS / 4, -phaseAngleRad, 0, false);
+            circleCtx.stroke();
+
+            // 6. Disegna la proiezione sull'asse Y (l'ampiezza)
+            const amplitude = CIRCLE_RADIUS * Math.sin(phaseAngleRad);
+
+            // Linea tratteggiata orizzontale dal punto P all'asse Y
+            circleCtx.strokeStyle = '#388e3c'; // Verde scuro
+            circleCtx.setLineDash([5, 5]);
+            circleCtx.beginPath();
+            circleCtx.moveTo(x, y);
+            circleCtx.lineTo(CIRCLE_CENTER_X, y);
+            circleCtx.stroke();
+            circleCtx.setLineDash([]); // Ripristina linea continua
+
+            // Proiezione evidenziata sull'asse Y
+            circleCtx.strokeStyle = '#1b5e20'; // Verde scuro, più spesso
+            circleCtx.lineWidth = 5;
+            circleCtx.beginPath();
+            circleCtx.moveTo(CIRCLE_CENTER_X, CIRCLE_CENTER_Y);
+            circleCtx.lineTo(CIRCLE_CENTER_X, CIRCLE_CENTER_Y - amplitude);
+            circleCtx.stroke();
+            circleCtx.lineWidth = 1; // Ripristina
+
+            // Punto P
+            circleCtx.fillStyle = '#d32f2f';
+            circleCtx.beginPath();
+            circleCtx.arc(x, y, 6, 0, 2 * Math.PI);
+            circleCtx.fill();
+
+            // 7. Etichette
+            circleCtx.fillStyle = '#1a202c';
+            circleCtx.fillText('X (Tempo/Angolo)', circleCanvas.width - 90, CIRCLE_CENTER_Y + 20);
+            circleCtx.fillText('Y (Ampiezza)', CIRCLE_CENTER_X + 10, 20);
+            circleCtx.fillText('P(x, y)', x + 10, y + 10);
+        }
+
+        function drawSine() {
+            // Pulisci il canvas
+            sineCtx.clearRect(0, 0, sineCanvas.width, sineCanvas.height);
+
+            // Offset per le coordinate del canvas (in basso a sinistra dell'area del grafico)
+            const offsetX = SINE_PADDING;
+            const offsetY = SINE_PADDING + SINE_HEIGHT / 2;
+
+            // 1. Disegna gli assi
+            sineCtx.strokeStyle = '#9e9e9e';
+            sineCtx.lineWidth = 1;
+            sineCtx.beginPath();
+            // Asse X (Tempo/Angolo da 0 a 2*pi)
+            sineCtx.moveTo(offsetX, offsetY);
+            sineCtx.lineTo(offsetX + SINE_WIDTH, offsetY);
+            // Asse Y (Ampiezza da -1 a 1)
+            sineCtx.moveTo(offsetX, SINE_PADDING);
+            sineCtx.lineTo(offsetX, SINE_PADDING + SINE_HEIGHT);
+            sineCtx.stroke();
+
+            // Etichette assi
+            sineCtx.fillStyle = '#1a202c';
+            sineCtx.fillText('Ampiezza', 10, SINE_PADDING);
+            sineCtx.fillText('2π', offsetX + SINE_WIDTH - 10, offsetY + 15);
+            sineCtx.fillText('π', offsetX + SINE_WIDTH / 2 - 10, offsetY + 15);
+
+            // 2. Disegna la funzione sinusoidale y = sin(x + phi)
+            sineCtx.strokeStyle = '#42a5f5'; // Azzurro chiaro
+            sineCtx.lineWidth = 3;
+            sineCtx.beginPath();
+
+            for (let i = 0; i <= SINE_WIDTH; i++) {
+                // x è l'angolo di tempo (theta) che va da 0 a 2*pi
+                const theta = i / SINE_SCALE_X;
+                // La funzione è y = sin(theta + phi)
+                const yValue = Math.sin(theta + phaseAngleRad);
+
+                // Converte le coordinate matematiche in coordinate del canvas
+                const xCanvas = offsetX + i;
+                const yCanvas = offsetY - yValue * SINE_SCALE_Y; // Inverte Y
+
+                if (i === 0) {
+                    sineCtx.moveTo(xCanvas, yCanvas);
+                } else {
+                    sineCtx.lineTo(xCanvas, yCanvas);
+                }
+            }
+            sineCtx.stroke();
+
+            // 3. Disegna il segmento verticale che mostra il punto di partenza
+            // Il punto di partenza è a tempo/angolo = 0, e il suo valore è sin(0 + phi) = sin(phi)
+            const yStartValue = Math.sin(phaseAngleRad);
+            const yStartCanvas = offsetY - yStartValue * SINE_SCALE_Y;
+
+            // Linea verticale evidenziata a x=0
+            sineCtx.strokeStyle = '#1b5e20'; // Verde scuro
+            sineCtx.lineWidth = 5;
+            sineCtx.beginPath();
+            sineCtx.moveTo(offsetX, offsetY); // Parte dall'asse X
+            sineCtx.lineTo(offsetX, yStartCanvas); // Arriva al valore sin(phi)
+            sineCtx.stroke();
+
+            // Punto di partenza sulla curva
+            sineCtx.fillStyle = '#d32f2f';
+            sineCtx.beginPath();
+            sineCtx.arc(offsetX, yStartCanvas, 6, 0, 2 * Math.PI);
+            sineCtx.fill();
+
+            // 4. Etichetta della formula
+            sineCtx.fillStyle = '#1a202c';
+            sineCtx.font = '16px Inter, sans-serif';
+            sineCtx.fillText(`P(t) = A sin(2πνt + ${phaseAngleDeg}° )`, offsetX, SINE_PADDING - 20);
+        }
+
+        // --- GESTIONE INTERATTIVA ---
+
+        function updateVisualization() {
+            // Aggiorna l'angolo e il valore visualizzato
+            phaseAngleDeg = parseFloat(slider.value);
+            phaseAngleRad = toRadians(phaseAngleDeg);
+            phaseValueSpan.textContent = phaseAngleDeg;
+
+            // Richiama le funzioni di disegno
+            drawCircle();
+            drawSine();
+        }
+
+        // Listener per il cambiamento dello slider
+        slider.addEventListener('input', updateVisualization);
+
+        // Disegna la visualizzazione iniziale
+        window.onload = updateVisualization;
+
+    </script>
+</body>
+</html>

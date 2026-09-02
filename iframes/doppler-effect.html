@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animazione Cerchio con Velocità Variabile</title>
+    <style>
+        /* Stili minimali per centrare e rendere il canvas visibile */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            background-color: #fff;
+            padding: 20px;
+        }
+
+        #canvas-container {
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            background-color: white;
+            overflow: hidden; /* Assicura che l'ombra sia contenuta */
+        }
+
+        canvas {
+            display: block;
+        }
+
+        #controls {
+            width: 300px;
+            padding: 15px;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        #speed-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        #speed-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 10px;
+            background: #ddd;
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+        }
+
+        #speed-slider:hover {
+            opacity: 1;
+        }
+
+        #speed-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4a90e2;
+            cursor: pointer;
+            border: 3px solid white;
+        }
+
+        #speed-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4a90e2;
+            cursor: pointer;
+            border: 3px solid white;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="canvas-container">
+        <canvas id="myCanvas" width="400" height="400"></canvas>
+    </div>
+
+    <div id="controls">
+        <label id="speed-label" for="speed-slider">Velocità dell’emettitore</label>
+        <input type="range" id="speed-slider" min="0" max="50" value="0">
+    </div>
+
+    <script>
+      // Variabili globali per canvas e contesto
+      const canvas = document.getElementById('myCanvas');
+      const ctx = canvas.getContext('2d');
+      const slider = document.getElementById('speed-slider');
+      const label = document.getElementById('speed-label');
+
+      // Impostazioni del canvas
+      const MAX_RADIUS = canvas.width / 2; // Raggio massimo, metà della dimensione del canvas (200px)
+      const CENTER_X = canvas.width / 2;
+      const CENTER_Y = canvas.height / 2;
+
+      let startTime = 0; // Timestamp di inizio del ciclo di animazione
+      let animationFrameId; // ID per il controllo del requestAnimationFrame
+      let emitterSpeed = parseFloat(slider.value); // Velocità in pixel/secondo
+      let soundSpeed = 60; // Velocità in pixel/secondo
+
+      /**
+       * Funzione principale di disegno e animazione.
+       * Il ciclo di ripetizione è calcolato dinamicamente.
+       * @param {number} timestamp - Il timestamp corrente fornito da requestAnimationFrame.
+       */
+      function draw(timestamp) {
+          if (!startTime) {
+              startTime = timestamp;
+          }
+
+          // Tempo trascorso in millisecondi dall'inizio del ciclo attuale
+          let elapsedTime = timestamp - startTime;
+
+          if (elapsedTime >= 10000.0) {
+              elapsedTime = 0;
+          }
+
+          // Pulisci il canvas
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // Disegna la linea lungo cui si muove l’emettitore
+          ctx.beginPath();
+          ctx.moveTo(0, CENTER_Y);
+          ctx.lineTo(canvas.width, CENTER_Y);
+          ctx.strokeStyle = '#888';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          let elapsedTimeSec = elapsedTime / 1000;
+          // Disegna i cerchi
+          for(i = 0; i < elapsedTimeSec; i += 0.5) {
+              const currentRadius = (elapsedTimeSec - i) * soundSpeed;
+
+              ctx.beginPath();
+              ctx.arc(CENTER_X + i * emitterSpeed, CENTER_Y, currentRadius, 0, 2 * Math.PI);
+              ctx.strokeStyle = '#000';
+              ctx.lineWidth = 2;
+              ctx.stroke();
+          }
+
+          // Disegna l’emettitore
+          ctx.beginPath();
+          ctx.arc(CENTER_X + elapsedTimeSec * emitterSpeed, CENTER_Y, 5, 0, 2 * Math.PI);
+          ctx.fillStyle = '#f00';
+          ctx.fill();
+
+          // Richiedi il prossimo frame
+          animationFrameId = requestAnimationFrame(draw);
+      }
+
+      // Gestore per lo slider
+      slider.addEventListener('input', () => {
+          emitterSpeed = parseFloat(slider.value);
+          label.textContent = `Velocità dell’emettitore: ${emitterSpeed} m/s`;
+          // Resetta startTime per applicare immediatamente la nuova velocità,
+          // garantendo una ripartenza coerente.
+          startTime = performance.now();
+          // Fai ripartire l’animazione
+          animationFrameId = requestAnimationFrame(draw);
+      });
+
+      // Inizializza e avvia l'animazione
+      window.onload = function() {
+          // Pre-imposta l'etichetta
+          label.textContent = `Velocità dell’emettitore: ${emitterSpeed} m/s`;
+          // Avvia il loop di animazione
+          animationFrameId = requestAnimationFrame(draw);
+      };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Scala delle misure</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    #slider {
+      width: 60%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Scala delle Misure</h1>
+  <p>Muovi lo slider per cambiare scala (da millimetri a chilometri)</p>
+  <input type="range" id="slider" min="-3" max="3" step="1" value="0">
+  <p id="scaleLabel"></p>
+  <canvas id="scaleChart" width="800" height="300"></canvas>
+
+  <script>
+    const ctx = document.getElementById('scaleChart').getContext('2d');
+
+    const scaleLevels = [
+      { label: "Millimetri", factor: 0.001 },
+      { label: "Centimetri", factor: 0.01 },
+      { label: "Metri", factor: 1 },
+      { label: "Decametri", factor: 10 },
+      { label: "Ettometri", factor: 100 },
+      { label: "Chilometri", factor: 1000 },
+      { label: "Decine di km", factor: 10000 },
+    ];
+
+    const objects = [
+      { name: "Cellula", size: 0.01 },
+      { name: "Mano", size: 0.2 },
+      { name: "Persona", size: 1.7 },
+      { name: "Casa", size: 10 },
+      { name: "Grattacielo", size: 100 },
+      { name: "Monte", size: 3000 },
+      { name: "Pianeta", size: 12742000 },
+    ];
+
+    let chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Dimensione (in unità correnti)',
+          data: [],
+          backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        }]
+      },
+      options: {
+        animation: {
+          duration: 600
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    function updateChart(scaleIndex) {
+      const level = scaleLevels[scaleIndex + 3]; // offset per -3..+3
+      document.getElementById('scaleLabel').innerText = `Scala: ${level.label}`;
+
+      const labels = [];
+      const data = [];
+
+      for (let obj of objects) {
+        const sizeInUnits = obj.size / level.factor;
+        if (sizeInUnits >= 0.01 && sizeInUnits <= 1e7) {
+          labels.push(obj.name);
+          data.push(sizeInUnits);
+        }
+      }
+
+      chart.data.labels = labels;
+      chart.data.datasets[0].data = data;
+      chart.update();
+    }
+
+    const slider = document.getElementById('slider');
+    slider.addEventListener('input', () => {
+      const scaleIndex = parseInt(slider.value);
+      updateChart(scaleIndex);
+    });
+
+    updateChart(0); // inizializzazione
+  </script>
+</body>
+</html>

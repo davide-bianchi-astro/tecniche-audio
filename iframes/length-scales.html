@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Transizione tra Scale</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 30px;
+      overflow-x: hidden;
+    }
+
+    #slider {
+      width: 60%;
+      margin: 20px;
+    }
+
+    #scaleLabel {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+    }
+
+    #imageStage {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .object-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+        transition: transform 0.8s ease, opacity 0.6s ease, left 0.8s ease;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .enter-left {
+        transform: translate(-150%, -50%) scale(0.5);
+    }
+    .enter-right {
+        transform: translate(50%, -50%) scale(1.5);
+    }
+    .exit-left {
+        transform: translate(-150%, -50%) scale(0.5);
+        opacity: 0;
+    }
+    .exit-right {
+        transform: translate(150%, -50%) scale(1.5);
+        opacity: 0;
+    }
+    .center {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Transizione tra Oggetti a Diverse Scale</h1>
+  <input type="range" id="slider" min="0" max="6" step="1" value="2">
+  <p id="scaleLabel"></p>
+
+  <div id="imageStage"></div>
+
+  <script>
+    const scaleData = [
+      { label: "Cellula", image: "/media/cellula.png" },
+      { label: "Mano", image: "/media/mano.png" },
+      { label: "Persona", image: "/media/persona.png" },
+      { label: "Casa", image: "/media/casa.png" },
+      { label: "Grattacielo", image: "/media/grattacielo.png" },
+      { label: "Montagna", image: "/media/montagna.png" },
+      { label: "Pianeta", image: "/media/pianeta.png" },
+    ];
+
+    const slider = document.getElementById("slider");
+    const label = document.getElementById("scaleLabel");
+    const stage = document.getElementById("imageStage");
+
+    let currentIndex = parseInt(slider.value);
+    let currentImg = null;
+
+    function createImageElement(src) {
+      const img = document.createElement("img");
+      img.src = src;
+      img.className = "object-image";
+      return img;
+    }
+
+    function transitionTo(index) {
+      if (index === currentIndex) return;
+
+      const direction = index > currentIndex ? "right" : "left";
+      const enteringFrom = direction === "right" ? "enter-right" : "enter-left";
+      const exitingTo = direction === "right" ? "exit-left" : "exit-right";
+
+      const newData = scaleData[index];
+      const newImg = createImageElement(newData.image);
+      newImg.classList.add(enteringFrom);
+      stage.appendChild(newImg);
+
+      // Force reflow to apply initial class before transitioning
+      void newImg.offsetWidth;
+
+      newImg.classList.add("center");
+      newImg.classList.remove(enteringFrom);
+
+      if (currentImg) {
+        currentImg.classList.remove("center");
+        currentImg.classList.add(exitingTo);
+
+        // Rimuovi dopo l’animazione
+        setTimeout(() => {
+          if (currentImg && currentImg.parentNode) {
+            currentImg.parentNode.removeChild(currentImg);
+          }
+        }, 800);
+      }
+
+      currentImg = newImg;
+      currentIndex = index;
+      label.textContent = `Oggetto: ${newData.label}`;
+    }
+
+    slider.addEventListener("input", () => {
+      transitionTo(parseInt(slider.value));
+    });
+
+    // Avvio iniziale
+    const initial = scaleData[currentIndex];
+    currentImg = createImageElement(initial.image);
+    currentImg.classList.add("center");
+    stage.appendChild(currentImg);
+    label.textContent = `Oggetto: ${initial.label}`;
+  </script>
+</body>
+</html>

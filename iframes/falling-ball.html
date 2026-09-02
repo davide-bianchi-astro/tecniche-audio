@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulazione Energia Gravitazionale</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        #container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .slider-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        input[type="range"] {
+            flex-grow: 1;
+            margin: 0 10px;
+        }
+
+        #buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #canvas-container {
+            border: 1px solid #333;
+            background-color: #e0f7fa;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        .energy-bar-container, .speed-bar-container {
+            margin-bottom: 15px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .energy-bar-total {
+            height: 25px;
+            display: flex;
+            overflow: hidden;
+            border-radius: 3px;
+        }
+
+        #kinetic-energy, #potential-energy {
+            height: 100%;
+            transition: width 0.1s linear; /* Transizione per un effetto visivo più fluido */
+        }
+
+        #kinetic-energy {
+            background-color: #ffc107; /* Giallo (Energia Cinetica) */
+        }
+
+        #potential-energy {
+            background-color: #17a2b8; /* Azzurro (Energia Potenziale) */
+        }
+
+        .bar-label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .speed-bar-total {
+            height: 25px;
+            background-color: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        #speed-bar {
+            height: 100%;
+            background-color: #28a745; /* Verde (Velocità) */
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="controls">
+        <div class="slider-group">
+            <label for="depth-slider">Profondità della buca:</label>
+            <input type="range" id="depth-slider" min="-0.5" max="0.5" value="0.25" step="0.01">
+        </div>
+        <div class="slider-group">
+            <label for="height-slider">Altezza del tratto piano:</label>
+            <input type="range" id="height-slider" min="0.25" max="0.95" value="0.5" step="0.01">
+        </div>
+        <div id="buttons">
+            <button id="start-button">Avvia Simulazione</button>
+        </div>
+    </div>
+
+    <div id="canvas-container">
+        <canvas id="sim-canvas" width="760" height="300"></canvas>
+    </div>
+
+    <div class="energy-bar-container">
+        <div class="bar-label">Conservazione dell'Energia (Cinetica + Potenziale)</div>
+        <div class="energy-bar-total">
+            <div id="kinetic-energy" style="width: 0%;"></div>
+            <div id="potential-energy" style="width: 100%;"></div>
+        </div>
+        <small>Giallo: Cinetica (E<sub>c</sub>) | Azzurro: Energia potenziale gravitazionale (E<sub>g</sub>)</small>
+    </div>
+
+    <div class="speed-bar-container">
+        <div class="bar-label">Modulo della Velocità (V)</div>
+        <div class="speed-bar-total">
+            <div id="speed-bar"></div>
+        </div>
+    </div>
+</div>
+
+<script src="./falling-ball.js"></script>
+
+</body>
+</html>

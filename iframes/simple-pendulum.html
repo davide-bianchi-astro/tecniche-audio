@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulazione di un pendolo galileiano</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Custom CSS for Canvas and Layout */
+        .simulation-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: white;
+            padding: 24px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        #pendulumCanvas {
+            border: 1px solid #e5e7eb;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+            width: 400px;
+            aspect-ratio: 5 / 6;
+            max-height: 750px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="simulation-container">
+        <!-- Main Two-Column Layout (Controls Left, Canvas Right) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 md:gap-8">
+
+            <!-- LEFT COLUMN: Controls, Period, and Buttons -->
+            <div class="flex flex-col gap-6">
+
+                <!-- Sliders Section -->
+                <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 grid grid-cols-1 gap-6">
+
+                    <!-- Length Slider -->
+                    <div class="control-group">
+                        <label for="lengthSlider" class="text-sm font-semibold text-gray-700 flex justify-between">
+                            Lunghezza del pendolo (L): <span id="lengthValue">0.6 m</span>
+                        </label>
+                        <input type="range" id="lengthSlider" min="0.3" max="1.2" step="0.01" value="0.6" class="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer range-lg">
+                        <p class="text-xs text-gray-500">
+                            Controlla il periodo dell’oscillazione (T = 2π√L/g$).
+                        </p>
+                    </div>
+
+                    <!-- Amplitude Slider -->
+                    <div class="control-group">
+                        <label for="amplitudeSlider" class="text-sm font-semibold text-gray-700 flex justify-between">
+                            Ampiezza iniziale (ϑ₀): <span id="amplitudeValue">0.2 rad</span>
+                        </label>
+                        <input type="range" id="amplitudeSlider" min="0.1" max="0.35" step="0.01" value="0.2" class="w-full h-2 bg-red-100 rounded-lg appearance-none cursor-pointer range-lg">
+                        <p class="text-xs text-gray-500">
+                            Angoli piccoli (≤0,35 rad) rendono vera l’approssimazione di Galileo
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Period Display Section -->
+                <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                    <h3 class="text-lg font-bold text-gray-800 border-b pb-2 mb-2">Misura del periodo</h3>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="font-semibold text-gray-700">Periodo teorico (formula di Galileo):</span>
+                            <span id="theoreticalPeriodValue" class="font-mono text-blue-600 font-bold">--</span>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-gray-700">Periodo misurato:</span>
+                            <span id="measuredPeriodValue" class="font-mono text-green-600 font-bold">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons Section -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button id="startButton" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 inline-block mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.985V5.653Z" />
+                        </svg>
+                        Avvia
+                    </button>
+                    <button id="resetButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 inline-block mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 0 1-9 9m-9-9a9 9 0 0 1 9-9m0 18c3.823 0 7.23-1.625 9.177-4.25M3.823 16.25A9.011 9.011 0 0 1 3 12m18 0a9 9 0 0 0-3.823-4.25M3 12v-.75m1.5 0h.75m-.75 0 1.5-1.5M4.5 12h.75m.75 0 1.5 1.5M4.5 12v.75m.75 0h-.75" />
+                        </svg>
+                        Reimposta posizione
+                    </button>
+                </div>
+
+                <!-- Status Message Box -->
+                <div id="statusMessage" class="p-3 text-center text-sm rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200">
+                    Premi “Avvia” per far partire la simulazione
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Canvas -->
+            <div>
+                <canvas id="pendulumCanvas"></canvas>
+            </div>
+
+        </div> <!-- End of Two-Column Layout -->
+
+    </div>
+
+    <script>
+        // Get canvas and context
+        const canvas = document.getElementById('pendulumCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Global simulation state variables
+        const G_ACCELERATION = 9.81; // Gravitational acceleration (m/s^2)
+        const PIXELS_PER_METER = 300; // Scaling factor for drawing length L (pixels/m)
+        let animationFrameId = null; // Stores the requestAnimationFrame ID
+        let isRunning = false;
+        let startTime = null;
+        let pausedTime = 0; // Time elapsed when paused
+        let totalTime = 0; // Current total elapsed time in seconds
+
+        // Pendulum parameters (will be updated by sliders)
+        let pendulumLength = parseFloat(document.getElementById('lengthSlider').value); // Length in meters (0.3 to 1.2)
+        let maxAmplitude = parseFloat(document.getElementById('amplitudeSlider').value); // Max amplitude in radians (0.1 to 0.35)
+
+        // Period Measurement State
+        let crossingTimes = []; // Stores the last three center crossing times for T measurement (T = t3 - t1)
+        let measuredPeriod = 0; // The calculated period in seconds
+        let previousAngle = 0; // Angle from the previous frame, used for zero-crossing detection
+
+        // DOM elements
+        const startButton = document.getElementById('startButton');
+        const resetButton = document.getElementById('resetButton');
+        const lengthSlider = document.getElementById('lengthSlider');
+        const amplitudeSlider = document.getElementById('amplitudeSlider');
+        const lengthValueSpan = document.getElementById('lengthValue');
+        const amplitudeValueSpan = document.getElementById('amplitudeValue');
+        const statusMessage = document.getElementById('statusMessage');
+        const theoreticalPeriodValue = document.getElementById('theoreticalPeriodValue');
+        const measuredPeriodValue = document.getElementById('measuredPeriodValue');
+
+        // --- Utility Functions ---
+
+        /**
+         * Converts meters to pixels using a scaling factor.
+         * @param {number} meters - The value in meters.
+         * @returns {number} The scaled value in pixels.
+         */
+        function toPixels(meters) {
+            return meters * PIXELS_PER_METER;
+        }
+
+        /**
+         * Updates the displayed value for a slider.
+         * @param {HTMLInputElement} slider - The slider element.
+         * @param {HTMLElement} display - The span element to update.
+         * @param {string} unit - The unit suffix (e.g., ' m', ' rad').
+         */
+        function updateSliderDisplay(slider, display, unit) {
+            display.textContent = parseFloat(slider.value).toFixed(2) + unit;
+        }
+
+        /**
+         * Calculates the theoretical period based on current length L.
+         * T = 2 * pi * sqrt(L / g)
+         * @returns {number} The theoretical period in seconds.
+         */
+        function getTheoreticalPeriod() {
+            return 2 * Math.PI * Math.sqrt(pendulumLength / G_ACCELERATION);
+        }
+
+        /**
+         * Updates the display fields for both theoretical and measured periods.
+         */
+        function updatePeriodsDisplay() {
+            const theoretical = getTheoreticalPeriod();
+            theoreticalPeriodValue.textContent = theoretical.toFixed(3) + ' s';
+
+            measuredPeriodValue.textContent = measuredPeriod > 0
+                ? measuredPeriod.toFixed(3) + ' s'
+                : 'Sto misurando…';
+        }
+
+        // --- Core Pendulum Logic ---
+
+        /**
+         * Calculates the angular frequency (omega) based on the current length L.
+         * Omega = sqrt(g / L)
+         * @returns {number} Angular frequency in rad/s.
+         */
+        function getAngularFrequency() {
+            return Math.sqrt(G_ACCELERATION / pendulumLength);
+        }
+
+        /**
+         * Calculates the angle of the pendulum at a given time t.
+         * Theta(t) = ThetaMax * cos(omega * t) (Small Angle Approx)
+         * @param {number} t - Time elapsed in seconds.
+         * @returns {number} Angle in radians.
+         */
+        function getAngle(t) {
+            const omega = getAngularFrequency();
+            return maxAmplitude * Math.cos(omega * t);
+        }
+
+        // --- Canvas Drawing ---
+
+        /**
+         * Clears the canvas and draws the static pivot and the moving pendulum.
+         * @param {number} angle - The current angle of the pendulum in radians.
+         */
+        function drawPendulum(angle) {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Center of the pivot relative to the canvas
+            const pivotX = canvas.width / 2;
+            const pivotY = canvas.height * 0.1; // 10% from the top
+
+            // Pendulum parameters in pixels
+            const L_pixels = toPixels(pendulumLength);
+            const BOB_RADIUS = 20;
+
+            // Calculate bob position (x, y) relative to the pivot
+            // X position: L * sin(theta)
+            // Y position: L * cos(theta)
+            const bobX = pivotX + L_pixels * Math.sin(angle);
+            const bobY = pivotY + L_pixels * Math.cos(angle);
+
+            // 1. Draw the Pivot (a small fixed circle)
+            ctx.beginPath();
+            ctx.arc(pivotX, pivotY, 8, 0, Math.PI * 2);
+            ctx.fillStyle = '#1f2937'; // Dark gray
+            ctx.fill();
+            ctx.closePath();
+
+            // 2. Draw the String (a line from pivot to bob)
+            ctx.beginPath();
+            ctx.moveTo(pivotX, pivotY);
+            ctx.lineTo(bobX, bobY);
+            ctx.strokeStyle = '#6b7280'; // Medium gray
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.closePath();
+
+            // 3. Draw the Bob (the mass)
+            ctx.beginPath();
+            ctx.arc(bobX, bobY, BOB_RADIUS, 0, Math.PI * 2);
+            ctx.fillStyle = '#ef4444'; // Red
+            ctx.shadowColor = 'rgba(239, 68, 68, 0.6)';
+            ctx.shadowBlur = 10;
+            ctx.fill();
+            ctx.closePath();
+
+            // Reset shadow properties
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+
+            // 4. Draw the initial amplitude line (dotted line for reference)
+            const refX = pivotX + L_pixels * Math.sin(maxAmplitude);
+            const refY = pivotY + L_pixels * Math.cos(maxAmplitude);
+
+            ctx.beginPath();
+            ctx.moveTo(pivotX, pivotY);
+            ctx.lineTo(refX, refY);
+            ctx.strokeStyle = '#1d4ed8'; // Blue
+            ctx.setLineDash([5, 5]); // Dotted line
+            ctx.globalAlpha = 0.5;
+            ctx.stroke();
+            ctx.closePath();
+            ctx.setLineDash([]); // Reset line dash
+            ctx.globalAlpha = 1.0;
+        }
+
+        // --- Animation Loop ---
+
+        /**
+         * The main animation loop.
+         * @param {number} timestamp - The current time provided by requestAnimationFrame (in ms).
+         */
+        function animate(timestamp) {
+            if (!isRunning) {
+                // If not running, just draw the current static state
+                drawPendulum(getAngle(totalTime));
+                return;
+            }
+
+            if (startTime === null) {
+                startTime = timestamp - pausedTime * 1000; // Adjust start time for pause duration
+            }
+
+            // Calculate current total time elapsed in seconds
+            totalTime = (timestamp - startTime) / 1000;
+
+            // Get the current angle based on elapsed time
+            const currentAngle = getAngle(totalTime);
+
+            // --- Period Measurement Logic (Center Crossing) ---
+            // A full period T is the time between three consecutive zero crossings (t3 - t1)
+            // We look for a sign change, indicating crossing the vertical axis (theta=0).
+            if (previousAngle * currentAngle < 0) {
+                const crossingTime = totalTime;
+
+                crossingTimes.push(crossingTime);
+
+                // Keep only the last 3 crossing times
+                if (crossingTimes.length > 3) {
+                    crossingTimes.shift(); // Remove the oldest time (t1)
+                }
+
+                if (crossingTimes.length === 3) {
+                    // Calculate T = t3 - t1
+                    const newPeriod = crossingTimes[2] - crossingTimes[0];
+
+                    // Use a simple running average (90% old, 10% new) to stabilize the reading
+                    if (measuredPeriod === 0) {
+                        measuredPeriod = newPeriod;
+                    } else {
+                        measuredPeriod = measuredPeriod * 0.9 + newPeriod * 0.1;
+                    }
+
+                    updatePeriodsDisplay();
+                }
+            }
+            previousAngle = currentAngle;
+
+            // Draw the pendulum at the new position
+            drawPendulum(currentAngle);
+
+            // Request the next frame
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        // --- Control Functions ---
+
+        function startSimulation() {
+            if (isRunning) return;
+            isRunning = true;
+            startTime = null; // Will be set on the next frame call
+            statusMessage.textContent = 'Simulazione in corso…';
+            statusMessage.className = 'mt-4 p-3 text-center text-sm rounded-lg bg-green-50 text-green-700 border border-green-200';
+
+            startButton.disabled = true;
+
+            // Start the animation loop
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        function resetSimulation() {
+            // Stop animation if running
+            if (isRunning) {
+                cancelAnimationFrame(animationFrameId);
+                isRunning = false;
+            }
+
+            // Reset time parameters
+            totalTime = 0;
+            pausedTime = 0;
+            startTime = null;
+
+            // Reset period measurement variables
+            crossingTimes = [];
+            measuredPeriod = 0;
+
+            // Update parameters from sliders
+            pendulumLength = parseFloat(lengthSlider.value);
+            maxAmplitude = parseFloat(amplitudeSlider.value);
+            updateSliderDisplay(lengthSlider, lengthValueSpan, ' m');
+            updateSliderDisplay(amplitudeSlider, amplitudeValueSpan, ' rad');
+
+            // Reset the previous angle for accurate crossing detection at startup
+            previousAngle = getAngle(0);
+
+            // Redraw at the initial (reset) position (angle = thetaMax)
+            drawPendulum(getAngle(totalTime));
+            updatePeriodsDisplay(); // Update display with new theoretical period
+
+            statusMessage.textContent = 'Pronto per partire.';
+            statusMessage.className = 'mt-4 p-3 text-center text-sm rounded-lg bg-blue-50 text-blue-700 border border-blue-200';
+
+            startButton.disabled = false;
+        }
+
+        // --- Event Listeners and Initialization ---
+
+        // Handle canvas resizing for responsiveness
+        function resizeCanvas() {
+            canvas.width = canvas.clientWidth;
+            canvas.height = canvas.clientWidth * 6 / 5;
+            // Re-draw the current state after resizing
+            drawPendulum(getAngle(totalTime));
+            // Recalculate theoretical period if parameters were changed
+            updatePeriodsDisplay();
+        }
+
+        // Listeners for buttons
+        startButton.addEventListener('click', startSimulation);
+        resetButton.addEventListener('click', resetSimulation);
+
+        // Listeners for sliders
+        lengthSlider.addEventListener('input', () => {
+            pendulumLength = parseFloat(lengthSlider.value);
+            updateSliderDisplay(lengthSlider, lengthValueSpan, ' m');
+            updatePeriodsDisplay(); // Update theoretical period immediately
+            // If paused or running, redraw to reflect new length
+            drawPendulum(getAngle(totalTime));
+        });
+
+        amplitudeSlider.addEventListener('input', () => {
+            maxAmplitude = parseFloat(amplitudeSlider.value);
+            updateSliderDisplay(amplitudeSlider, amplitudeValueSpan, ' rad');
+            // If paused or running, redraw to reflect new amplitude
+            drawPendulum(getAngle(totalTime));
+        });
+
+        // Initial setup
+        window.addEventListener('load', () => {
+            resizeCanvas(); // Set initial canvas size
+            resetSimulation(); // Draw the initial state and set initial period displays
+        });
+        window.addEventListener('resize', resizeCanvas); // Handle window resizing
+
+        // Initial display update for sliders
+        updateSliderDisplay(lengthSlider, lengthValueSpan, ' m');
+        updateSliderDisplay(amplitudeSlider, amplitudeValueSpan, ' rad');
+
+    </script>
+</body>
+</html>
