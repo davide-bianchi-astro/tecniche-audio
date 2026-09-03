@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="it-IT">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Davide Bianchi (davide.bianchi1@unimi.it)">
+  <title>Fisica – Lezione 5</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js-5.2.1/dist/reset.css">
+  <link rel="stylesheet" href="reveal.js-5.2.1/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      /* overflow: visible; */
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="reveal.js-5.2.1/dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="css/custom-revealjs.css"/>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Fisica – Lezione 5</h1>
+  <p class="subtitle">Oscillazioni</p>
+  <p class="author">Davide Bianchi (<a
+href="mailto:davide.bianchi1@unimi.it">davide.bianchi1@unimi.it</a>)</p>
+  <p class="institute">(slides mutate dal corso di Maurizio Tomasi)</p>
+  <p class="date">Mercoledì 2 Settembre 2026</p>
+</section>
+
+<section id="introduzione-allargomento-di-oggi" class="slide level1">
+<h1>Introduzione all’argomento di oggi</h1>
+<ul>
+<li>Studieremo i moti oscillatori e ne vedremo i tipi più
+importanti</li>
+<li>Introdurremo i concetti di “periodo” e di “frequenza”</li>
+<li>Introdurremo il concetto di “onda”</li>
+</ul>
+</section>
+<section id="oscillazioni" class="slide level1">
+<h1>Oscillazioni</h1>
+</section>
+<section id="cosè-unoscillazione" class="slide level1">
+<h1>Cos’è un’oscillazione?</h1>
+<ul>
+<li>Un’oscillazione è un movimento periodico di un corpo che si sposta
+tra due posizioni estreme</li>
+<li>Semplificando, è un moto “avanti e indietro” che si ripete</li>
+<li>Alcuni esempi:
+<ul>
+<li>Altalena</li>
+<li>Pendolo di un orologio</li>
+<li>Corda di una chitarra</li>
+</ul></li>
+</ul>
+</section>
+<section id="oscillazioni-e-forze" class="slide level1">
+<h1>Oscillazioni e forze</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Evidentemente le oscillazioni sono possibili solo se è in gioco
+qualche forza!</p></li>
+<li><p>Perché un corpo torni indietro, è infatti necessario che una
+forza lo faccia decelerare fino a fermarlo, per poi farlo tornare
+indietro</p></li>
+<li><p>Le forze adatte allo scopo sono molte:</p>
+<ul>
+<li>Elastiche (molla)</li>
+<li>Gravitazionale (altalena, pendolo)</li>
+<li>Etc.</li>
+</ul></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/pendulum-no-text.gif" /></p>
+</div>
+</div>
+</section>
+<section id="forze-elastiche" class="slide level1">
+<h1>Forze elastiche</h1>
+<ul>
+<li><p>Le forze elastiche sono ovviamente quelle associate all’energia
+elastica <span class="math inline">E_e</span> che avevamo visto <a
+href="tomasi-lezione-03.html#energia-elastica">nella scorsa
+lezione</a></p></li>
+<li><p>Quando un corpo elastico viene deformato da una forza esterna,
+esso cerca di riportarsi alla forma originaria</p></li>
+<li><p>Esempi:</p>
+<ul>
+<li><p>Elastici da cucina</p></li>
+<li><p>Molle degli orologi</p></li>
+<li><p>Strumenti musicali a corda (violino, chitarra, arpa,
+pianoforte…)</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="forze-elastiche-1" class="slide level1">
+<h1>Forze elastiche</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li>Una forza elastica:
+<ul>
+<li>Richiama verso <strong>sinistra</strong> quando il corpo è deformato
+verso destra</li>
+<li>Richiama verso <strong>destra</strong> quando il corpo è deformato
+verso sinistra</li>
+</ul></li>
+<li>Ovviamente potete sostituire a destra/sinistra anche alto/basso,
+avanti/indietro… Il concetto resta sempre lo stesso</li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/oscillating-spring.gif" /></p>
+</div>
+</div>
+</section>
+<section id="energia-elastica" class="slide level1">
+<h1>Energia elastica</h1>
+<ul>
+<li>In termini di energia:
+<ul>
+<li>Quando si allunga/comprime una molla, si accumula energia
+elastica</li>
+<li>Rilasciandola, l’energia elastica si converte in energia
+cinetica</li>
+<li>Nel caso ideale, l’energia elastica e cinetica continuano a
+convertirsi tra loro, mantenendo la somma uguale</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<iframe src="iframes/ideal-oscillator.html" width="100%" height="700" style="border:1px solid #ccc; border-radius: 8px;">
+</iframe>
+</section>
+<section id="il-pendolo" class="slide level1">
+<h1>Il pendolo</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li>Quando spostiamo la massa di un pendolo, la gravità tenta di tirarla
+verso il basso…</li>
+<li>…ma l’asta la costringe a muoversi lungo un arco</li>
+<li>La combinazione della gravità e dell’asta fa sì che nel punto più
+basso la spinta della gravità si annulla, mentre è massima agli estremi:
+proprio come una molla!</li>
+<li>Attenzione: non c’è energia elastica ma potenziale gravitazionale!
+Però la forma del movimento e il comportamento della forza sono gli
+stessi di una molla</li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/orologio-a-pendolo.jpg" height="400" /></p>
+</div>
+</div>
+</section>
+<section id="periodo-e-frequenza" class="slide level1">
+<h1>Periodo e frequenza</h1>
+<ul>
+<li><p>Il tempo perché un pendolo o una molla faccia un’oscillazione
+completa è detto <strong>periodo</strong>, e di solito si indica con
+<span class="math inline">T</span> (il <strong>semiperiodo</strong> è
+invece <span class="math inline">T/2</span>).</p></li>
+<li><p>Viene molto usata anche la quantità inversa, la
+<strong>frequenza</strong> <span class="math inline">\nu</span>:</p>
+<p><span class="math display">
+\nu = \frac1{T} \quad \Rightarrow \quad T = \frac1\nu.
+</span></p></li>
+<li><p>Nel SI, il periodo si misura in secondi e la frequenza in s⁻¹.
+L’unità s⁻¹ viene indicata anche con il simbolo Hz (“Hertz”)</p></li>
+<li><p><strong>Trucco pratico</strong>: Un numero in Hertz dice quante
+oscillazioni si compiono in un secondo.</p></li>
+</ul>
+</section>
+<section id="esempi-di-periodi-e-frequenze" class="slide level1">
+<h1>Esempi di periodi e frequenze</h1>
+</section>
+<section id="diapason" class="slide level1">
+<h1>Il diapason</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Il diapason è uno strumento che si usa per accordare gli
+strumenti musicali</p></li>
+<li><p>È fatto da una forcella metallica, dimensionata in modo da
+oscillare 440 volte al secondo</p></li>
+<li><p>La frequenza di oscillazione è quindi 440 Hz, e il periodo è</p>
+<p><span class="math display">
+T = \frac1{\nu} = \frac1{440\,\text{Hz}} \approx 0{,}0023\,\text{s} =
+2{,}3\,\text{ms}.
+</span></p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/diapason.webp" /></p>
+</div>
+</div>
+</section>
+<section id="lorologio-a-pendolo" class="slide level1">
+<h1>L’orologio a pendolo</h1>
+<ul>
+<li><p>Un diapason oscilla sempre a 440 Hz: non può oscillare ad
+un’altra frequenza!</p></li>
+<li><p>Già Galileo Galilei scoprì che questo è vero anche per un
+pendolo: <strong>a patto di non fargli fare movimenti troppo
+ampi</strong>, il suo periodo resta sempre lo stesso</p></li>
+<li><p>Galileo stabilì che l’unico mezzo per variare il periodo di un
+pendolo è accorciare o allungare la corda</p></li>
+<li><p>(No, aumentare o diminuire la massa non cambia il
+periodo!)</p></li>
+<li><p>È questo che rende possibile l’esistenza degli orologi a
+pendolo</p></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<iframe src="iframes/simple-pendulum.html" width="100%" height="700" style="border:1px solid #ccc; border-radius: 8px;">
+</iframe>
+</section>
+<section id="il-metronomo" class="slide level1">
+<h1>Il metronomo</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>A differenza del diapason e dei pendoli, la frequenza del
+metronomo è aggiustabile mediante un cursore mobile</p></li>
+<li><p>Se siete curiosi, <a
+href="https://www.youtube.com/watch?v=M8wBNKHN9Cs">questo video</a>
+spiega il suo funzionamento</p></li>
+<li><p>I numeri del metronomo non indicano gli Hertz, ma i “battiti al
+minuto”</p></li>
+<li><p>Per un <em>Allegro vivace</em> potreste scegliere 120 battiti al
+minuto, che corrisponde a <span class="math inline">T =
+0{,}5\,\text{s}</span> e <span class="math inline">\nu =
+2\,\text{Hz}</span>.</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/metronome-animation.webp" /></p>
+</div>
+</div>
+</section>
+<section id="il-pianoforte" class="slide level1">
+<h1>Il pianoforte</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Il pianoforte copre circa sette ottave: la corda più grave (La₀)
+oscilla a 27 Hz, quella più acuta (Do₈) a 4.190 Hz!</p></li>
+<li><p>Ad ogni ottava la frequenza raddoppia:</p>
+<table>
+<thead>
+<tr>
+<th>Nota</th>
+<th style="text-align: right;">Frequenza (Hz)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>La₀</td>
+<td style="text-align: right;">27,5</td>
+</tr>
+<tr>
+<td>La₁</td>
+<td style="text-align: right;">55,0</td>
+</tr>
+<tr>
+<td>La₂</td>
+<td style="text-align: right;">110,0</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/Kisting-Pianoforte.jpg" /></p>
+</div>
+</div>
+</section>
+<section id="il-cuore-umano" class="slide level1">
+<h1>Il cuore umano</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Il battito cardiaco a riposo è di circa 60 pulsazioni al
+minuto</p></li>
+<li><p>Il periodo è quindi <span class="math inline">T =
+1\,\text{s}</span>, e la frequenza è <span class="math inline">\nu =
+1\,\text{Hz}</span></p></li>
+<li><p>Per curiosità, il battito a riposo di un colibrì è di 600
+pulsazioni al minuto, quindi <span class="math inline">T =
+0{,}1\,\text{s}</span> e <span class="math inline">\nu =
+10\,\text{Hz}</span>.</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/heart-beat.webp" /></p>
+</div>
+</div>
+</section>
+<section id="terremoti" class="slide level1">
+<h1>Terremoti</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Il periodo di oscillazione di un’onda sismica è molto
+variabile</p></li>
+<li><p>Nell’immagine a fianco (<a
+href="https://it.wikipedia.org/wiki/Terremoto_di_Christchurch_del_2011">terremoti
+del 2010–2011 a Christcurch, in Nuova Zelanda</a>) si può stimare che il
+periodo dell’onda fosse inferiore al secondo, quindi <span
+class="math inline">1\,\text{Hz} &lt; \nu &lt;
+10\,\text{Hz}</span>.</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/earthquake-christcurch.webp" /></p>
+</div>
+</div>
+</section>
+<section id="giostra" class="slide level1">
+<h1>Giostra</h1>
+<p>Provate a stimare il periodo e la frequenza di questa giostra:</p>
+<video width="960" height="540" controls>
+<source src="media/giostra.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+<p>Originale su <a
+href="https://youtu.be/zTyqUf3E2xk?si=OAZtpeEWosCZvc_k">YouTube</a></p>
+</section>
+<section id="tipi-di-moti-oscillatori" class="slide level1">
+<h1>Tipi di moti oscillatori</h1>
+</section>
+<section id="oscillazioni-libere" class="slide level1">
+<h1>Oscillazioni libere</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li>Le “oscillazioni libere” sono tutte quelle oscillazioni originate da
+una forza che, dopo aver dato un impulso iniziale, cessa di operare</li>
+<li>In seguito a quell’impulso, l’oscillazione continua grazie alla sola
+forza elastica o gravitazionale</li>
+<li>Il moto di un pendolo o di una molla è solo in prima approssimazione
+libero</li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/oscillating-spring.gif" /></p>
+</div>
+</div>
+</section>
+<section id="oscillazioni-smorzate" class="slide level1">
+<h1>Oscillazioni smorzate</h1>
+<ul>
+<li><p>Nella realtà, ci sono sempre altre forze in gioco che fermano le
+oscillazioni: un’altalena, se non spinta periodicamente, si
+ferma!</p></li>
+<li><p>È quindi impossibile avere un’oscillazione libera
+<strong>perpetua</strong></p></li>
+<li><p>Quali sono queste forze aggiuntive che impediscono alle
+oscillazioni di continuare?</p></li>
+</ul>
+</section>
+<section id="arresto-di-unaltalena" class="slide level1">
+<h1>Arresto di un’altalena</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Le forze che arrestano un’altalena sono le seguenti:</p>
+<ul>
+<li><p>L’attrito dell’aria in cui è immersa l’altalena</p></li>
+<li><p>Il non perfetto scorrimento delle sospensioni (catene o corde)
+intorno ai perni</p></li>
+</ul></li>
+<li><p>Queste forze convertono l’energia cinetica e potenziale
+dell’oscillazione in <strong>calore</strong>, che si disperde sia
+nell’aria che nelle sospensioni</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/altalena.jpg" /></p>
+</div>
+</div>
+</section>
+<section id="forze-viscose" class="slide level1">
+<h1>Forze viscose</h1>
+<ul>
+<li><p>L’attrito dell’aria è una cosiddetta <strong>forza
+viscosa</strong></p></li>
+<li><p>Le forze viscose intervengono quando un corpo si muove, mentre
+sono nulle se il corpo è fermo</p></li>
+<li><p>In altre parole, più velocemente un corpo si muove, più intense
+sono le forze viscose, secondo la formula</p>
+<p><span class="math display">
+F = - c v,
+</span></p>
+<p>dove il segno meno indica che la forza si oppone sempre alla
+velocità, e <span class="math inline">c</span> è un coefficiente che
+dipende dalla viscosità del fluido, dalle dimensioni del corpo e dalla
+sua forma.</p></li>
+</ul>
+</section>
+<section id="forze-viscose-1" class="slide level1">
+<h1>Forze viscose</h1>
+<ul>
+<li><p>Il coefficiente <span class="math inline">c</span> ha queste
+unità di misura:</p>
+<p><span class="math display">
+c = \frac{F}{v} \quad \Rightarrow \quad \left[c\right] = \mathrm{kg/s}.
+</span></p>
+<p>Non sforzatevi di ricavarne un senso profondo: è più facile pensare
+che sono semplicemente derivate dalla definizione di <span
+class="math inline">c</span>!</p></li>
+<li><p>Più è grande <span class="math inline">c</span>, più resistenza
+oppone il fluido in cui si muove il corpo: il miele offre più resistenza
+dell’acqua!</p></li>
+</ul>
+</section>
+<section id="corpi-in-caduta-nellaria" class="slide level1">
+<h1>Corpi in caduta nell’aria</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Un corpo in caduta aumenta la sua velocità di 10 m/s ogni secondo
+che passa. Ma dopo un certo tempo la forza viscosa dell’aria arriva a
+bilanciare quella di gravità, rendendo la velocità costante</p></li>
+<li><p>Grazie all’aria, la velocità delle gocce di pioggia non supera
+gli 8 m/s: senza di essa l’impatto a terra sarebbe come quello di una
+palla da bowling che cade da 1  m!</p></li>
+<li><p>I paracadute funzionano perché <span class="math inline">c</span>
+è grande</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/paracadute.jpg" /></p>
+</div>
+</div>
+</section>
+<section id="oscillazioni-smorzate-1" class="slide level1">
+<h1>Oscillazioni smorzate</h1>
+<ul>
+<li><p>Un oscillatore che subisce una forza viscosa rallenta
+progressivamente il suo moto</p></li>
+<li><p>Se non intervengono forze, l’oscillazione è destinata ad
+interrompersi dopo un certo tempo</p></li>
+<li><p>Un esempio è una molla che oscilla in un fluido: potete pensare
+all’aria, ma è più efficace se pensate alla molla immersa
+sott’acqua</p></li>
+</ul>
+</section>
+<section id="smorzamento-critico" class="slide level1">
+<h1>Smorzamento critico</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Se le forze che si oppongono all’oscillazione sono intense, il
+corpo potrebbe non oscillare proprio!</p></li>
+<li><p>Quello che succede è che la molla torna alla posizione di riposo,
+e non la oltrepassa: si ferma e da lì non si muove più</p></li>
+<li><p>Questo è desiderabile in certi casi: ad esempio, gli
+ammortizzatori delle auto realizzano uno smorzamento critico per evitare
+che le sospensioni dell’auto oscillino troppo dopo una buca</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/automobile-buca.jpg" /></p>
+</div>
+</div>
+</section>
+<section id="smorzamento-critico-1" class="slide level1">
+<h1>Smorzamento critico</h1>
+<ul>
+<li><p>Si può calcolare (ma è complicato!) quanto deve valere <span
+class="math inline">c</span> per avere uno smorzamento critico; il
+risultato è</p>
+<p><span class="math display">
+c_\text{crit} = 2\sqrt{k m},
+</span></p>
+<p>dove <span class="math inline">k</span> è la costante della molla e
+<span class="math inline">m</span> è la massa del corpo attaccato alla
+molla.</p></li>
+<li><p>Se <span class="math inline">c</span> è maggiore di questo valore
+critico, non si hanno oscillazioni</p></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<iframe src="iframes/damped-oscillator.html" width="100%" height="700" style="border:1px solid #ccc; border-radius: 8px;">
+</iframe>
+</section>
+<section id="risonanza" class="slide level1">
+<h1>Risonanza</h1>
+</section>
+<section id="risonanza-1" class="slide level1">
+<h1>Risonanza</h1>
+<ul>
+<li><p>Di solito, se si mette in moto un sistema oscillante, si desidera
+che l’oscillazione continui! (Non è il caso delle sospensioni delle
+auto…)</p></li>
+<li><p>Senza un meccanismo che impedisca lo smorzamento
+dell’oscillazione, un orologio o un metronomo sarebbero ben poco
+utili!</p></li>
+<li><p>Per poter vincere le forze viscose e di attrito (che “degradano”
+l’energia), è necessario fornire periodicamente energia:</p>
+<ul>
+<li><p>Tramite una molla (metronomo, orologio a molla)</p></li>
+<li><p>Tramite una batteria (orologio al quarzo)</p></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<iframe src="iframes/resonant-system.html" width="100%" height="700" style="border:1px solid #ccc; border-radius: 8px;">
+</iframe>
+</section>
+<section id="ampiezza-infinita" class="slide level1">
+<h1>Ampiezza infinita?</h1>
+<ul>
+<li><p>Se la viscosità è sotto una certa soglia, ad ogni periodo di
+oscillazione l’ampiezza aumenta, potenzialmente fino all’infinito (se
+non si rompe prima la molla…)</p></li>
+<li><p>Per capire come si comporta un oscillatore in risonanza, bisogna
+quindi tenere conto di questi fattori:</p>
+<ul>
+<li><p>L’intensità della forzante, che tende a far
+<strong>aumentare</strong> l’ampiezza</p></li>
+<li><p>L’intensità delle forze viscose, che tende a
+<strong>ridurre</strong> l’ampiezza</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="conclusioni" class="slide level1">
+<h1>Conclusioni</h1>
+</section>
+<section id="cosa-sapere-per-lesame" class="slide level1">
+<h1>Cosa sapere per l’esame</h1>
+<ul>
+<li>Periodo e frequenza, valori tipici delle oscillazioni viste in
+classe</li>
+<li>Oscillazioni libere e smorzate</li>
+<li>Risonanza</li>
+</ul>
+</section>
+    </div>
+  </div>
+
+  <script src="reveal.js-5.2.1/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="reveal.js-5.2.1/plugin/notes/notes.js"></script>
+  <script src="reveal.js-5.2.1/plugin/search/search.js"></script>
+  <script src="reveal.js-5.2.1/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+       // Parallax background image
+       parallaxBackgroundImage: 'media/background.png', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1440,
+
+        height: 810,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

@@ -14,10 +14,16 @@
     .reveal .sourceCode {  /* see #7635 */
       /* overflow: visible; */
     }
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     /* The extra [class] is a hack that increases specificity enough to
        override a similar rule in reveal.js */
@@ -55,9 +61,9 @@ href="mailto:maurizio.tomasi@unimi.it"><code>maurizio.tomasi@unimi.it</code></a>
 <ul>
 <li>Tre moduli:
 <ol>
-<li>Fisica applicata (prof. Tomasi)</li>
-<li>Misure elettriche ed elettroniche (dott. Bianchi)</li>
-<li>Statistica medica</li>
+<li>Fisica Applicata (dott. Bianchi)</li>
+<li>Misure Elettriche ed Elettroniche (dott. Bianchi)</li>
+<li>Statistica Medica (dott. Turati)</li>
 </ol></li>
 <li>Un esame di 60 minuti per ogni modulo, nella stessa giornata</li>
 <li>Obbligatoria la presenza al 70% di lezioni <strong>per ogni
@@ -83,9 +89,9 @@ sarà fornito in forma di slide come quelle che state vedendo
 ora.</p></li>
 <li><p>Non c’è un libro di testo consigliato: le slide dovrebbero
 bastare per la preparazione.</p></li>
-<li><p>Queste slides sono disponibili all’indirizzo <a
-href="https://ziotom78.github.io/tecniche-audio/">ziotom78.github.io/tecniche-audio</a>,
-e sono navigabili.</p></li>
+<li><p>Queste slides sono disponibili all’indirizzo
+https://davide-bianchi-astro.github.io/tecniche-audio e sono
+navigabili.</p></li>
 <li><p>Se vi è più comodo, potete ottenere una versione PDF producendola
 da soli: basta aggiungere <code>?print-pdf</code> alla fine della URL e
 stampare la pagina da browser in un file PDF (vedi le <a

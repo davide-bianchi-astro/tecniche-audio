@@ -4,16 +4,16 @@
 <script src="js/trajectories.js" charset="utf-8"></script>
 <script src="js/plotly-3.1.0.min.js" charset="utf-8"></script>
 
-# L’insegnamento “Fisica e statistica”
+# L’insegnamento “Fisica e Statistica”
 
 -   Tre moduli:
-    #.   Fisica applicata (dott. Bianchi)
-    #.   Misure elettriche ed elettroniche (dott. Bianchi)
-    #.   Statistica medica (dott. Turati)
+    #.   Fisica Applicata (dott. Bianchi)
+    #.   Misure Elettriche ed Elettroniche (dott. Bianchi)
+    #.   Statistica Medica (dott. Turati)
 -   Un esame di 60 minuti per ogni modulo, nella stessa giornata
 -   Obbligatoria la presenza al 70% di lezioni **per ogni modulo** (giustificazioni solo con certificato medico)
 
-# Fisica applicata
+# Fisica Applicata
 
 -   Sistemi di misura
 -   Meccanica: cinematica e dinamica, l’energia
@@ -41,7 +41,7 @@
 
 # Modalità d’esame
 
--   Questo vale solo per il modulo di Fisica Applicata (questo); gli esami di Misure Elettriche e Fisica Statistica hanno le loro regole che vi saranno illustrate dai rispettivi titolari 
+-   Questo vale solo per il modulo di Fisica Applicata (questo); gli esami di Misure Elettriche ed Elettroniche e Statistica Medica hanno le loro modalità che vi saranno illustrate dai rispettivi titolari 
 -   Esame scritto della durata di 60 minuti
 -   Articolato in:
     -  Alcune domande a risposta multipla
@@ -248,7 +248,7 @@ Sottolinea che la misurazione di qualcosa è un’attività della vita quotidian
 
 ---
 title: Fisica Applicata -- Lezione 1
-subtitle: Cosa significa misurare?
-author: Davide Bianchi ([davide.bianchi1@unimi.it`](mailto:davide.bianchi1@unimi.it))
+author: Davide Bianchi ([davide.bianchi1@unimi.it](mailto:davide.bianchi1@unimi.it))
 date: Mercoledì 2 Settembre 2026
+institute: (slides mutate dal corso di Maurizio Tomasi)
 ...

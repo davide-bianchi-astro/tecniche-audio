@@ -1,0 +1,38 @@
+.reveal {
+    font-family: Arial, sans-serif;
+    color: #222;
+}
+
+.reveal h1,
+.reveal h2 {
+    color: #204a87;
+    text-transform: none;
+}
+
+.reveal h1 {
+    font-size: 2.2em;
+}
+
+.reveal h2 {
+    font-size: 1.7em;
+}
+
+.reveal p,
+.reveal li {
+    font-size: 0.85em;
+    line-height: 1.4;
+}
+
+.reveal strong {
+    color: #b22222;
+}
+
+.reveal img {
+    max-height: 500px;
+    border: none;
+    box-shadow: none;
+}
+
+.reveal .slides {
+    text-align: left;
+}

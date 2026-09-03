@@ -1,24 +1,25 @@
-PANDOC := /usr/bin/pandoc
-PANDOC_IMAGINE := $(HOME)/bin/pandoc-imagine
+CONDA ?= conda
+CONDA_ENV ?= env_old_mac_workaround
+PANDOC := $(CONDA) run -n $(CONDA_ENV) pandoc
 HTTP_FILES = \
-	tomasi-lezione-09.html \
-	tomasi-lezione-08.html \
-	tomasi-lezione-07.html \
-	tomasi-lezione-06.html \
-	tomasi-lezione-05.html \
-	tomasi-lezione-04.html \
-	tomasi-lezione-03.html \
-	tomasi-lezione-02.html \
-	tomasi-lezione-01.html \
+	fisica_applicata_lezione-09.html \
+	fisica_applicata_lezione-08.html \
+	fisica_applicata_lezione-07.html \
+	fisica_applicata_lezione-06.html \
+	fisica_applicata_lezione-05.html \
+	fisica_applicata_lezione-04.html \
+	fisica_applicata_lezione-03.html \
+	fisica_applicata_lezione-02.html \
+	fisica_applicata_lezione-01.html \
 	index.html
 
-.phony: all http
+.PHONY: all http
 
 all: $(HTTP_FILES)
 
-index.html: index.md
+index.html: index.md template.html5 css/index-theme.css css/skylighting-solarized-theme.css
 	$(PANDOC) \
-		--katex \
+		--math-method=katex \
 		--to html5+smart \
 		--toc \
 		--toc-depth 2 \
@@ -31,12 +32,11 @@ index.html: index.md
 		-o $@ \
 		$<
 
-tomasi-lezione-%.html: tomasi-lezione-%.md
+fisica_applicata_lezione-%.html: fisica_applicata_lezione-%.md template-revealjs.html5 css/custom-revealjs.css
 	$(PANDOC) \
 	    	--standalone \
-		--filter $(PANDOC_IMAGINE) \
                 --template ./template-revealjs.html5 \
-		--katex \
+		--math-method=katex \
                 --css css/custom-revealjs.css \
 		-f markdown+tex_math_single_backslash+subscript+superscript \
 		-V "revealjs-url=reveal.js-5.2.1" \

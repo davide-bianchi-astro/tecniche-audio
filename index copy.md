@@ -1,24 +1,24 @@
 # Prospetto delle lezioni
 
-[html1]: fisica_applicata_lezione-01.html
-[html2]: fisica_applicata_lezione-02.html
-[html3]: fisica_applicata_lezione-03.html
-[html4]: fisica_applicata_lezione-04.html
-[html5]: fisica_applicata_lezione-05.html
-[html6]: fisica_applicata_lezione-06.html
-[html7]: fisica_applicata_lezione-07.html
-[html8]: fisica_applicata_lezione-08.html
-[html9]: fisica_applicata_lezione-09.html
+[html1]: tomasi-lezione-01.html
+[html2]: tomasi-lezione-02.html
+[html3]: tomasi-lezione-03.html
+[html4]: tomasi-lezione-04.html
+[html5]: tomasi-lezione-05.html
+[html6]: tomasi-lezione-06.html
+[html7]: tomasi-lezione-07.html
+[html8]: tomasi-lezione-08.html
+[html9]: tomasi-lezione-09.html
 
-[pdf1]: pdfs/fisica_applicata_lezione-01.pdf
-[pdf2]: pdfs/fisica_applicata_lezione-02.pdf
-[pdf3]: pdfs/fisica_applicata_lezione-03.pdf
-[pdf4]: pdfs/fisica_applicata_lezione-04.pdf
-[pdf5]: pdfs/fisica_applicata_lezione-05.pdf
-[pdf6]: pdfs/fisica_applicata_lezione-06.pdf
-[pdf7]: pdfs/fisica_applicata_lezione-07.pdf
-[pdf8]: pdfs/fisica_applicata_lezione-08.pdf
-[pdf9]: pdfs/fisica_applicata_lezione-09.pdf
+[pdf1]: pdfs/tomasi-fisica-lezione-01.pdf
+[pdf2]: pdfs/tomasi-fisica-lezione-02.pdf
+[pdf3]: pdfs/tomasi-fisica-lezione-03.pdf
+[pdf4]: pdfs/tomasi-fisica-lezione-04.pdf
+[pdf5]: pdfs/tomasi-fisica-lezione-05.pdf
+[pdf6]: pdfs/tomasi-fisica-lezione-06.pdf
+[pdf7]: pdfs/tomasi-fisica-lezione-07.pdf
+[pdf8]: pdfs/tomasi-fisica-lezione-08.pdf
+[pdf9]: pdfs/tomasi-fisica-lezione-09.pdf
 
 <center>
 | Data             | Lezione                                                              | PDF        |
@@ -37,10 +37,10 @@
 -->
 </center>
 
-Domande d’esame per l’anno accademico 2026–2027: [questions-aa2526.pdf](questions-aa2526.pdf).
+Domande d’esame per l’anno accademico 2025–2026: [questions-aa2526.pdf](questions-aa2526.pdf).
 
 ---
-title: Lezioni del modulo di Fisica Applicata (Tecniche Audiometriche ed Audioprotesiche)
-author: Davide Bianchi
-date: A.A. 2026−2027
+title: Lezioni del modulo di Fisica (Tecniche Audiometriche ed Audioprotesiche)
+author: Maurizio Tomasi
+date: A.A. 2025−2026
 ...

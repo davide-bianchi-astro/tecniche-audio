@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="it-IT">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Davide Bianchi (davide.bianchi1@unimi.it)">
+  <title>Fisica – Lezione 9</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js-5.2.1/dist/reset.css">
+  <link rel="stylesheet" href="reveal.js-5.2.1/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      /* overflow: visible; */
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="reveal.js-5.2.1/dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="css/custom-revealjs.css"/>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Fisica – Lezione 9</h1>
+  <p class="subtitle">Timbro, analisi di Fourier, filtraggio, effetto
+Doppler</p>
+  <p class="author">Davide Bianchi (<a
+href="mailto:davide.bianchi1@unimi.it">davide.bianchi1@unimi.it</a>)</p>
+  <p class="institute">(slides mutate dal corso di Maurizio Tomasi)</p>
+  <p class="date">Mercoledì 2 Settembre 2026</p>
+</section>
+
+<section id="introduzione-allargomento" class="slide level1">
+<h1>Introduzione all’argomento</h1>
+<ul>
+<li><p>Cosa determina il timbro della voce o di uno strumento?</p></li>
+<li><p>Cos’è l’analisi di Fourier?</p></li>
+<li><p>Come funzionano i filtri?</p></li>
+</ul>
+</section>
+<section id="il-timbro" class="slide level1">
+<h1>Il timbro</h1>
+</section>
+<section id="timbro-del-suono" class="slide level1">
+<h1>Timbro del suono</h1>
+<ul>
+<li><p>Abbiamo visto l’interferenza tra due onde sonore, ma ovviamente
+si può sovrapporre qualsiasi numero di onde!</p></li>
+<li><p>Il motivo per cui due strumenti diversi come un violino e un
+flauto suonino “diversi” anche quando la nota è la stessa è dovuta
+proprio al diverso modo con cui le tante onde prodotte dallo strumento
+si combinano</p></li>
+<li><p>Il “colore” di un suono è detto <strong>timbro</strong>, e
+dipende dal fatto che gli strumenti non emettono mai semplici onde
+sinusoidali, ma sovrapposizioni di onde</p></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<iframe src="iframes/timbre.html" width="720px" height="760px">
+</iframe>
+</section>
+<section id="espressione-matematica" class="slide level1">
+<h1>Espressione matematica</h1>
+<ul>
+<li><p>Dal punto di vista matematico, il suono emesso dall’applicazione
+nella pagina precedente si può scrivere una somma di tre sinusoidi</p>
+<p><span class="math display">
+\begin{aligned}
+P(t) = &amp;A_1 \sin(2\pi\nu_1 t + \varphi_1) +\\
+&amp;A_2 \sin(2\pi\nu_2 t + \varphi_2) +\\
+&amp;A_3 \sin(2\pi\nu_3 t + \varphi_3)
+\end{aligned}
+</span></p></li>
+<li><p>In un generico caso della vita reale, anziché tre sinusoidi se ne
+avranno molte di più, ciascuna caratterizzata dalla sua ampiezza <span
+class="math inline">A</span>, frequenza <span
+class="math inline">\nu</span> e fase <span
+class="math inline">\varphi</span></p></li>
+</ul>
+</section>
+<section id="perché-tante-frequenze" class="slide level1">
+<h1>Perché tante frequenze?</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Il motivo per cui la voce o uno strumento musicale emettono più
+di una frequenza ha a che fare con il processo fisico che emette
+l’onda.</p></li>
+<li><p>L’effettiva frequenza di vibrazione di una corda dipende dalla
+sua tensione (variabile attraverso le chiavi e i piroli, per il violino
+in foto) e dal materiale di cui è fatta</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/accordare-violino.webp" /></p>
+</div>
+</div>
+</section>
+<section id="onde-stazionarie" class="slide level1">
+<h1>Onde stazionarie</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Se la corda ha gli estremi fissi, come una chitarra o un violino,
+si parla di <strong>onde stazionarie</strong></p></li>
+<li><p>Sono dette stazionarie perché l’energia non si propaga, ma resta
+“intrappolata” nella lunghezza dell’onda</p></li>
+<li><p>Fisicamente, è un’onda che si propaga in una direzione
+sovrapposta alla sua onda riflessa (da uno dei due estremi della corda),
+che viaggia nell’altra direzione.</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/standing-wave.webp" /></p>
+</div>
+</div>
+</section>
+<section id="nodi-e-ventri" class="slide level1">
+<h1>Nodi e ventri</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li>Data una certa frequenza di oscillazione (o lunghezza d’onda), ci
+sono alcuni punti della corda che non vibrano mai: questi sono detti
+<strong>nodi</strong> (perché i nodi “tengono ferme” le corde!)</li>
+<li>I punti in cui c’è l’oscillazione massima sono detti
+<strong>ventri</strong></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/nodi-e-ventri.webp" /></p>
+</div>
+</div>
+</section>
+<section id="figure-di-chladni" class="slide level1">
+<h1>Figure di Chladni</h1>
+<ul>
+<li><p><a href="https://en.wikipedia.org/wiki/Ernst_Chladni">Ernst
+Chladni</a> (1756–1827) è stato un fisico/musicista, tra i fondatori
+della moderna acustica</p></li>
+<li><p>Egli mostrò che in una superficie elastica fatta vibrare (es., la
+pelle di un tamburo) si osservano delle linee in corrispondenza dei nodi
+di vibrazione: mise della polvere scura sulla pelle tesa che,
+percuotendo il tamburo, tendeva a disporsi lungo i nodi</p></li>
+<li><p>Potete vederne alcuni esempi sul sito <a
+href="https://javalab.org/en/standing_waves_on_a_drum_surface_en/">Javalab</a>.</p></li>
+</ul>
+</section>
+<section id="gli-strumenti-a-corda" class="slide level1">
+<h1>Gli strumenti a corda</h1>
+<ul>
+<li><p>La lunghezza d’onda λ, <a
+href="tomasi-lezione-08.html#wavelength">come sappiamo</a>, dipende
+dalla frequenza e dalla velocità di propagazione dell’onda attraverso la
+corda secondo la formula <span class="math display">
+v_\text{onda} = \lambda \times \nu.
+</span></p></li>
+<li><p>Ma in un qualsiasi strumento a corda come il violino o il
+pianoforte infatti, la corda non può vibrare con qualsiasi lunghezza
+d’onda, perché gli estremi sono fissi!</p></li>
+<li><p>La lunghezza <span class="math inline">L</span> della corda
+determina quindi la lunghezza d’onda <span
+class="math inline">\lambda</span>, e la forza di tensione determina la
+velocità dell’onda <span class="math inline">_\text{onda}</span> e
+quindi la frequenza <span class="math inline">\nu</span> della nota che
+sentiremo.</p></li>
+</ul>
+</section>
+<section id="suono-di-una-corda" class="slide level1">
+<h1>Suono di una corda</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Quando il musicista sollecita la corda, produce una somma di
+oscillazioni con <span class="math inline">\lambda</span> disposte nella
+cosiddetta <strong>serie armonica</strong></p></li>
+<li><p>Essa è definita a partire dalla lunghezza d’onda fondamentale,
+<span class="math inline">\lambda_0 = 2L</span> con <span
+class="math inline">L</span> lunghezza della corda (e quindi della
+“pancia”), e via via dividendo <span
+class="math inline">\lambda_0</span> per un numero intero.</p></li>
+<li><p>Le “armoniche” sono le frequenze corrispondenti alle <span
+class="math inline">\lambda</span>: <span
+class="math inline">\nu</span>, <span class="math inline">2\nu</span>,
+<span class="math inline">3\nu</span>, etc.</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/harmonic-partials-on-string.svg" /></p>
+</div>
+</div>
+</section>
+<section id="serie-armonica" class="slide level1">
+<h1>Serie armonica</h1>
+<p>Ogni nota ha la sua serie armonica. Questa è nel caso di un do:</p>
+<table>
+<thead>
+<tr>
+<th>Lunghezza d’onda</th>
+<th style="text-align: right;">Frequenza</th>
+<th>Altezza del suono</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>λ₀</td>
+<td style="text-align: right;">ν₀</td>
+<td>Do</td>
+</tr>
+<tr>
+<td>λ₀/2</td>
+<td style="text-align: right;">2ν₀</td>
+<td>Do’</td>
+</tr>
+<tr>
+<td>λ₀/3</td>
+<td style="text-align: right;">3ν₀</td>
+<td>Sol’</td>
+</tr>
+<tr>
+<td>λ₀/4</td>
+<td style="text-align: right;">4ν₀</td>
+<td>Do’’</td>
+</tr>
+<tr>
+<td>λ₀/5</td>
+<td style="text-align: right;">5ν₀</td>
+<td>Mi’’</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="e-per-gli-strumenti-ad-aria" class="slide level1">
+<h1>E per gli strumenti ad aria?</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Nel caso degli strumenti ad aria, come il flauto o l’organo,
+abbiamo un tubo con due estremità, più complesso di una corda</p></li>
+<li><p>Un’estremità <strong>chiusa</strong> impedisce (per attrito) alle
+particelle di gas di vibrare, ed è quindi un <strong>nodo</strong> di
+spostamento</p></li>
+<li><p>Presso l’estremità <strong>aperta</strong>, le particelle sono
+libere di muoversi al massimo: è un <strong>ventre</strong> di
+spostamento. Ma, proprio perché sono libere, la compressione è minima: è
+un nodo di pressione.</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/stationary-wave-types.webp" /></p>
+</div>
+</div>
+</section>
+<section id="strumenti-ad-aria" class="slide level1">
+<h1>Strumenti ad aria</h1>
+<ul>
+<li><p>Uno strumento ad aria con le due estremità aperte (come il
+flauto) può produrre tutte le note della serie armonica (1, 2, 3,
+4…)</p></li>
+<li><p>Uno strumento ad aria con un’estremità chiusa ed una aperta (come
+il clarinetto, che usa un’<a
+href="https://it.wikipedia.org/wiki/Ancia">ancia</a>) può produrre solo
+le armoniche dispari (1, 3, 5…). Questo è ciò che dà al clarinetto quel
+suono così particolare e “nasale” rispetto al flauto.</p></li>
+</ul>
+</section>
+<section id="esempio-di-caso-chiuso-aperto" class="slide level1">
+<h1>Esempio di caso chiuso-aperto</h1>
+<video controls loop>
+<source src="media/standing-longitudinal-waves.mp4" type="video/mp4">
+</video>
+<p><small><a
+href="https://www.youtube.com/watch?v=fMJrtheQfZw">Longitudinal wave
+using slinky coil</a></small></p>
+</section>
+<section id="strumenti-ad-aria-1" class="slide level1">
+<h1>Strumenti ad aria</h1>
+<ul>
+<li><p>Le onde stazionarie nelle corde e nei tubi sono le uniche
+<strong>stabili</strong> e prolungate nel tempo. Ma, come abbiamo visto,
+si possono produrre solo se la loro <span
+class="math inline">\lambda</span> soddisfa la relazione specifica per
+il loro tipo: questo determina principalmente il timbro dello
+strumento</p></li>
+<li><p>Sono però possibili anche onde che non soddisfano queste
+relazioni: esse però sono <strong>effimere</strong>, nel senso che
+disperdono rapidamente la loro energia scomparendo presto</p></li>
+<li><p>Queste onde costituiscono il cosiddetto “transitorio d’attacco”,
+ossia quel breve istante iniziale (il “ta” della tromba o lo sfregamento
+dell’archetto) che ci permette di riconoscere lo strumento. (Senza di
+esso, il suono di un violino o di un flauto sarebbe più difficile da
+distinguere!)</p></li>
+</ul>
+</section>
+<section id="scomposizione-di-fourier" class="slide level1">
+<h1>Scomposizione di Fourier</h1>
+</section>
+<section id="scomposizione-di-fourier-1" class="slide level1">
+<h1>Scomposizione di Fourier</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Abbiamo visto che la sovrapposizione di un suono fondamentale e
+di armoniche fornisce il “timbro” di quel suono</p></li>
+<li><p>Un matematico francese, <a
+href="https://it.wikipedia.org/wiki/Jean_Baptiste_Joseph_Fourier">Jean-Baptiste
+Joseph Fourier</a> (1768–1830), dimostrò una proprietà fondamentale
+delle onde, non solo sonore: ogni fenomeno periodico può essere
+scomposto nella somma di oscillazioni sinusoidali</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/fourier.jpg" /></p>
+</div>
+</div>
+</section>
+<section id="trasformata-di-fourier" class="slide level1">
+<h1>Trasformata di Fourier</h1>
+<ul>
+<li><p>La “trasformata di Fourier” è un’operazione matematica che
+consente, data la misurazione dell’ampiezza di pressione di un’onda
+sonora, di decomporre quest’onda in una somma di onde
+sinusoidali</p></li>
+<li><p>Dal punto di vista pratico, il risultato del calcolo di una
+trasformata di Fourier è la stima dei valori delle ampiezze, frequenze e
+fasi nella formula <span class="math display">
+\begin{aligned}
+P(t) = &amp;\textcolor{#a08}{A_1} \sin(2\pi\textcolor{#a08}{\nu_1} t +
+\textcolor{#a08}{\varphi_1}) +\\
+&amp;\textcolor{#a08}{A_2} \sin(2\pi\textcolor{#a08}{\nu_2} t +
+\textcolor{#a08}{\varphi_2}) +\\
+&amp;\ldots
+\end{aligned}
+</span></p></li>
+</ul>
+</section>
+<section id="trasformate-di-fourier-con-audacity" class="slide level1">
+<h1>Trasformate di Fourier con Audacity</h1>
+<ul>
+<li><p>È possibile calcolare la trasformata di Fourier usando il
+programma <em>open source</em> Audacity, scaricabile dal link <a
+href="https://www.audacityteam.org/">www.audacityteam.org</a></p></li>
+<li><p>Vediamo ora un esempio interattivo</p></li>
+</ul>
+</section>
+<section id="esempio-con-audacity" class="slide level1">
+<h1>Esempio con Audacity</h1>
+<p><img data-src="media/audacity-01.webp" height="560" /></p>
+</section>
+<section id="esempio-con-audacity-1" class="slide level1">
+<h1>Esempio con Audacity</h1>
+<p><img data-src="media/audacity-02.webp" height="560" /></p>
+</section>
+<section id="esempio-con-audacity-2" class="slide level1">
+<h1>Esempio con Audacity</h1>
+<p><img data-src="media/audacity-03.webp" height="560" /></p>
+</section>
+<section id="esempio-con-audacity-3" class="slide level1">
+<h1>Esempio con Audacity</h1>
+<p><img data-src="media/audacity-04.webp" height="560" /></p>
+</section>
+<section id="tuba-mirum" class="slide level1">
+<h1>Tuba Mirum</h1>
+<ul>
+<li><p>Consideriamo come esempio un’esecuzione del <em>Requiem</em> KV
+626 di Mozart</p></li>
+<li><p>In particolare, all’inizio del <em>Tuba mirum</em> c’è un famoso
+assolo di trombone, dove lo strumento suona senza
+accompagnamento</p></li>
+<li><p>Prendiamo due esecuzioni su YouTube di questo brano:</p>
+<ul>
+<li><p>Esecuzione diretta da Karl Bohm (Wiener Symphoniker): <a
+href="https://www.youtube.com/watch?v=0-i5S4uXlNg"
+class="uri">https://www.youtube.com/watch?v=0-i5S4uXlNg</a></p></li>
+<li><p>Esecuzione dei Seraphic fire: <a
+href="https://www.youtube.com/watch?v=_jFMZ4jguwY"
+class="uri">https://www.youtube.com/watch?v=_jFMZ4jguwY</a></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="tuba-mirum-1" class="slide level1">
+<h1>Tuba Mirum</h1>
+<p><img data-src="media/tuba-mirum-spectrum.svg" /></p>
+<p>Rappresentazione spettrale della prima nota (Si♭³) del trombone nelle
+due esecuzioni del <em>Tuba Mirum</em>, calcolata con Audacity.</p>
+</section>
+<section id="applicazioni-della-trasformata" class="slide level1">
+<h1>Applicazioni della trasformata</h1>
+<ul>
+<li><p>Anche l’orecchio umano opera una decomposizione in frequenze: è
+in questo modo che un orecchio allenato distingue le note di un
+accordo</p></li>
+<li><p>Un equalizzatore acustico è in grado di modificare i suoni gravi,
+medi ed acuti decomponendo il suono e agendo sulle ampiezze di alcune
+frequenze e non altre, come vedremo tra poco</p></li>
+<li><p>I file MP3 riescono a registrare musica usando 10 volte meno
+spazio dei vecchi CD, perché usano la decomposizione di Fourier per
+registrare solo le frequenze nell’intervallo di frequenze udibili
+dall’uomo, e cancellare le frequenze troppo deboli (es., quelle di un
+violino in <em>pianissimo</em> sotto le trombe in
+<em>fortissimo</em>)</p></li>
+</ul>
+</section>
+<section id="suono-e-rumore" class="slide level1">
+<h1>Suono e rumore</h1>
+</section>
+<section id="suono-e-rumore-1" class="slide level1">
+<h1>Suono e rumore</h1>
+<ul>
+<li><p>Nella vita quotidiana, usiamo spesso le parole “suono” e “rumore”
+in contrapposizione tra esse</p></li>
+<li><p>Ma sappiamo qual è la differenza tra i due? In particolare,
+stiamo parlando di un fenomeno fisico oggettivo, o della
+<strong>sensazione</strong> che un certo fenomeno fisico (quale?) ci
+provoca?</p></li>
+</ul>
+</section>
+<section id="rumore-e-suono" class="slide level1">
+<h1>Rumore e suono</h1>
+<ul>
+<li><p>Quando si parla di “suono” contrapposto a “rumore”, la differenza
+è la seguente:</p>
+<ul>
+<li><p>Il <strong>suono</strong> (in senso musicale) è generato da
+un’onda sonora <strong>periodica</strong>, cioè che ripete la sua forma
+nel tempo in modo regolare.</p></li>
+<li><p>Il <strong>rumore</strong> è generato da un’onda
+<strong>aperiodica</strong>, che varia in modo casuale e non si ripete
+mai uguale a se stessa.</p></li>
+</ul></li>
+<li><p>Vediamo subito la differenza con un esempio interattivo</p></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<iframe src="iframes/sound-example.html" width="100%" height="580px" style="border:1px solid #ccc; border-radius: 8px;">
+</iframe>
+</section>
+<section id="il-rumore-secondo-fourier" class="slide level1">
+<h1>Il rumore secondo Fourier</h1>
+<ul>
+<li><p>Analizzando con la trasformata di Fourier un suono armonioso,
+come una nota suonata da un violoncello, si vede che l’onda è composta
+da una frequenza fondamentale precisa sommata alle sue armoniche
+ordinate.</p></li>
+<li><p>Analizzando invece il rumore (es. il soffio dell’aria o un
+applauso), esso appare come un ‘caos’ di frequenze: moltissime sinusoidi
+di tutte le altezze ammassate insieme senza ordine.</p></li>
+<li><p>Non esiste una differenza netta tra suono e rumore: aumentando il
+numero di componenti sinusoidali casuali, è possibile gradualmente
+mutare un suono in rumore. E molti suoni sono una via di mezzo: un colpo
+di tamburo ha un inizio rumoroso (l’impatto) e una coda più
+tonale.</p></li>
+</ul>
+</section>
+<section id="filtraggio" class="slide level1">
+<h1>Filtraggio</h1>
+</section>
+<section id="filtraggio-1" class="slide level1">
+<h1>Filtraggio</h1>
+<ul>
+<li><p>Una volta calcolata la trasformata di Fourier, è possibile
+modificare l’ampiezza delle sinusoidi per cambiare il timbro del suono,
+e poi “rimettere insieme” le sinusoidi ottenendo un suono filtrato:</p>
+<center>
+<p><img data-src="media/filtering.svg" /></p>
+</center></li>
+<li><p>In questo modo si possono ad esempio amplificare i suoni più
+bassi, o quelli più alti: questo avviene ad esempio in fase di
+<em>editing</em> della registrazione di un concerto</p></li>
+</ul>
+</section>
+<section id="esempio" class="slide level1">
+<h1>Esempio</h1>
+<p><img data-src="media/filtered-spectrum.svg" /></p>
+<p>Ho usato Audacity per applicare un filtro passa-basso al Si♭³ del
+trombone nel <em>Tuba mirum</em> di Mozart: il filtro opera sopra i 1000
+Hz, riducendo 6 dB ogni ottava sopra. (Menu “Effect | EQ and filters |
+Low-pass filter”)</p>
+</section>
+<section id="leffetto-doppler" class="slide level1">
+<h1>L’effetto Doppler</h1>
+</section>
+<section class="slide level1">
+
+<iframe src="iframes/doppler-effect.html" width="100%" height="560">
+</iframe>
+</section>
+<section id="leffetto-doppler-1" class="slide level1">
+<h1>L’effetto Doppler</h1>
+<ul>
+<li><p>Quando un emettitore di suoni si sposta <strong>verso</strong>
+l’ascoltatore (nella slide precedente, l’ascoltatore starebbe a
+<strong>destra</strong>), le onde arrivano separate da una distanza
+inferiore, perché ogni onda successiva parte un po’ più vicina
+all’osservatore della precedente</p></li>
+<li><p>Viceversa, chi vede l’emettitore allontanarsi (nella slide
+precedente, un ascoltatore a <strong>sinistra</strong>) riceve le onde
+come se avessero una lunghezza d’onda maggiore</p></li>
+<li><p>Se cambia la lunghezza d’onda λ, cambia necessariamente anche la
+frequenza: si avverte un suono più acuto (avvicinamento) o più grave
+(allontanamento) del normale</p></li>
+</ul>
+</section>
+<section id="formule" class="slide level1">
+<h1>Formule</h1>
+<ul>
+<li><p>Nel caso di <strong>avvicinamento</strong> con velocità <span
+class="math inline">v</span>, si ha</p>
+<p><span class="math display">
+\lambda = \lambda_0\left(1 - \frac{v}{v_\text{suono}}\right), \qquad
+\nu = \frac{\nu_0}{1 - v/v_\text{suono}}.
+</span></p>
+<p>con <span class="math inline">\lambda_0</span> e <span
+class="math inline">\nu_0</span> riferiti al caso in cui non c’è
+moto.</p></li>
+<li><p>Nel caso di <strong>allontanamento</strong> con velocità <span
+class="math inline">v</span>, si ha</p>
+<p><span class="math display">
+\lambda = \lambda_0\left(1 + \frac{v}{v_\text{suono}}\right), \qquad
+\nu = \frac{\nu_0}{1 + v/v_\text{suono}}.
+</span></p></li>
+</ul>
+</section>
+<section id="esempio-1" class="slide level1">
+<h1>Esempio</h1>
+<ul>
+<li><p>Il clacson di un’auto che viaggia a 50 km/h suona un La a 440
+Hz.</p></li>
+<li><p>Chi è fermo sul bordo della strada e vede l’automobile
+<strong>avvicinarsi</strong>, percepirà una frequenza</p>
+<p><span class="math display">
+\nu = \frac{440\,\text{Hz}}{1 - 13{,}9\,\text{m/s} / 343\,\text{m/s}} =
+458{,}6\,\text{Hz}
+</span></p></li>
+<li><p>Chi vede l’auto allontanarsi invece percepisce</p>
+<p><span class="math display">
+\nu = \frac{440\,\text{Hz}}{1 + 13{,}9\,\text{m/s} / 343\,\text{m/s}} =
+422{,}9\,\text{Hz}
+</span></p></li>
+</ul>
+</section>
+<section id="conclusioni" class="slide level1">
+<h1>Conclusioni</h1>
+</section>
+<section id="cosa-sapere-per-lesame" class="slide level1">
+<h1>Cosa sapere per l’esame</h1>
+<ul>
+<li>Timbro, scomposizione di Fourier</li>
+<li>Onde stazionarie</li>
+<li>Filtraggio</li>
+<li>Effetto Doppler</li>
+</ul>
+</section>
+    </div>
+  </div>
+
+  <script src="reveal.js-5.2.1/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="reveal.js-5.2.1/plugin/notes/notes.js"></script>
+  <script src="reveal.js-5.2.1/plugin/search/search.js"></script>
+  <script src="reveal.js-5.2.1/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+       // Parallax background image
+       parallaxBackgroundImage: 'media/background.png', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1440,
+
+        height: 810,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

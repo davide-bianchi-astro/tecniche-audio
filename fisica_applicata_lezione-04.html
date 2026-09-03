@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="it-IT">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Davide Bianchi (davide.bianchi1@unimi.it)">
+  <title>Fisica – Lezione 4</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js-5.2.1/dist/reset.css">
+  <link rel="stylesheet" href="reveal.js-5.2.1/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      /* overflow: visible; */
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="reveal.js-5.2.1/dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="css/custom-revealjs.css"/>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Fisica – Lezione 4</h1>
+  <p class="subtitle">Energia (continua)</p>
+  <p class="author">Davide Bianchi (<a
+href="mailto:davide.bianchi1@unimi.it">davide.bianchi1@unimi.it</a>)</p>
+  <p class="institute">(slides mutate dal corso di Maurizio Tomasi)</p>
+  <p class="date">Mercoledì 2 Settembre 2026</p>
+</section>
+
+<section id="introduzione-allargomento-di-oggi" class="slide level1">
+<h1>Introduzione all’argomento di oggi</h1>
+<ul>
+<li>Oggi completeremo la trattazione del lavoro e dell’energia</li>
+<li>Introdurremo il concetto di “potenza”</li>
+<li>Vedremo come si produce oggi energia per il consumo casalingo ed
+industriale</li>
+</ul>
+</section>
+<section id="lavoro-ed-energia" class="slide level1">
+<h1>Lavoro ed energia</h1>
+<ul>
+<li><p>L’energia è <strong>la capacità di un corpo di compiere
+lavoro</strong>, ossia di esercitare una forza <span
+class="math inline">F</span> in grado di spostare un corpo di <span
+class="math inline">\Delta x</span></p></li>
+<li><p>Ad esempio, l’energia gravitazionale è ciò che rende possibile lo
+spostamento di un corpo che cade, compiendo lavoro nel farlo accelerare
+verso il basso</p></li>
+<li><p>Oltre all’energia gravitazionale ci sono altri tipi, e tutti sono
+associati a qualche tipo di forza</p></li>
+<li><p>Vediamo i più importanti</p></li>
+</ul>
+</section>
+<section id="energia-cinetica" class="slide level1">
+<h1>Energia cinetica</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>È l’energia che ha un corpo per il fatto stesso di muoversi:
+<span class="math display">
+E_c = \frac12 m v^2.
+</span></p></li>
+<li><p>Se un corpo in movimento ne urta uno fermo, quest’ultimo si
+muove: è stato compiuto lavoro.</p></li>
+<li><p><strong>Attenzione</strong>: un corpo che si muove di moto
+rettilineo uniforme non compie lavoro!</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/gioco-delle-bocce_O1.jpg" /></p>
+</div>
+</div>
+</section>
+<section id="esempio" class="slide level1">
+<h1>Esempio</h1>
+<ul>
+<li>Una palla da bowling da 7 kg viene lanciata e si muove a 1 m/s</li>
+<li>La sua energia cinetica iniziale è <span class="math display">
+E_c^{(i)} = 0\,\text{J}
+</span></li>
+<li>Quella finale è <span class="math display">
+E_c^{(f)} = \frac12 \times 7\,\text{kg}\times (1\,\text{m/s})^2 =
+3{,}5\,\text{J}
+</span></li>
+<li>Di conseguenza, il giocatore ha compiuto un lavoro uguale a
+3,5 J.</li>
+</ul>
+</section>
+<section id="energia-potenziale-gravitazionale" class="slide level1">
+<h1>Energia potenziale gravitazionale</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>La forza di gravità sposta i corpi verso il basso</p></li>
+<li><p>Se un corpo sta in alto, ha quindi <strong>energia potenziale
+gravitazionale</strong>, che per un corpo ad un’altezza <span
+class="math inline">h</span> è <span class="math display">
+E_g = m g h
+</span></p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/captain-spacemaker-caribe-bay-jesolo.jpg"
+height="400" /></p>
+</div>
+</div>
+</section>
+<section id="esempio-1" class="slide level1">
+<h1>Esempio</h1>
+<ul>
+<li>Un corpo di 1 kg (ad esempio una bottiglia di latte) cade da
+un’altezza di 10 m. La sua energia cinetica iniziale è zero, e quella
+potenziale è <span class="math display">
+E_g^{(i)} = 1\,\text{kg}\times 10\,\mathrm{m/s^2}\times 10\,\text{m} =
+100\,\text{J}
+</span></li>
+<li>Quando arriva a terra, tutta l’energia potenziale è diventata
+cinetica: <span class="math display">
+E_c^{(f)} = E_g^{(i)} = 100\,\text{J}
+</span></li>
+<li>Questo avviene perché ha acquisito velocità: <span
+class="math display">
+100\,\text{J} = \frac12 m v^2 \quad \Rightarrow \quad v =
+14\,\text{m/s}.
+</span></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<iframe src="iframes/falling-ball.html" width="100%" height="740" style="border:1px solid #ccc; border-radius: 8px;">
+</iframe>
+</section>
+<section id="energia-elastica" class="slide level1">
+<h1>Energia elastica</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Una molla compressa o allungata di <span
+class="math inline">\Delta x</span> ha la capacità di tornare alla sua
+posizione originaria: <span class="math display">
+E_e = \frac12 k (\Delta x)^2,
+</span> dove <span class="math inline">k</span> è una costante che dice
+quanto è “dura” una molla</p></li>
+<li><p>La molla ha quindi la capacità di compiere lavoro: basta
+immaginare di attaccare alla sua estremità un corpo</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/molle.jpg" width="400" /></p>
+</div>
+</div>
+</section>
+<section id="esempio-2" class="slide level1">
+<h1>Esempio</h1>
+<ul>
+<li>Una molla con <span class="math inline">k = 10\,\mathrm{N/m}</span>
+viene compressa di 1 cm.</li>
+<li>Nel momento in cui viene rilasciata, l’energia cinetica è nulla, e
+quella elastica è <span class="math display">
+E_e^{(i)} = \frac12\times 10\,\mathrm{N/m}\times (0.01\,\text{m})^2 =
+0{,}000\,5\,\text{J} = 0{,}5\,\text{mJ}.
+</span></li>
+<li>L’energia cinetica della sua estremità, quando torna alla posizione
+di riposo, è <span class="math display">
+E_c^{(f)} = E_e^{(i)} = 0{,}5\,\text{mJ}.
+</span></li>
+<li>Avendo energia cinetica, ha velocità non nulla e quindi inerzia:
+anziché fermarsi alla posizione di riposo, prosegue dando moto ad un
+fenomeno oscillatorio</li>
+</ul>
+</section>
+<section id="energia-chimica" class="slide level1">
+<h1>Energia chimica</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Le molecole che formano i corpi sono tenute insieme da legami
+chimici, dovuti a forze elettromagnetiche</p></li>
+<li><p>Queste forze agiscono più o meno come molle: impediscono che le
+molecole si allontanino o si avvicinino troppo</p></li>
+<li><p>In una reazione chimica, i legami (le “molle”) si rompono o se ne
+formano di nuovi. Questo cambiamento porta a un rilascio di energia,
+oppure a un suo assorbimento</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/alberto-sordi-galateo-a-tavola.jpg" /></p>
+</div>
+</div>
+</section>
+<section id="energia-termica-calore" class="slide level1">
+<h1>Energia termica (calore)</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Le molecole dei corpi vibrano continuamente, e la vibrazione è
+maggiore nei corpi caldi (nei liquidi e nei gas, oltre alla vibrazione
+sono presenti anche moti rotatori e spostamenti)</p></li>
+<li><p>Le vibrazioni sono governate dalle stesse forze molecolari ed
+atomiche che abbiamo nominato per l’energia chimica</p></li>
+<li><p>Ad un corpo è associata quindi una certa <strong>energia
+termica</strong>, che è una forma di energia elastica/cinetica
+“disordinata”</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/metl_heat.gif" /></p>
+</div>
+</div>
+</section>
+<section id="energia-elettrica" class="slide level1">
+<h1>Energia elettrica</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Le cariche elettriche si attraggono e si respingono tra
+loro</p></li>
+<li><p>Il movimento delle cariche elettriche è ciò che trasferisce
+energia (la “corrente elettrica” non è altro che il moto di cariche
+elettriche)</p></li>
+<li><p>È una forma di energia molto conveniente, perché è estremamente
+semplice convertirla in altre forme di energia e trasportarla (almeno su
+distanze non esagerate!)</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/lampadina.jpg" /></p>
+</div>
+</div>
+</section>
+<section id="energia-sonora" class="slide level1">
+<h1>Energia sonora</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>È l’energia che ci interessa di più!</p></li>
+<li><p>In un altoparlante, l’energia elettrica fa vibrare una membrana
+che fa vibrare l’aria attorno ad essa: questa vibrazione produce un
+“effetto domino” che fa propagare il suono nell’aria anche a grandi
+distanze</p></li>
+<li><p>Si tratta di energia cinetica: molecole d’aria che si muovono,
+più o meno come nel caso del calore. Però in questo caso il moto è
+<strong>ordinato</strong>: sono onde di pressione, che vedremo meglio in
+seguito</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/casse-amplificatore.webp" /></p>
+</div>
+</div>
+</section>
+<section id="esempi-della-vita-reale" class="slide level1">
+<h1>Esempi della vita reale</h1>
+</section>
+<section id="la-lavatrice" class="slide level1">
+<h1>La lavatrice</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>La lavatrice consuma energia elettrica</p></li>
+<li><p>Converte l’energia elettrica in:</p>
+<dl>
+<dt>Energia termica</dt>
+<dd>
+Riscalda l’acqua
+</dd>
+<dt>Energia cinetica</dt>
+<dd>
+Fa girare il cestello
+</dd>
+<dt>Energia sonora</dt>
+<dd>
+È il suono che fa quando il programma è terminato
+</dd>
+</dl></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/lavatrice.jpg" height="400" /></p>
+</div>
+</div>
+</section>
+<section id="piatto-che-si-rompe" class="slide level1">
+<h1>Piatto che si rompe</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li>Il piatto nella credenza ha energia potenziale gravitazionale <span
+class="math inline">E_g</span></li>
+<li>Durante la caduta converte l’energia potenziale in energia cinetica
+<span class="math inline">E_c</span></li>
+<li>Al momento dell’urto, parte dell’energia diventa termica, parte
+sonora, e parte resta cinetica (nei frammenti)</li>
+</ul>
+</div>
+<div class="media">
+<p><img
+data-src="media/titanic-sinking-plates-falling-and-breaking.webp" /></p>
+</div>
+</div>
+</section>
+<section id="colpo-di-tennis" class="slide level1">
+<h1>Colpo di tennis</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Una pallina da tennis raggiunge il giocatore con una certa
+velocità: ha quindi energia cinetica</p></li>
+<li><p>Il moto della racchetta trasferisce l’energia cinetica del
+braccio alla pallina</p></li>
+<li><p>Parte dell’energia viene usata per creare il rumore e per la
+deformazione delle corde e della pallina</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/tennis.webp" /></p>
+</div>
+</div>
+</section>
+<section id="frenata-di-unauto" class="slide level1">
+<h1>Frenata di un’auto</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li>L’automobile ha una certa energia cinetica</li>
+<li>Il piede muove il pedale (energia cinetica), che stringe le ganasce
+dei freni</li>
+<li>Le ganasce producono attrito, ossia calore che scalda i freni e
+l’aria, e rumore (energia sonora)</li>
+<li>Se i freni sono rigenerativi, una dinamo converte parte dell’energia
+cinetica dell’automobile in elettricità, che viene convertita dalla
+batteria in energia chimica</li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/automobili-autostrada.webp" height="450" /></p>
+</div>
+</div>
+</section>
+<section id="diga-idroelettrica" class="slide level1">
+<h1>Diga idroelettrica</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li>Come nel caso dei piatti, l’acqua converte energia potenziale
+gravitazionale <span class="math inline">E_g</span> in energia
+cinetica</li>
+<li>Questa si trasmette ad una turbina, facendola ruotare</li>
+<li>Una dinamo converte l’energia cinetica (rotatoria) della turbina in
+energia elettrica</li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/centrale-idroelettrica-orig.webp" /></p>
+</div>
+</div>
+</section>
+<section id="analogia-col-denaro" class="slide level1">
+<h1>Analogia col denaro</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Dagli esempi fatti, si capisce che l’energia può essere
+paragonata a un tipo di denaro che non si può creare né distruggere, e
+non si svaluta mai</p></li>
+<li><p>Come il denaro può essere convertito (contanti, somma in banca,
+lingotti d’oro), così anche l’energia si può convertire</p></li>
+<li><p>Il “bilancio” dell’energia <strong>è sempre perfetto</strong>: se
+scompaiono <span class="math inline">x</span> Joule di energia da una
+parte, devono comparirne <span class="math inline">x</span> da
+un’altra.</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/soldi-oro.jpg" /></p>
+</div>
+</div>
+</section>
+<section id="energia-e-potenza" class="slide level1">
+<h1>Energia e potenza</h1>
+</section>
+<section id="il-concetto-di-potenza" class="slide level1">
+<h1>Il concetto di “potenza”</h1>
+<ul>
+<li><p>Abbiamo visto che l’energia è fondamentale per tutti i processi
+fisici e biologici</p></li>
+<li><p>È però anche importante la <strong>velocità</strong> con cui
+l’energia viene convertita</p></li>
+<li><p>La <strong>potenza</strong> <span class="math inline">P</span> è
+il rapporto tra una quantità di energia <span
+class="math inline">E</span> e il tempo necessario per “produrla” o
+“consumarla”:</p>
+<p><span class="math display">
+P = \frac{E}{\Delta t}
+</span></p></li>
+</ul>
+</section>
+<section id="unità-di-misura" class="slide level1">
+<h1>Unità di misura</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>La potenza è una energia sul tempo, quindi la sua unità naturale
+è il Joule sul secondo. Questo è il Watt, che si abbrevia con
+<strong>W</strong>:</p>
+<p><span class="math display">
+1\,\mathrm{W} = \frac{1\,\mathrm{J}}{1\,\mathrm{s}}.
+</span></p></li>
+<li><p>Il Watt è un’unità di misura molto comune!</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/lampadina.jpg" /></p>
+</div>
+</div>
+</section>
+<section class="slide level1">
+
+<p><img data-src="media/washing-machine-power-consumption.png"
+height="640" /></p>
+</section>
+<section id="da-potenza-a-energia" class="slide level1">
+<h1>Da potenza a energia</h1>
+<ul>
+<li><p>Conoscendo l’andamento della potenza consumata, si può stimare il
+consumo di energia</p></li>
+<li><p>Ad esempio, nel grafico precedente la lavatrice ha consumato:</p>
+<ul>
+<li>circa 2000 W per una ventina di minuti (riscaldamento, che
+rappresenta il grosso del consumo)</li>
+<li>circa 400 W negli ultimi 5 minuti (centrifuga)</li>
+<li>circa 100 W nei restanti ~40 minuti</li>
+</ul></li>
+<li><p>Calcoliamo quanta energia è stata consumata dalla
+lavatrice</p></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<ul>
+<li><p>Se la potenza è il rapporto tra energia e tempo, allora l’energia
+è la potenza per il tempo: <span class="math display">
+\begin{split}
+    2.000\,\text{W}\times 1.200\,\text{s} &amp;= 2.400.000\,\text{J} =
+2.400\,\text{kJ}\\
+    400\,\text{W}\times 300\,\text{s} &amp;= 120.000\,\text{J} =
+150\,\text{kJ}\\
+    100\,\text{W}\times 2.400\,\text{s} &amp;= 240.000\,\text{J} =
+270\,\text{kJ}
+\end{split}
+</span></p></li>
+<li><p>In totale, la lavatrice ha quindi consumato <span
+class="math display">
+2.400\,\text{kJ} + 120\,\text{kJ} + 240\,\text{kJ} = 2.760\,\text{kJ}
+\approx 2{,}8\,\text{MJ},
+</span> che è circa 0,8 kWh (ricordate che 1 kWh = 3,6 MJ = 3.600
+kJ).</p></li>
+<li><p>Siamo confidenti del risultato?</p></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<p><img data-src="media/washing-machine-power-consumption.png"
+height="640" /></p>
+</section>
+<section id="rifacciamo-i-conti" class="slide level1">
+<h1>Rifacciamo i conti!</h1>
+<ul>
+<li><p>Guardando attentamente il grafico, è chiaro che abbiamo usato
+dati approssimativi, e quindi il risultato <strong>esatto</strong> sarà
+un po’ diverso dal nostro. Ma quanto?</p></li>
+<li><p>Cerchiamo di stimare non solo i valori della potenza (asse y) e
+del tempo (asse x), ma anche degli errori approssimativi:</p>
+<ul>
+<li>2050±50 W per circa 18±1 minuti (riscaldamento)</li>
+<li>450±25 W negli ultimi 5±1 minuti (centrifuga)</li>
+<li>75±25 W nei restanti minuti (40±2: l’errore è più grande perché ne
+sono meno sicuro)</li>
+</ul></li>
+<li><p>Rifacciamo il calcolo usando la <strong>propagazione degli
+errori</strong>!</p></li>
+</ul>
+</section>
+<section id="da-potenza-a-energia-1" class="slide level1">
+<h1>Da potenza a energia</h1>
+<p><span class="math display">
+\begin{split}
+&amp;(2050\pm50)\,\text{W}\times (1080\pm60)\,\text{s} + \\
++&amp;(450\pm25)\,\text{W} \times (300\pm60)\,\text{s} + \\
++&amp;(75\pm25)\,\text{W} \times (2400\pm120)\,\text{s}
+\end{split}
+</span></p>
+</section>
+<section id="propagazione-errori" class="slide level1">
+<h1>Propagazione errori</h1>
+<ul>
+<li><p>Il conto consiste nella somma di tre termini, e nelle lezioni di
+Misure Elettriche ed Elettroniche vedrete che “nella somma gli errori
+<strong>assoluti</strong> si sommano in quadratura”</p></li>
+<li><p>Però ogni termine della somma è il risultato di un prodotto, e
+“nel prodotto gli errori <strong>relativi</strong> si sommano in
+quadratura”</p></li>
+<li><p>Dobbiamo quindi prima affrontare i tre prodotti</p></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<p>Il calcolo</p>
+<p><span class="math display">
+\textcolor{#269342}{(2050\pm50)\,\text{W}}
+\times
+\textcolor{#682693}{(1080\pm60)\,\text{s}}
+=
+\textcolor{#932642}{(2.214.000\pm?)\,\text{J}}
+=
+\textcolor{#932642}{(2{,}214\pm?)\,\text{MJ}}
+</span></p>
+<p>coinvolge due quantità, il cui errore relativo è</p>
+<p><span class="math display">
+\textcolor{#269342}{\frac{50\,\text{W}}{2050\,\text{W}} = 0{,}024\
+(2{,}4\,\%)},
+\quad
+\textcolor{#682693}{\frac{60\,\text{s}}{1080\,\text{s}} = 0{,}056\
+(5{,}6\,\%)}
+</span></p>
+<p>L’errore <strong>relativo</strong> è quindi la somma in
+quadratura:</p>
+<p><span class="math display">
+\sqrt{\textcolor{#269342}{0{,}024}^2 + \textcolor{#682693}{0{,}050}^2} =
+\textcolor{#932642}{0{,}061\ (6{,}1\,\%)}.
+</span></p>
+<p>Il 6,1% di 2,214 MJ è 0,13 MJ, che è l’errore che cerchiamo.</p>
+</section>
+<section class="slide level1">
+
+<ul>
+<li><p>Applicando i medesimi calcoli agli altri termini, scopriamo
+che</p>
+<p><span class="math display">
+\begin{split}
+(450\pm25)\,\text{W} \times (300\pm60)\,\text{s} &amp;=
+(135\pm28)\,\text{kJ}\\
+(75\pm25)\,\text{W} \times (2640\pm60)\,\text{s} &amp;=
+(180\pm61)\,\text{kJ}
+\end{split}
+</span></p></li>
+<li><p>La somma è <span class="math display">
+\bigl[(2.210\pm130) + (135\pm28) + (181\pm60)\bigr]\,\text{kJ} =
+(2.520\pm150)\,\text{kJ},
+</span> dove l’errore è dato dalla somma in quadratura: <span
+class="math display">
+\sqrt{(130\,\text{kJ})^2 + (28\,\text{kJ})^2 + (61\,\text{kJ})^2} =
+150\,\text{kJ}.
+</span></p></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<ul>
+<li><p>Abbiamo ottenuto come risultato 2,52 ± 0,15 MJ.</p></li>
+<li><p>Col nostro conto originario, molto più semplice, avevamo ottenuto
+2,8 MJ.</p></li>
+<li><p>I due valori sono <strong>compatibili</strong> solo se ammettiamo
+che il nostro vecchio valore fosse molto incerto!</p></li>
+</ul>
+</section>
+<section id="il-kilowattora" class="slide level1">
+<h1>Il Kilowattora</h1>
+<div class="side-by-side">
+<div class="content">
+<ul>
+<li><p>Possiamo ora comprendere la definizione del
+<strong>Kilowattora</strong> (kWh)</p></li>
+<li><p>Esso è l’energia che si estrae da una potenza di 1 kW (un
+chilowatt) in un’ora di tempo:</p>
+<p><span class="math display">
+1\,\mathrm{kWh} = 1\,\mathrm{kW} \times 3.600\,\mathrm{s} =
+3{,}6\,\mathrm{MJ}
+</span></p></li>
+<li><p>I fornitori di energia come ENI, Enel, Sorgenia, etc., riportano
+l’energia consumata in bolletta usando i kWh.</p></li>
+</ul>
+</div>
+<div class="media">
+<p><img data-src="media/bolletta-elettrica.jpg" /></p>
+</div>
+</div>
+</section>
+<section id="usare-i-kilowattora" class="slide level1">
+<h1>Usare i Kilowattora</h1>
+<ul>
+<li><p>Sebbene i kWh non siano un’unità del SI, sono molto
+utili!</p></li>
+<li><p>Se sapete ad esempio che il vostro frigorifero consuma circa 100
+W (complimenti! è <a
+href="https://ounapuu.ee/posts/2025/10/14/fridge-power-consumption/#fnref:1">molto
+efficiente</a>), allora in un giorno esso consumerà</p>
+<p><span class="math display">
+100\,\text{W} \times 24\,\text{h} = 2.400\,\text{Wh} =
+2{,}4\,\text{kWh},
+</span></p>
+<p>che corrisponde a una spesa giornaliera di circa 50 centesimi: in un
+mese il frigo vi costa 15€ in bolletta.</p></li>
+<li><p>Per monitorare il consumo degli elettrodomestici, esistono prese
+intelligenti che misurano la potenza consumata dall’apparecchio a cui
+sono collegate (cercate su Internet “smart plug” o “presa
+smart”)</p></li>
+</ul>
+</section>
+<section id="esempi-di-consumo" class="slide level1">
+<h1>Esempi di consumo</h1>
+<p><img data-src="media/potenza-elettrodomestici.svg" /></p>
+</section>
+<section id="produzione-di-energia" class="slide level1">
+<h1>“Produzione” di energia</h1>
+</section>
+<section id="energia-nelle-case" class="slide level1">
+<h1>Energia nelle case</h1>
+<ul>
+<li><p>L’energia nelle case arriva principalmente sotto forma di:</p>
+<ul>
+<li><p>Elettricità</p></li>
+<li><p>Gas</p></li>
+<li><p>Biomassa (legna, pellet…)</p></li>
+</ul></li>
+<li><p>In ambito domestico, il gas e la biomassa vengono tipicamente
+usate solo per produrre calore (fornelli, termosifoni, stufe). Non è
+però così a livello di produzione nazionale</p></li>
+<li><p>L’energia elettrica è estremamente versatile perché è facile
+trasportarla (su distanze non eccessive) e convertirla in altre
+forme</p></li>
+</ul>
+</section>
+<section id="lenergia-in-italia" class="slide level1">
+<h1>L’energia in Italia</h1>
+<ul>
+<li><p>Nel 2024, in Italia si sono consumati 312 TWh di energia</p></li>
+<li><p>Convertiti in Joule, si tratta di un <strong>miliardo di miliardi
+di Joule</strong>, ossia <strong>un milione di TJ</strong></p></li>
+<li><p>Come produciamo questa energia?</p></li>
+</ul>
+</section>
+<section id="fonti-fossili" class="slide level1">
+<h1>Fonti fossili</h1>
+<ul>
+<li><p>Poco più del 40% dell’energia prodotta in Italia viene da fonti
+fossili: principalmente gas, ma anche carbone:</p>
+<ul>
+<li>Il gas viene bruciato (producendo CO₂ 🙁) per scaldare acqua</li>
+<li>L’acqua evapora, e il vapore fa girare turbine</li>
+<li>Alle turbine è collegata una dinamo, che produce energia
+elettrica</li>
+</ul></li>
+<li><p>Esistono ancora 4 centrali a carbone in Italia: 2 sono sul punto
+di essere chiuse, mentre per le altre 2 (entrambe in Sardegna) è stata
+<a
+href="https://www.qualenergia.it/articoli/pichetto-carbone-centrali-resteranno-stand-by/">posticipata
+la chiusura al 2029</a></p></li>
+</ul>
+</section>
+<section id="fonti-rinnovabili" class="slide level1">
+<h1>Fonti rinnovabili</h1>
+<ul>
+<li><p>Un altro 40% proviene da fonti rinnovabili:</p>
+<ul>
+<li>Centrali idroelettriche</li>
+<li>Energia solare</li>
+<li>Pale eoliche</li>
+<li>Biomasse (le uniche che producono CO₂)</li>
+</ul></li>
+<li><p>Le centrali idroelettriche hanno un rilevante impatto ambientale
+quando vengono costruite (anche sul medio termine, <a
+href="https://www.hydropower.org/blog/new-study-sheds-light-on-reservoir-emissions-over-a-long-time-period">a
+livello di gas serra</a>)</p></li>
+<li><p>La produzione di pannelli fotovoltaici e pale eoliche è <a
+href="https://www.bbc.com/future/article/20150402-the-worst-place-on-earth">molto
+inquinante</a>, ma avviene di solito all’estero</p></li>
+</ul>
+</section>
+<section id="acquisti-dallestero" class="slide level1">
+<h1>Acquisti dall’estero</h1>
+<ul>
+<li><p>Oltre al 40% di fonti fossili e al 40% di rinnovabili, il
+restante 20% è energia elettrica acquistata dall’estero</p></li>
+<li><p>Dal momento che l’energia elettrica non può essere trasportata
+per lunghi tratti, possiamo acquistarla solo da Francia, Svizzera,
+Slovenia ed Austria</p></li>
+<li><p>Oltre ad acquistare elettricità dall’estero, importiamo però
+anche moltissimo gas: il 95% di quanto consumiamo! Questo è uno dei
+motivi per cui il costo dell’energia elettrica in Italia è <a
+href="https://tg24.sky.it/economia/2025/05/30/energia-prezzo-elettricita-italia-europa#03">uno
+dei più cari in Europa</a></p></li>
+</ul>
+</section>
+<section id="requisiti" class="slide level1">
+<h1>Requisiti</h1>
+<ul>
+<li><p>Qualsiasi sistema di distribuzione elettrica deve garantire un
+flusso di energia costante: non è possibile produrre meno di quanto
+serve (ovvio!), ma neanche di più (meno ovvio!)</p></li>
+<li><p>Questo è problematico soprattutto per l’energia solare ed eolica!
+A queste fonti variabili deve quindi sempre essere associata una o più
+centrali di “emergenza” (gas, carbone, nucleare)</p></li>
+<li><p>Una possibile soluzione sarebbe l’uso di <strong>sistemi di
+accumulo</strong> (ad es., batterie), che immagazzinino l’energia quando
+è abbondante e la distribuiscano nei periodi di bisogno.</p></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<p><img data-src="media/pannelli-solari-2025-10-24-sole.jpg" /></p>
+<p>Produzione (da pannelli fotovoltaici) e consumo di energia in una
+giornata di sole (venerdì 24 ottobre 2025). I pannelli hanno prodotto
+14,61 kWh; 6,74 ne sono stati consumati, e 1,88 sono stati immessi dalla
+rete per un consumo totale di 8,62 kWh.</p>
+</section>
+<section class="slide level1">
+
+<p><img data-src="media/pannelli-solari-2025-10-23-pioggia.jpg" /></p>
+<p>Produzione (da pannelli fotovoltaici) e consumo di energia in una
+giornata di pioggia (giovedì 24 ottobre 2025). I pannelli hanno prodotto
+0,68 kWh; sono stati quasi tutti auto-consumati, e ne sono stati
+importati 9,69 dalla rete.</p>
+</section>
+<section id="tipi-di-accumulatori" class="slide level1">
+<h1>Tipi di accumulatori</h1>
+<ul>
+<li><p>Batterie dei cellulari e dei dispositivi elettronici: 0,01
+kWh</p></li>
+<li><p>Batterie per la casa: 10–80 kWh</p></li>
+<li><p>Batterie per le automobili elettriche: 20–120 kWh</p></li>
+<li><p>Grandi batterie: fino a 2.000 kWh (<a
+href="https://en.wikipedia.org/wiki/Moss_Landing_Power_Plant">Moss
+Landing Power Plant</a>, California)</p></li>
+</ul>
+<p>Per avere un sistema di accumulo come quello Californiano ma capace
+di garantire all’Italia una potenza di 50 GW per 4 ore ci vorrebbero
+2.500 G€, che è più del doppio del PIL nazionale (la manovra finanziaria
+2025 è di 18 G€).</p>
+</section>
+<section id="conclusioni" class="slide level1">
+<h1>Conclusioni</h1>
+</section>
+<section id="cosa-sapere-per-lesame" class="slide level1">
+<h1>Cosa sapere per l’esame</h1>
+<ul>
+<li>Cos’è l’energia</li>
+<li>Tipi di energia</li>
+<li>Tutti gli esempi sull’energia visti in classe (lavatrice, piatto che
+si rompe…)</li>
+<li>Potenza, W e kWh</li>
+</ul>
+</section>
+    </div>
+  </div>
+
+  <script src="reveal.js-5.2.1/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="reveal.js-5.2.1/plugin/notes/notes.js"></script>
+  <script src="reveal.js-5.2.1/plugin/search/search.js"></script>
+  <script src="reveal.js-5.2.1/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+       // Parallax background image
+       parallaxBackgroundImage: 'media/background.png', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1440,
+
+        height: 810,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

@@ -7,9 +7,9 @@
 # L’insegnamento “Fisica e statistica”
 
 -   Tre moduli:
-    #.   Fisica applicata (dott. Bianchi)
-    #.   Misure elettriche ed elettroniche (dott. Bianchi)
-    #.   Statistica medica (dott. Turati)
+    #.   Fisica Applicata (dott. Bianchi)
+    #.   Misure Elettriche ed Elettroniche (dott. Bianchi)
+    #.   Statistica Medica (dott. Turati)
 -   Un esame di 60 minuti per ogni modulo, nella stessa giornata
 -   Obbligatoria la presenza al 70% di lezioni **per ogni modulo** (giustificazioni solo con certificato medico)
 

@@ -1,160 +1,22 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="it-IT">
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc 3.11" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="author" content="Davide Bianchi (mutuato da Maurizio Tomasi) (davide.bianchi1@unimi.it`)" />
-  <title>Fisica – Lezione 1</title>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Davide Bianchi (davide.bianchi1@unimi.it)">
+  <title>Fisica Applicata – Lezione 1</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js-5.2.1/dist/reset.css">
+  <link rel="stylesheet" href="reveal.js-5.2.1/dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      /* overflow: visible; */
+    }
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    html {
-      color: #1a1a1a;
-      background-color: #fdfdfd;
-    }
-    body {
-      margin: 0 auto;
-      max-width: 36em;
-      padding-left: 50px;
-      padding-right: 50px;
-      padding-top: 50px;
-      padding-bottom: 50px;
-      hyphens: auto;
-      overflow-wrap: break-word;
-      text-rendering: optimizeLegibility;
-      font-kerning: normal;
-    }
-    @media (max-width: 600px) {
-      body {
-        font-size: 0.9em;
-        padding: 12px;
-      }
-      h1 {
-        font-size: 1.8em;
-      }
-    }
-    @media print {
-      html {
-        background-color: white;
-      }
-      body {
-        background-color: transparent;
-        color: black;
-      }
-      p, h2, h3 {
-        orphans: 3;
-        widows: 3;
-      }
-      h2, h3, h4 {
-        page-break-after: avoid;
-      }
-    }
-    p {
-      margin: 1em 0;
-    }
-    a {
-      color: #1a1a1a;
-    }
-    a:visited {
-      color: #1a1a1a;
-    }
-    img {
-      max-width: 100%;
-    }
-    svg {
-      height: auto;
-      max-width: 100%;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      margin-top: 1.4em;
-    }
-    h5, h6 {
-      font-size: 1em;
-      font-style: italic;
-    }
-    h6 {
-      font-weight: normal;
-    }
-    ol, ul {
-      padding-left: 1.7em;
-      margin-top: 1em;
-    }
-    li > ol, li > ul {
-      margin-top: 0;
-    }
-    blockquote {
-      margin: 1em 0 1em 1.7em;
-      padding-left: 1em;
-      border-left: 2px solid #e6e6e6;
-      color: #606060;
-    }
-    code {
-      white-space: pre-wrap;
-      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
-      font-size: 85%;
-      margin: 0;
-      hyphens: manual;
-    }
-    pre {
-      margin: 1em 0;
-      overflow: auto;
-    }
-    pre code {
-      padding: 0;
-      overflow: visible;
-      overflow-wrap: normal;
-    }
-    .sourceCode {
-     background-color: transparent;
-     overflow: visible;
-    }
-    hr {
-      border: none;
-      border-top: 1px solid #1a1a1a;
-      height: 1px;
-      margin: 1em 0;
-    }
-    table {
-      margin: 1em 0;
-      border-collapse: collapse;
-      width: 100%;
-      overflow-x: auto;
-      display: block;
-      font-variant-numeric: lining-nums tabular-nums;
-    }
-    table caption {
-      margin-bottom: 0.75em;
-    }
-    tbody {
-      margin-top: 0.5em;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
-    }
-    th {
-      border-top: 1px solid #1a1a1a;
-      padding: 0.25em 0.5em 0.25em 0.5em;
-    }
-    td {
-      padding: 0.125em 0.5em 0.25em 0.5em;
-    }
-    header {
-      margin-bottom: 4em;
-      text-align: center;
-    }
-    #TOC li {
-      list-style: none;
-    }
-    #TOC ul {
-      padding-left: 1.3em;
-    }
-    #TOC > ul {
-      padding-left: 0;
-    }
-    #TOC a:not(:hover) {
-      text-decoration: none;
-    }
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: 1.5em;}
     div.column{flex: auto;}
@@ -173,33 +35,43 @@
       vertical-align: middle;
     }
   </style>
+  <link rel="stylesheet" href="reveal.js-5.2.1/dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="css/custom-revealjs.css"/>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">Fisica – Lezione 1</h1>
-<p class="subtitle">Cosa significa misurare?</p>
-<p class="author">Davide Bianchi (mutuato da Maurizio Tomasi) (<a
-href="mailto:davide.bianchi1@unimi.it">davide.bianchi1@unimi.it`</a>)</p>
-<p class="date">Mercoledì 2 Settembre 2026</p>
-</header>
-<h1 id="introduzione-al-corso">Introduzione al corso</h1>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Fisica Applicata – Lezione 1</h1>
+  <p class="author">Davide Bianchi (<a
+href="mailto:davide.bianchi1@unimi.it">davide.bianchi1@unimi.it</a>)</p>
+  <p class="institute">(slides mutate dal corso di Maurizio Tomasi)</p>
+  <p class="date">Mercoledì 2 Settembre 2026</p>
+</section>
+
+<section id="introduzione-al-corso" class="slide level1">
+<h1>Introduzione al corso</h1>
 <script src="js/chart.js" charset="utf-8"></script>
 <script src="js/trajectories.js" charset="utf-8"></script>
 <script src="js/plotly-3.1.0.min.js" charset="utf-8"></script>
-<h1 id="linsegnamento-fisica-e-statistica">L’insegnamento “Fisica e
-statistica”</h1>
+</section>
+<section id="linsegnamento-fisica-e-statistica" class="slide level1">
+<h1>L’insegnamento “Fisica e Statistica”</h1>
 <ul>
 <li>Tre moduli:
 <ol>
-<li>Fisica applicata (dott. Bianchi)</li>
-<li>Misure elettriche ed elettroniche (dott. Bianchi)</li>
-<li>Statistica medica (dott. Turati)</li>
+<li>Fisica Applicata (dott. Bianchi)</li>
+<li>Misure Elettriche ed Elettroniche (dott. Bianchi)</li>
+<li>Statistica Medica (dott. Turati)</li>
 </ol></li>
 <li>Un esame di 60 minuti per ogni modulo, nella stessa giornata</li>
 <li>Obbligatoria la presenza al 70% di lezioni <strong>per ogni
 modulo</strong> (giustificazioni solo con certificato medico)</li>
 </ul>
-<h1 id="fisica-applicata">Fisica applicata</h1>
+</section>
+<section id="fisica-applicata" class="slide level1">
+<h1>Fisica Applicata</h1>
 <ul>
 <li>Sistemi di misura</li>
 <li>Meccanica: cinematica e dinamica, l’energia</li>
@@ -208,7 +80,9 @@ modulo</strong> (giustificazioni solo con certificato medico)</li>
 <li>Sovrapposizioni e interferenza, effetto Doppler</li>
 <li>Suoni complessi e scomposizione in frequenze</li>
 </ul>
-<h1 id="queste-slides">Queste slides</h1>
+</section>
+<section id="queste-slides" class="slide level1">
+<h1>Queste slides</h1>
 <ul>
 <li><p>Il materiale delle lezioni di questo modulo dell’insegnamento
 sarà fornito in forma di slide come quelle che state vedendo
@@ -224,15 +98,19 @@ stampare la pagina da browser in un file PDF (vedi le <a
 href="https://revealjs.com/pdf-export/">istruzioni
 dettagliate</a>).</p></li>
 </ul>
-<hr />
-<p><img src="media/website-qr-code.svg" height="640" /></p>
+</section>
+<section class="slide level1">
+
+<p><img data-src="media/website-qr-code.svg" height="640" /></p>
 <p><a href="https://davide-bianchi-astro.github.io/tecniche-audio/"
 class="uri">https://davide-bianchi-astro.github.io/tecniche-audio/</a></p>
-<h1 id="modalità-desame">Modalità d’esame</h1>
+</section>
+<section id="modalità-desame" class="slide level1">
+<h1>Modalità d’esame</h1>
 <ul>
 <li>Questo vale solo per il modulo di Fisica Applicata (questo); gli
-esami di Misure Elettriche e Fisica Statistica hanno le loro regole che
-vi saranno illustrate dai rispettivi titolari</li>
+esami di Misure Elettriche ed Elettroniche e Statistica Medica hanno le
+loro modalità che vi saranno illustrate dai rispettivi titolari</li>
 <li>Esame scritto della durata di 60 minuti</li>
 <li>Articolato in:
 <ul>
@@ -241,16 +119,24 @@ vi saranno illustrate dai rispettivi titolari</li>
 <li>Analisi di un caso pratico (già visto a lezione)</li>
 </ul></li>
 </ul>
-<h1 id="cosa-significa-misurare">Cosa significa misurare?</h1>
-<h1 id="ricette">Ricette</h1>
-<p><img src="media/giallozafferano-misurare-tempo.png"
+</section>
+<section id="cosa-significa-misurare" class="slide level1">
+<h1>Cosa significa misurare?</h1>
+</section>
+<section id="ricette" class="slide level1">
+<h1>Ricette</h1>
+<p><img data-src="media/giallozafferano-misurare-tempo.png"
 height="600" /></p>
-<div class="notes">
+<aside class="notes">
 <p>Sottolinea che la misurazione di qualcosa è un’attività della vita
 quotidiana, e non è limitata solo ai fisici!</p>
-</div>
-<h1 id="come-si-misura">Come si misura</h1>
-<h1 id="due-sistemi-a-confronto">Due sistemi a confronto</h1>
+</aside>
+</section>
+<section id="come-si-misura" class="slide level1">
+<h1>Come si misura</h1>
+</section>
+<section id="due-sistemi-a-confronto" class="slide level1">
+<h1>Due sistemi a confronto</h1>
 <ul>
 <li><p>In Europa si usa il <strong>Sistema Internazionale</strong>, dove
 le misure sono espresse in metri, secondi, kilogrammi, etc.</p></li>
@@ -260,9 +146,13 @@ Imperiale Britannico</strong>, usato nel Regno Unito</p></li>
 <li><p>È ormai abbandonato quasi ovunque, tranne che negli USA, dov’è
 ancora abbastanza usato.</p></li>
 </ul>
-<hr />
-<p><img src="media/tab-can-double-units.jpg" height="640" /></p>
-<h1 id="il-sistema-imperiale">Il sistema imperiale</h1>
+</section>
+<section class="slide level1">
+
+<p><img data-src="media/tab-can-double-units.jpg" height="640" /></p>
+</section>
+<section id="il-sistema-imperiale" class="slide level1">
+<h1>Il sistema imperiale</h1>
 <ul>
 <li><p>Le sue radici sono antichissime: certe convenzioni derivano
 dall’Impero Romano!</p></li>
@@ -276,7 +166,9 @@ sono le misure delle lunghezze:</p>
 </ul></li>
 <li><p>Secondo voi, perché si usano divisioni così strane?</p></li>
 </ul>
-<h1 id="criteri-di-divisibilità">Criteri di divisibilità</h1>
+</section>
+<section id="criteri-di-divisibilità" class="slide level1">
+<h1>Criteri di divisibilità</h1>
 <ul>
 <li><p>Nella vita quotidiana capita spesso di dover dividere una misura
 in più parti.</p></li>
@@ -284,8 +176,9 @@ in più parti.</p></li>
 persone, ma la ricetta riporta gli ingredienti per quattro
 persone?</p></li>
 </ul>
-<h1 id="numeri-più-divisibili-di-altri">Numeri più divisibili di
-altri</h1>
+</section>
+<section id="numeri-più-divisibili-di-altri" class="slide level1">
+<h1>Numeri più divisibili di altri</h1>
 <ul>
 <li><p>Ci sono numeri che hanno molti divisori, come il 12 (che ha 2, 3,
 4 e 6 come divisori), e altri che sono messi peggio, come il 17 (un
@@ -296,8 +189,9 @@ facili da dividere.</p></li>
 duodecimale, ossia in base 12 (basato sull’anatomia della mano umana!)
 anziché decimale come il nostro.</p></li>
 </ul>
-<h1 id="divisibilità-dei-primi-30-numeri">Divisibilità dei primi 30
-numeri</h1>
+</section>
+<section id="divisibilità-dei-primi-30-numeri" class="slide level1">
+<h1>Divisibilità dei primi 30 numeri</h1>
 <div id="first-30-divisors-plot" style="width:100%;height:420px;">
 
 </div>
@@ -321,8 +215,9 @@ numeri</h1>
   // keep it responsive when the slide is resized
   window.addEventListener('resize', () => Plotly.Plots.resize('first-30-divisors-plot'));
 </script>
-<h1 id="divisibilità-nel-sistema-imperiale">Divisibilità nel sistema
-imperiale</h1>
+</section>
+<section id="divisibilità-nel-sistema-imperiale" class="slide level1">
+<h1>Divisibilità nel sistema imperiale</h1>
 <ul>
 <li><p>Un miglio è lungo 5280 piedi. Il numero 5280 ha ben
 <strong>quarantotto</strong> divisori: 2, 3, 4, 5, 6, 8, 10, 11, 12, 15,
@@ -335,7 +230,9 @@ gestire numeri con la virgola.</p></li>
 nell’antichità i numeri con la virgola erano sconosciuti, e si contava
 solo con gli interi!</p></li>
 </ul>
-<h1 id="misure-di-volume">Misure di volume</h1>
+</section>
+<section id="misure-di-volume" class="slide level1">
+<h1>Misure di volume</h1>
 <ul>
 <li><p>Lo stesso principio si vede anche nelle misure di volume:</p>
 <ul>
@@ -348,7 +245,9 @@ solo con gli interi!</p></li>
 tante suddivisioni: è meno necessario usare numeri con la
 virgola.</p></li>
 </ul>
-<h1 id="esempio-pratico">Esempio pratico</h1>
+</section>
+<section id="esempio-pratico" class="slide level1">
+<h1>Esempio pratico</h1>
 <ul>
 <li><p>Una ricetta per quattro persone dice di usare “1 tazza di farina”
 (negli USA si misura la farina in volumi anziché in grammi: è più
@@ -364,7 +263,9 @@ oz”</li>
 <li><p>Provate a pensare cos’avreste fatto se invece la dose di farina
 fosse stata 150 g…</p></li>
 </ul>
-<h1 id="altri-esempi">Altri esempi</h1>
+</section>
+<section id="altri-esempi" class="slide level1">
+<h1>Altri esempi</h1>
 <ul>
 <li><p>Per misurare il peso (meglio: la massa! lo vedremo nella prossima
 lezione), nel Sistema Imperiale si usa la libbra, che equivale a 16
@@ -378,7 +279,9 @@ seguiva (fino al 1971) lo stesso principio: una sterlina (“£”) valeva 20
 scellini (“s”), ed uno scellino valeva 12 pence (“d”, dal latino
 <em>denarius</em>).</p></li>
 </ul>
-<h1 id="perché-proprio-queste-unità">Perché proprio queste unità?</h1>
+</section>
+<section id="perché-proprio-queste-unità" class="slide level1">
+<h1>Perché proprio queste unità?</h1>
 <ul>
 <li><p>Dito, piede e cubito erano usate già dagli egizi, arrivate ai
 romani tramite i greci</p></li>
@@ -397,7 +300,9 @@ dipinte</li>
 peso)</li>
 </ul></li>
 </ul>
-<h1 id="perché-proprio-queste-unità-1">Perché proprio queste unità?</h1>
+</section>
+<section id="perché-proprio-queste-unità-1" class="slide level1">
+<h1>Perché proprio queste unità?</h1>
 <ul>
 <li>Il “braccio” (<em>fathom</em>) corrisponde a 1,82 m, ossia a 2
 yarde</li>
@@ -407,7 +312,9 @@ significava “braccia spalancate”)</li>
 <li>Era un’unità usata per misurare la profondità del mare mediante una
 corda attaccata a un peso</li>
 </ul>
-<h1 id="limiti-del-sistema-imperiale">Limiti del sistema imperiale</h1>
+</section>
+<section id="limiti-del-sistema-imperiale" class="slide level1">
+<h1>Limiti del sistema imperiale</h1>
 <ul>
 <li><p>A fianco di tutti questi vantaggi (unità di misura vicine alla
 realtà quotidiana, comodità nella divisione, scarsa necessità di cifre
@@ -422,8 +329,9 @@ i soldi (sterline, scellini…) o con i volumi (once, tazze…)</li>
 di misura, che trae ispirazioni dal Sistema Metrico Decimale inventato
 durante la Rivoluzione Francese.</p></li>
 </ul>
-<h1 id="il-sistema-internazionale-si">Il Sistema Internazionale
-(SI)</h1>
+</section>
+<section id="il-sistema-internazionale-si" class="slide level1">
+<h1>Il Sistema Internazionale (SI)</h1>
 <ul>
 <li>È adottato in quasi tutti i paesi del mondo (inclusa l’Italia)</li>
 <li>Basato su 7 unità fondamentali (ma a noi interesseranno solo alcune
@@ -431,7 +339,9 @@ di esse)</li>
 <li>Ogni unità si moltiplica o divide per 10: non ci sono multipli
 strani come nel sistema imperiale</li>
 </ul>
-<h1 id="unità-del-si">Unità del SI</h1>
+</section>
+<section id="unità-del-si" class="slide level1">
+<h1>Unità del SI</h1>
 <table>
 <thead>
 <tr>
@@ -474,7 +384,9 @@ strani come nel sistema imperiale</li>
 </tr>
 </tbody>
 </table>
-<h1 id="multipli-e-sottomultipli">Multipli e sottomultipli</h1>
+</section>
+<section id="multipli-e-sottomultipli" class="slide level1">
+<h1>Multipli e sottomultipli</h1>
 <table>
 <thead>
 <tr>
@@ -521,7 +433,9 @@ strani come nel sistema imperiale</li>
 </tr>
 </tbody>
 </table>
-<h1 id="vantaggi-del-si">Vantaggi del SI</h1>
+</section>
+<section id="vantaggi-del-si" class="slide level1">
+<h1>Vantaggi del SI</h1>
 <ul>
 <li>Tutte le unità usano gli stessi multipli e sottomultipli (“milli”,
 “kilo”, “giga”, etc.)</li>
@@ -533,7 +447,9 @@ Ad es., 300 cm = 30 dm = 3 m = 0,3 dam. (Molto utile in medicina, dove
 un medico deve ad esempio adattare il dosaggio di un farmaco al peso di
 un paziente!)</li>
 </ul>
-<h1 id="svantaggi-del-si">Svantaggi del SI</h1>
+</section>
+<section id="svantaggi-del-si" class="slide level1">
+<h1>Svantaggi del SI</h1>
 <ul>
 <li><p>Tra gli svantaggi del SI, elenchiamo questi:</p>
 <ol type="1">
@@ -551,18 +467,192 @@ Unito!) è passato al SI.</p></li>
 <li><p>Per l’esame dovrete mostrare di saper maneggiare i multipli e i
 sottomultipli del SI (tera, giga, mega, kilo, …)</p></li>
 </ul>
-<h1 id="conclusioni">Conclusioni</h1>
-<h1 id="cosa-sapere-per-lesame">Cosa sapere per l’esame</h1>
+</section>
+<section id="conclusioni" class="slide level1">
+<h1>Conclusioni</h1>
+</section>
+<section id="cosa-sapere-per-lesame" class="slide level1">
+<h1>Cosa sapere per l’esame</h1>
 <ul>
 <li>Perché misuriamo</li>
 <li>Sistema Internazionale (SI) — Il Sistema Imperiale
 <strong>non</strong> è richiesto!</li>
 <li>Multipli decimali</li>
 <li>Vantaggi del SI</li>
-<li>Studiate bene, cercando collegamenti e usando carte Anki per le cose
-che dovete mandare a memoria</li>
-<li>Se dovete usare ChatGPT, fatelo con giudizio e grande
-attenzione!</li>
 </ul>
-</body>
+</section>
+    </div>
+  </div>
+
+  <script src="reveal.js-5.2.1/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="reveal.js-5.2.1/plugin/notes/notes.js"></script>
+  <script src="reveal.js-5.2.1/plugin/search/search.js"></script>
+  <script src="reveal.js-5.2.1/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+       // Parallax background image
+       parallaxBackgroundImage: 'media/background.png', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1440,
+
+        height: 810,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
 </html>
