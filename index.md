@@ -1,4 +1,4 @@
-# Prospetto delle lezioni
+# Slides
 
 [html1]: fisica_applicata_lezione-01.html
 [html2]: fisica_applicata_lezione-02.html
@@ -21,26 +21,24 @@
 [pdf9]: pdfs/fisica_applicata_lezione-09.pdf
 
 <center>
-| Data             | Lezione                                                              | PDF        |
-|------------------|----------------------------------------------------------------------|------------|
-| 6 ottobre 2025   | [01. Cosa significa misurare?][html1]                                | [#1][pdf1] |
-| 13 ottobre 2025  | [02. Conversioni, tempo, cinematica e dinamica][html2]               | [#2][pdf2] |
-| 20 ottobre 2025  | [03. Dinamica, lavoro ed energia][html3]                             | [#3][pdf3] |
-| 27 ottobre 2025  | [04. Energia (continua)][html4]                                      | [#4][pdf4] |
-| 3 novembre 2025  | [05. Oscillazioni][html5]                                            | [#5][pdf5] |
-| 11 novembre 2025 | [06. Pressione e onde sonore][html6]                                 | [#6][pdf6] |
-| 18 novembre 2025 | [07. Onde sinusoidali e intensità del suono][html7]                  | [#7][pdf7] |
-| 25 novembre 2025 | [08. Decibel, sovrapposizione e interferenza][html8]                 | [#8][pdf8] |
-| 3 dicembre 2025  | [09. Timbro, analisi di Fourier, filtraggio, effetto Doppler][html9] | [#9][pdf9] |
-<!--
-| 15 dicembre 2025 | Compitino finale                                                   |            |
--->
+| Argomento                                                            | PDF        |
+|----------------------------------------------------------------------|------------|
+| [01. Cosa significa misurare?][html1]                                | [#1][pdf1] |
+| [02. Conversioni, tempo, cinematica e dinamica][html2]               | [#2][pdf2] |
+| [03. Dinamica, lavoro ed energia][html3]                             | [#3][pdf3] |
+| [04. Energia (continua)][html4]                                      | [#4][pdf4] |
+| [05. Oscillazioni][html5]                                            | [#5][pdf5] |
+| [06. Pressione e onde sonore][html6]                                 | [#6][pdf6] |
+| [07. Onde sinusoidali e intensità del suono][html7]                  | [#7][pdf7] |
+| [08. Decibel, sovrapposizione e interferenza][html8]                 | [#8][pdf8] |
+| [09. Timbro, analisi di Fourier, filtraggio, effetto Doppler][html9] | [#9][pdf9] |
+
 </center>
 
 Domande d’esame per l’anno accademico 2026–2027: [questions-aa2526.pdf](questions-aa2526.pdf).
 
 ---
-title: Lezioni del modulo di Fisica Applicata (Tecniche Audiometriche ed Audioprotesiche)
+title: Tecniche Audiometriche ed Audioprotesiche - Modulo di Fisica Applicata
 author: Davide Bianchi
 date: A.A. 2026−2027
 ...

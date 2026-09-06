@@ -41,7 +41,7 @@
 
 # Forze elastiche
 
--   Le forze elastiche sono ovviamente quelle associate all’energia elastica $E_e$ che avevamo visto [nella scorsa lezione](tomasi-lezione-03.html#energia-elastica)
+-   Le forze elastiche sono ovviamente quelle associate all’energia elastica $E_e$
 
 -   Quando un corpo elastico viene deformato da una forza esterna, esso cerca di riportarsi alla forma originaria
 

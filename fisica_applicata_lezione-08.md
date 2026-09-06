@@ -118,7 +118,7 @@
 
 -   In altre parole, un suono di 30 dB risulta doppiamente intenso rispetto allo stesso suono con intensità di 15 dB.
 
--   (Ricordate invece che misurando l’intensità in W/m² eravamo arrivati a [strane conclusioni](tomasi-lezione-07.html#esempio-intensita-percepita), vero?)
+-   (Ricordate invece che misurando l’intensità in W/m² eravamo arrivati a strane conclusioni, vero?)
 
 # Soglia di udibilità
 
@@ -199,7 +199,7 @@
 
 # Numeri da ricordare
 
-In questa slide elenco una serie di numeri da ricordare. [Se usate Anki](tomasi-lezione-01.html#flash-cards), vi suggerisco di creare delle flash cards.
+In questa slide elenco una serie di numeri da ricordare
 
 | Impulso sonoro                  | Intensità |
 |---------------------------------|----------:|
@@ -238,7 +238,7 @@ Questi numeri invece sono relativi a **differenze** tra due intensità $L_1$ e $
 
 # Inverso del quadrato
 
--   Ricordate la legge dell’[inverso del quadrato](tomasi-lezione-07.html#legge-inverso-quadrato)? Essa dice che ad una distanza $r_2$, il suono ha un’intensità rispetto a $r_1$ uguale a
+-   Ricordate la legge dell’inverso del quadrato? Essa dice che ad una distanza $r_2$, il suono ha un’intensità rispetto a $r_1$ uguale a
 
     \[
     I_2 = I_1\times\frac{r_1^2}{r_2^2}.
@@ -300,7 +300,7 @@ Questi numeri invece sono relativi a **differenze** tra due intensità $L_1$ e $
 
 # Esempio
 
--   Ricordate l’[esempio del professore che parla in classe](tomasi-lezione-07.html#esempio-intensita-percepita)? Avevamo visto che triplicando la distanza, l’intensità si riduceva di un fattore 9
+-   Ricordate l’esempio del professore che parla in classe? Avevamo visto che triplicando la distanza, l’intensità si riduceva di un fattore 9
 
 -   Vediamo ora che se $L_1$ è l’intensità in decibel che raggiunge chi è seduto più vicino, allora chi è seduto a una distanza tre volte maggiore percepisce un’intensità pari a
 

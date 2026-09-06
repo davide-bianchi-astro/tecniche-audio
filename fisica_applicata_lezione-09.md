@@ -104,7 +104,7 @@
 
 # Gli strumenti a corda
 
--   La lunghezza d’onda λ, [come sappiamo](tomasi-lezione-08.html#wavelength), dipende dalla frequenza e dalla velocità di propagazione dell’onda attraverso la corda secondo la formula
+-   La lunghezza d’onda λ, come sappiamo, dipende dalla frequenza e dalla velocità di propagazione dell’onda attraverso la corda secondo la formula
     \[
     v_\text{onda} = \lambda \times \nu.
     \]

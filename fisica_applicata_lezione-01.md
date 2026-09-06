@@ -34,7 +34,7 @@
 
 ---
 
-![](media/website-qr-code.svg){height=640px}
+![](media/website_qrcode.png){height=640px}
 
 <https://davide-bianchi-astro.github.io/tecniche-audio/>
 

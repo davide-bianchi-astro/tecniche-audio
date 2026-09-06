@@ -376,7 +376,8 @@ Sono sia trasversali che longitudinali, ovviamente!
 
 -   Ma il nostro corpo è adattato all’aria, ed esercita dall’interno una pressione verso l’esterno che bilancia quella dell’aria
 
--   Qualcuno ricorda la [scena finale](https://youtu.be/RkCgZ6yMNx8?si=KnQxzXrQ8oo3cXsq) di [Total Recall](https://www.imdb.com/title/tt0100802/) (Verhoeven, 1990)?
+-   Qualcuno ricorda la [scena finale](https://www.youtube.com/watch?v=ClmIKmhSvU) di [Total Recall](https://www.imdb.com/title/tt0100802/) (Verhoeven, 1990)?
+
 
 -   Tutti gli organismi viventi hanno meccanismi di regolazione della pressione adatti all’ambiente in cui vivono
 
