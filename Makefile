@@ -2,15 +2,13 @@ CONDA ?= conda
 CONDA_ENV ?= env_old_mac_workaround
 PANDOC := $(CONDA) run -n $(CONDA_ENV) pandoc
 HTTP_FILES = \
-	fisica_applicata_lezione-09.html \
-	fisica_applicata_lezione-08.html \
-	fisica_applicata_lezione-07.html \
-	fisica_applicata_lezione-06.html \
-	fisica_applicata_lezione-05.html \
-	fisica_applicata_lezione-04.html \
-	fisica_applicata_lezione-03.html \
-	fisica_applicata_lezione-02.html \
-	fisica_applicata_lezione-01.html \
+	fisica_applicata_parte-07.html \
+	fisica_applicata_parte-06.html \
+	fisica_applicata_parte-05.html \
+	fisica_applicata_parte-04.html \
+	fisica_applicata_parte-03.html \
+	fisica_applicata_parte-02.html \
+	fisica_applicata_parte-01.html \
 	index.html
 
 .PHONY: all http
@@ -32,7 +30,7 @@ index.html: index.md template.html5 css/index-theme.css css/skylighting-solarize
 		-o $@ \
 		$<
 
-fisica_applicata_lezione-%.html: fisica_applicata_lezione-%.md template-revealjs.html5 css/custom-revealjs.css
+fisica_applicata_parte-%.html: fisica_applicata_parte-%.md template-revealjs.html5 css/custom-revealjs.css
 	$(PANDOC) \
 	    	--standalone \
                 --template ./template-revealjs.html5 \
