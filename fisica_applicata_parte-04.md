@@ -435,7 +435,7 @@ Originale su [YouTube](https://youtu.be/zTyqUf3E2xk?si=OAZtpeEWosCZvc_k)
 
     -   L’intensità delle forze viscose, che tende a **ridurre** l’ampiezza
 
-# Esempi di risonanza (conclusione della lezione precedente)
+# Esempi di risonanza
 
 # Spinta di un’altalena
 

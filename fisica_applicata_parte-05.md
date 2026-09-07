@@ -326,14 +326,6 @@ La pressione è circa 660 atm.
 :::
 :::
 
-# Simulazione
-
--   Facciamo un gioco! Scegliamo una fila di banchi abbastanza popolata, e con le persone sedute una vicina all’altra
-
--   Chi è ad un’estremità tocchi il braccio della persona vicina, la quale farà lo stesso con quella dopo
-
--   Dopo aver provato una volta, la persona in cima alla fila ora dia tocchi regolari. Verifichiamo che la persona all’altro capo riceva impulsi con lo stesso periodo (frequenza)
-
 
 # Onde sonore
 
