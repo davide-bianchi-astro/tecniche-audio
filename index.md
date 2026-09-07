@@ -17,7 +17,7 @@
 [pdf7]: pdfs/fisica_applicata_parte-07.pdf
 
 <center>
-| Titolo                                                                 | PDF        |
+| HTML                                                                   | PDF        |
 |------------------------------------------------------------------------|------------|
 | [01. Cosa significa misurare?][html1]                                  | [#1][pdf1] |
 | [02. Cinematica e dinamica][html2]                                     | [#2][pdf2] |
