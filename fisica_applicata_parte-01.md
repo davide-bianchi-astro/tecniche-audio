@@ -285,7 +285,7 @@ Sottolinea che la misurazione di qualcosa è un’attività della vita quotidian
 -   …ma appena un anno dopo si tolse l’obbligo, con queste motivazioni:
     - Usare gli stessi termini “ora” e “minuto” confondeva, ma introdurne di nuovi sarebbe stato complicato per la gente del popolo
     - Cambiare tutti gli orologi della nazione sarebbe costato troppo
--   È sopravvissuto in astronomia, dove oggi si usa regolarmente il [Giorno giuliano](https://it.wikipedia.org/wiki/Giorno_giuliano): questa lezione è iniziata al tempo 2.460.961,875JD (circa)
+-   È sopravvissuto in astronomia, dove oggi si usa regolarmente il [Giorno giuliano](https://it.wikipedia.org/wiki/Giorno_giuliano): questa lezione è iniziata al tempo 2.461.326,0625JD (circa)
 
 # Come si misura il tempo
 
