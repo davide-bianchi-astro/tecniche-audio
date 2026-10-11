@@ -140,14 +140,6 @@ Far camminare alcuni studenti avanti ed indietro con due velocità, e commentare
 
 (Molto importante impararli tutti e tre!)
 
-# Principi di Newton
-
-1. Lo stato naturale (“imperturbato”) dei corpi è il moto rettilineo uniforme (incluso lo stato di quiete!)
-2. Un corpo sottoposto a forze si muove di moto accelerato (o decelerato), e l’accelerazione è proporzionale alla somma delle forze
-3. Se un corpo A esercita una forza sul corpo B, il corpo B esercita una forza uguale e contraria sul corpo A
-
-(Molto importante impararli tutti e tre!)
-
 # Primo principio
 
 ![](media/2001-space-odyssey.jpg){height=420px}
