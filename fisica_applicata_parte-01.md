@@ -90,7 +90,7 @@ Sottolinea che la misurazione di qualcosa è un’attività della vita quotidian
     -   1 miglio = 8 furlong (“stadi”)
     -   1 furlong = 10 catene
     -   1 catena = 66 piedi
-    -   1 piede = 30 pollici
+    -   1 piede = 12 pollici
 
 -   Secondo voi, perché si usano divisioni così strane?
 
@@ -164,7 +164,7 @@ Sottolinea che la misurazione di qualcosa è un’attività della vita quotidian
 
 # Altri esempi
 
--   Per misurare il peso (meglio: la massa! lo vedremo nella prossima lezione), nel Sistema Imperiale si usa la libbra, che equivale a 16 once
+-   Per misurare il peso (meglio: la massa! Lo vedremo più tardi), nel Sistema Imperiale si usa la libbra, che equivale a 16 once
 
 -   Però l’uso di dividere una libbra in 16 once è stato introdotto in Inghilterra nel 1300 per uniformarsi al sistema francese; prima una libbra era divisa in 12 once! (Questa era la divisione usata nell’Impero Romano)
 
