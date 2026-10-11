@@ -285,13 +285,13 @@ Sottolinea che la misurazione di qualcosa è un’attività della vita quotidian
 -   …ma appena un anno dopo si tolse l’obbligo, con queste motivazioni:
     - Usare gli stessi termini “ora” e “minuto” confondeva, ma introdurne di nuovi sarebbe stato complicato per la gente del popolo
     - Cambiare tutti gli orologi della nazione sarebbe costato troppo
--   È sopravvissuto in astronomia, dove oggi si usa regolarmente il [Giorno giuliano](https://it.wikipedia.org/wiki/Giorno_giuliano): questa lezione è iniziata al tempo 2.461.326,0625JD (circa)
+-   È sopravvissuto in astronomia, dove oggi si usa regolarmente il [Giorno giuliano](https://it.wikipedia.org/wiki/Giorno_giuliano): questa lezione è iniziata al tempo 2.461.326,0625JD
 
 # Come si misura il tempo
 
 -   Torniamo alla domanda iniziale: come si misura il tempo?
 
--   Consideriamo un problema pratico: voglio stabilire chi tra miei due amici, Luca e Serena, corre più velocemente, prendendo come riferimento una pista di atletica lunga 100 m
+-   Consideriamo un problema pratico: voglio stabilire chi tra due miei amici, Luca e Serena, corre più velocemente, prendendo come riferimento una pista di atletica lunga 100 m
 
 ::: notes
 
