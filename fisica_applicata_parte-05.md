@@ -5,6 +5,14 @@
 -   Pressione e onde sonore
 
 
+# Le onde
+
+-   Un’onda è una perturbazione che si propaga nello spazio, trasportando energia ma non materia
+
+-   La propagazione avviene trasferendo energia lungo una certa direzione
+
+-   Quest’energia può essere di varia natura: termica, elastica, elettromagnetica...
+
 # Esempi
 
 -   Le “onde” del mare sono un tipo di onda (abbastanza complesso!)
