@@ -337,18 +337,6 @@ La pressione è circa 660 atm.
 
 # Onde sonore
 
-# Analogia col suono
-
-Il gioco che abbiamo fatto presenta analogie con la propagazione sonora:
-
--   Gli “impulsi” della prima persona si propagano nella stanza, anche se nessuna persona ha cambiato il suo posto.
-
--   Si tratta di un’onda longitudinale: tutto il movimento avviene lungo la fila, senza coinvolgere quella davanti o dietro
-
--   Ciascun impulso non si propaga istantaneamente, ma richiede qualche tempo per raggiungere l’altra estremità della fila
-
--   Se le persone sedessero più separate tra loro (minore densità), ci vorrebbe di più perché un impulso si trasferisca da un capo all’altro della fila (ognuno dovrebbe sporgersi, o addirittura alzarsi momentaneamente dal suo posto)
-
 # Suoni attraverso i muri
 
 ::: side-by-side
@@ -444,8 +432,6 @@ Possiamo quindi dare una definizione delle onde sonore:
 
 <iframe src="iframes/sinusoid.html" width="100%" height="760" style="border:1px solid #ccc; border-radius: 8px;"></iframe>
 
-
-# Conclusioni
 
 # Cosa sapere per l’esame
 
