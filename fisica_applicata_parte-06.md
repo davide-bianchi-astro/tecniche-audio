@@ -1134,7 +1134,6 @@ Toccata e fuga in re minore BWV 565 di J. S. Bach, suonata da Liene Andreta Kaln
 
 La [cattedrale di Riga](https://en.wikipedia.org/wiki/Riga_Cathedral) occupa circa 8000 m², e l’organo è uno dei più grandi d’Europa, con un’altezza di 25 metri e 6768 canne.
 
-
 # Conclusioni
 
 # Cosa sapere per l’esame

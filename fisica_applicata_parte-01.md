@@ -645,6 +645,8 @@ Riassumendo, abbiamo individuato queste proprietà, che ci serviranno tra un mom
 
 -   Potete provare ad applicarlo per convertire tonnellate (1000 kg) in grammi, o chilometri quadrati in metri quadrati
 
+# Conclusioni
+
 # Cosa sapere per l’esame
 
 - Perché misuriamo
