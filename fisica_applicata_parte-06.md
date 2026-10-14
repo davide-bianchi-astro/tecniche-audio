@@ -13,9 +13,24 @@
 -   Concetti di “sovrapposizione” ed “interferenza”
 
 
+# Onde sinusoidali {#sinusoidal-waves}
+
 # Onde sinusoidali
 
--   Abbiamo introdotto il concetto di “onda sinusoidale”
+-   Il modo più semplice per affrontare lo studio delle onde sonore è di partire dal tipo più semplice, ossia un suono. Inizieremo col suono più regolare possibile: l’**onda sinusoidale**, che abbiamo appena visto nell’esempio interattivo
+
+-   Matematicamente, l’oscillazione causata da un’onda sinusoidale è
+
+    \[
+    \text{oscillazione} = A \sin (2\pi\nu t + \varphi),
+    \]
+
+    dove $t$ misura il tempo. La scritta $\sin$ rappresenta la funzione matematica “seno”, che è usata in trigonometria per caratterizzare gli angoli.
+
+
+# Onde sinusoidali
+
+-   La funzione “seno” è molto interessante ma abbastanza complessa da studiare.
 
 -   Dell’equazione
 
@@ -28,6 +43,17 @@
     #.   La sua ampiezza (quanto la pressione varia), indicata solitamente con $A$
     #.   La sua frequenza (quanto rapidamente oscilla), indicata con $\nu$ o con $f$
     #.   La sua fase (a che istante l’onda raggiunge il suo massimo), indicata con $\varphi$
+
+# Unità di misura
+
+-   L’ampiezza $A$ è misurata in Pascal (pressione) o in kg/m³ (densità) se l’onda si propaga in un fluido, o in metri (milionesimi di metro!) se è un’oscillazione di un mezzo rigido (ad es. un muro)
+-   La frequenza, come sappiamo, si misura in Hertz (Hz)
+-   La fase è indicata con un valore in gradi, da 0° (nessuno sfasamento) a 360° (un’intera oscillazione), e siccome si comporta come un angolo, di solito si rappresenta in gradi
+
+---
+
+<iframe src="iframes/sinusoid.html" width="100%" height="760" style="border:1px solid #ccc; border-radius: 8px;"></iframe>
+
 
 # 1. La frequenza
 
