@@ -665,7 +665,7 @@ Il 6,1% di 2,214 MJ è 0,13 MJ, che è l’errore che cerchiamo.
     -   L’acqua evapora, e il vapore fa girare turbine
     -   Alle turbine è collegata una dinamo, che produce energia elettrica
 
--   Esistono ancora 4 centrali a carbone in Italia: 2 sono sul punto di essere chiuse, mentre per le altre 2 (entrambe in Sardegna) è stata [posticipata la chiusura al 2029](https://www.qualenergia.it/articoli/pichetto-carbone-centrali-resteranno-stand-by/)
+-   Esistono ancora 4 centrali a carbone in Italia: 2 sono spente, mentre per le altre 2 (entrambe in Sardegna) è stata [posticipata la chiusura al 2029](https://www.qualenergia.it/articoli/pichetto-carbone-centrali-resteranno-stand-by/)
 
 # Fonti rinnovabili
 
