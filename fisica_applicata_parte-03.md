@@ -111,48 +111,6 @@ L = F \times \Delta x
 
 # Lavoro ed energia
 
--   L’energia può essere vista come **la capacità di un corpo di compiere lavoro**: l’energia gravitazionale è ciò che rende possibile lo spostamento di un corpo che cade
-
--   Oltre all’energia gravitazionale ci sono altri tipi, e tutti sono associati a qualche tipo di forza
-
--   Vediamo i più importanti
-
-# Energia cinetica
-
-::: side-by-side
-::: content
-
--   È l’energia che ha un corpo per il fatto stesso di muoversi:
-    \[
-    E_c = \frac12 m v^2.
-    \]
-
--   Se un corpo in movimento ne urta uno fermo, quest’ultimo si muove: è stato compiuto lavoro.
-
--   **Attenzione**: un corpo che si muove di moto rettilineo uniforme non compie lavoro!
-
-:::
-
-::: media
-![](media/gioco-delle-bocce_O1.jpg)
-:::
-:::
-
-# Esempio
-
--   Un uomo di massa 80 kg parte da fermo e si muove a 1 m/s
--   La sua energia cinetica iniziale è
-    \[
-    E_c^{(i)} = 0\,\text{J}
-    \]
--   Quella finale è
-    \[
-    E_c^{(f)} = \frac12 \times 80\,\text{kg}\times (1\,\text{m/s})^2 = 40\,\text{J}
-    \]
--   Di conseguenza, la forza di gravità ha compiuto un lavoro uguale a 40 J.
-
-# Lavoro ed energia
-
 -   L’energia è **la capacità di un corpo di compiere lavoro**, ossia di esercitare una forza $F$ in grado di spostare un corpo di $\Delta x$
 
 -   Ad esempio, l’energia gravitazionale è ciò che rende possibile lo spostamento di un corpo che cade, compiendo lavoro nel farlo accelerare verso il basso
